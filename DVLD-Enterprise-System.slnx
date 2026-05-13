@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="DVLD-Enterprise-System.BLL/DVLD-Enterprise-System.BLL.csproj" />
+  <Project Path="DVLD-Enterprise-System.Core/DVLD-Enterprise-System.Core.csproj" />
+  <Project Path="DVLD-Enterprise-System.DAL/DVLD-Enterprise-System.DAL.csproj" />
+  <Project Path="DVLD-Enterprise-System.UI/DVLD-Enterprise-System.UI.csproj" />
+</Solution>
