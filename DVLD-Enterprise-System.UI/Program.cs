@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DVLD_Enterprise_System.UI.Screens;
 
 namespace DVLD_Enterprise_System.UI
 {
@@ -16,7 +17,7 @@ namespace DVLD_Enterprise_System.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new frmSplashScreen());
         }
     }
 }
