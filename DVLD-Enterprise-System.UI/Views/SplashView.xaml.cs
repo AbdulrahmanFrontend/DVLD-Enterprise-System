@@ -20,11 +20,20 @@ namespace DVLD_Enterprise_System.UI.Views
     /// </summary>
     public partial class SplashView : Window
     {
+        private SplashViewModel _viewModel;
+
         public SplashView()
         {
             InitializeComponent();
 
-            DataContext = new SplashViewModel();
+            _viewModel = new SplashViewModel();
+
+            DataContext = _viewModel;
+
+            Loaded += SplashView_Loaded;
         }
+
+        private async void SplashView_Loaded(object sender, RoutedEventArgs e)
+            => await _viewModel.StartLoadingAsync();
     }
 }

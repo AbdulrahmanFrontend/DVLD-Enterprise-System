@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DVLD_Enterprise_System.UI.Views;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,11 @@ namespace DVLD_Enterprise_System.UI
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            SplashView splash = new SplashView();
+
+            splash.Show();
+        }
     }
 }
