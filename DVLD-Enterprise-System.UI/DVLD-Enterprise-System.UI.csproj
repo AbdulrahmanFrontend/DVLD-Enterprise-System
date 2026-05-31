@@ -61,18 +61,14 @@
     <Compile Include="Views\SplashView.xaml.cs">
       <DependentUpon>SplashView.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="Resources\DVLDColors.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SplashView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -105,8 +101,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
-    <Folder Include="Resources\" />
+    <Resource Include="Assets\Images\dvld-logo-light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Icons\dvld-logo-light.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\dvld-logo-dark.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

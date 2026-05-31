@@ -14,7 +14,8 @@ namespace DVLD_Enterprise_System.UI.ViewModels
         private string _statusText = string.Empty;
         private string _subTitle = string.Empty;
         private string _versionText = string.Empty;
-        private int _progressValue;
+        private int _progressValue = 0;
+        private double _Opacity = 0;
 
         public string Title
         {
@@ -81,16 +82,33 @@ namespace DVLD_Enterprise_System.UI.ViewModels
             }
         }
 
+        public double Opacity
+        {
+            get => _Opacity;
+            set
+            {
+                if (_Opacity == value)
+                    return;
+
+                _Opacity = value;
+                OnPropertyChanged();
+            }
+        }
+
         public SplashViewModel()
         {
             Title = "DVLD Enterprise System";
             SubTitle = "Driving & Vehicle License Department";
             VersionText = "Version 1.0.0";
             StatusText = "Initializing...";
+            Opacity = 0;
         }
 
         public async Task StartLoadingAsync()
         {
+            for (Opacity = 0; Opacity < 1; Opacity += 0.1d)
+                await Task.Delay(10);
+
             for (int i = 0; i <= 100; i++)
             {
                 ProgressValue = i;
@@ -110,6 +128,9 @@ namespace DVLD_Enterprise_System.UI.ViewModels
 
                 await Task.Delay(40);
             }
+
+            for (Opacity = 1; Opacity > 0; Opacity -= 0.1d)
+                await Task.Delay(10);
         }
     }
 }
