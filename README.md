@@ -12,7 +12,7 @@ This project is a real-world simulation of a Driving License Management System d
 - Clean Architecture (UI / Services / Data Access)
 - Repository & Unit of Work patterns
 - Service Layer with business workflows
-- Event-driven WinForms UI
+- Event-driven WPF UI
 
 ## 🧰 Built With:
 - C# / .NET Framework (WinForms)
