@@ -4,37 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DVLD_Enterprise_System.UI.Views"
+        xmlns:dt="clr-namespace:DevToolkit.BaseWPF.Controls;assembly=DevToolkit.BaseWPF"
         mc:Ignorable="d" Height="305" Width="463" WindowStyle="None" ResizeMode="NoResize" 
         ShowInTaskbar="false" WindowStartupLocation="CenterScreen" AllowsTransparency="True"
         Background="Transparent" Opacity="{Binding Opacity}">
     <Border CornerRadius="20" Background="{StaticResource BackgroundBrush}">
-        <Grid x:Name="SplashGrid">
 
+        <dt:SplashScreenControl x:Name="SplashControl" 
+                                Foreground="{StaticResource TextPrimaryBrush}"/>
 
-            <StackPanel x:Name="Container" Margin="0,0,0,0" HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-
-                <Image x:Name="SplashLogo" Width="129" Height="121" 
-                       Source="/Assets/Images/dvld-logo-dark.png" Margin="0,0,0,5"/>
-                <TextBlock x:Name="SplashTitle" FontSize="28" FontWeight="Bold" 
-                           Text="{Binding Title}" HorizontalAlignment="Center" 
-                           Foreground="{StaticResource TextPrimaryBrush}"/>
-                <TextBlock x:Name="SplashSubTitle" FontSize="16" Margin="0,10,0,0" 
-                           Text="{Binding SubTitle}" HorizontalAlignment="Center" 
-                           Foreground="{StaticResource TextPrimaryBrush}"/>
-                <TextBlock x:Name="SplashLoading" FontSize="12" Margin="0,10,0,0" 
-                           Text="{Binding StatusText}" HorizontalAlignment="Center" 
-                           Foreground="{StaticResource TextPrimaryBrush}"/>
-                <ProgressBar x:Name="SplashProgress" Height="31" Minimum="0" Maximum="100" 
-                             Value="{Binding ProgressValue}" Width="390" Margin="0,10,0,0">
-                </ProgressBar>
-                <TextBlock x:Name="SplashVersion" FontSize="10" Margin="0,10,0,0" 
-                           Text="{Binding VersionText}" HorizontalAlignment="Center" 
-                           Foreground="{StaticResource TextPrimaryBrush}"/>
-
-            </StackPanel>
-
-
-        </Grid>
     </Border>
 </Window>

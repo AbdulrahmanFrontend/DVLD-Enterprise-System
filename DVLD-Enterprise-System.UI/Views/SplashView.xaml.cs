@@ -28,6 +28,8 @@ namespace DVLD_Enterprise_System.UI.Views
 
             _viewModel = new SplashViewModel();
 
+            SplashControl.DataContext = _viewModel.SplashData;
+
             DataContext = _viewModel;
 
             Loaded += SplashView_Loaded;

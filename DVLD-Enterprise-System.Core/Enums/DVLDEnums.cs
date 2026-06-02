@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DVLD_Enterprise_System.Core
+namespace DVLD_Enterprise_System.Core.Enums
 {
-    public class Class1
+    public enum StartupResult
     {
+        RegisterAdmin,
+        Login
     }
 }

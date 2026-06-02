@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevToolkit.BaseWPF">
+      <HintPath>..\DevToolkit\DevToolkit.BaseWPF\bin\Debug\DevToolkit.BaseWPF.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -55,8 +58,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Services\NavigationService.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\SplashViewModel.cs" />
     <Compile Include="Views\SplashView.xaml.cs">
       <DependentUpon>SplashView.xaml</DependentUpon>
@@ -101,13 +102,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\dvld-logo-light.png" />
+    <Resource Include="Assets\Images\dvld-logo-dark.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\dvld-logo-light.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Images\dvld-logo-dark.png" />
+    <Resource Include="Assets\Images\dvld-logo-light.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

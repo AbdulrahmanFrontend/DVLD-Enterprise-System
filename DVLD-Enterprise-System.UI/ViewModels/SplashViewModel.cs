@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevToolkit.BaseWPF.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -10,127 +11,67 @@ namespace DVLD_Enterprise_System.UI.ViewModels
 {
     public class SplashViewModel : BaseViewModel
     {
-        private string _title = string.Empty;
-        private string _statusText = string.Empty;
-        private string _subTitle = string.Empty;
-        private string _versionText = string.Empty;
-        private int _progressValue = 0;
-        private double _Opacity = 0;
+        private double _opacity = 0;
 
-        public string Title
-        {
-            get => _title;
-            set
+        public SplashScreenViewModel SplashData { get; private set; } = 
+            new SplashScreenViewModel
             {
-                if(_title == value)
-                    return;
-
-                _title = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string StatusText
-        {
-            get => _statusText;
-            set
-            {
-                if(_statusText == value)
-                    return;
-
-                _statusText = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string SubTitle
-        {
-            get => _subTitle;
-            set
-            {
-                if (_subTitle == value)
-                    return;
-
-                _subTitle = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string VersionText
-        {
-            get => _versionText;
-            set
-            {
-                if (_versionText == value)
-                    return;
-
-                _versionText = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public int ProgressValue
-        {
-            get => _progressValue;
-            set
-            {
-                if(_progressValue == value)
-                    return;
-
-                _progressValue = value;
-                OnPropertyChanged();
-            }
-        }
+                LogoPath = "/Assets/Images/dvld-logo-light.png",
+                Title = "DVLD Enterprise System",
+                SubTitle = "Driving & Vehicle License Department",
+                Version = "Version 1.0.0",
+                StatusMessage = "Initializing...",
+                ProgressValue = 0,
+            };
 
         public double Opacity
         {
-            get => _Opacity;
+            get => _opacity;
             set
             {
-                if (_Opacity == value)
+                if (_opacity == value)
                     return;
 
-                _Opacity = value;
+                _opacity = value;
                 OnPropertyChanged();
             }
-        }
-
-        public SplashViewModel()
-        {
-            Title = "DVLD Enterprise System";
-            SubTitle = "Driving & Vehicle License Department";
-            VersionText = "Version 1.0.0";
-            StatusText = "Initializing...";
-            Opacity = 0;
         }
 
         public async Task StartLoadingAsync()
         {
-            for (Opacity = 0; Opacity < 1; Opacity += 0.1d)
+            for (int i = 0; i <= 10; i++)
+            {
+                Opacity = i / 10.0;
+
                 await Task.Delay(10);
+            }
 
             for (int i = 0; i <= 100; i++)
             {
-                ProgressValue = i;
+                SplashData.ProgressValue = i;
 
                 if (i <= 20)
-                    StatusText = "Initializing Modules...";
+                    SplashData.StatusMessage = "Initializing Modules...";
                 else if (i <= 40)
-                    StatusText = "Loading Configuration...";
+                    SplashData.StatusMessage = "Loading Configuration...";
                 else if (i <= 60)
-                    StatusText = "Loading Services...";
+                    SplashData.StatusMessage = "Loading Services...";
                 else if (i <= 80)
-                    StatusText = "Connecting Database...";
+                    SplashData.StatusMessage = "Connecting Database...";
                 else if (i < 100)
-                    StatusText = "Preparing Interface...";
+                    SplashData.StatusMessage = "Preparing Interface...";
                 else
-                    StatusText = "System Ready...";
+                    SplashData.StatusMessage = "System Ready...";
 
-                await Task.Delay(40);
+                await Task.Delay(50);
             }
 
-            for (Opacity = 1; Opacity > 0; Opacity -= 0.1d)
+            for (int i = 10; i >= 0; i--)
+            {
+                Opacity = i / 10.0;
+
                 await Task.Delay(10);
+            }
         }
     }
 }
