@@ -1,4 +1,4 @@
-USE [DVLD]
+USE [DVLDSystemDb]
 GO
 
 /****** Object:  Table [dbo].[Licenses]    Script Date: 6/3/2026 4:38:15 PM ******/

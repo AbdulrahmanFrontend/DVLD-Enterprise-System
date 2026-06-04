@@ -1,0 +1,5 @@
+CREATE DATABASE DVLDSystemDb;
+GO
+
+USE DVLDSystemDb;
+GO
