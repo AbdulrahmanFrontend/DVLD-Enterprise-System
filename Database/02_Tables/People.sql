@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE [dbo].[People](
 	[PersonID] [int] IDENTITY(1,1) NOT NULL,
-	[NationalNo] [nvarchar](20) NOT NULL,
+	[NationalNo] [nvarchar](20) CHECK (NationalNo LIKE REPLICATE('[0-9]', 14)) UNIQUE NOT NULL,
 	[FirstName] [nvarchar](20) NOT NULL,
 	[SecondName] [nvarchar](20) NOT NULL,
 	[ThirdName] [nvarchar](20) NULL,
@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[People](
 	[DateOfBirth] [datetime] NOT NULL,
 	[Gender] [tinyint] NOT NULL,
 	[Address] [nvarchar](500) NOT NULL,
-	[Phone] [nvarchar](20) NOT NULL,
+	[Phone] [nvarchar](20) CHECK (Phone LIKE '01[0125][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]') UNIQUE NOT NULL,
 	[Email] [nvarchar](50) NULL,
 	[NationalityCountryID] [int] NOT NULL,
 	[ImagePath] [nvarchar](250) NULL,
