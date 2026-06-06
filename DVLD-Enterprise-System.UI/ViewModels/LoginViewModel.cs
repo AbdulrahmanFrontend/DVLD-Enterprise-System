@@ -36,27 +36,13 @@ namespace DVLD_Enterprise_System.UI.ViewModels
         public string UserName
         {
             get => _userName;
-            set
-            {
-                if (_userName != value)
-                {
-                    _userName = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => _SetProperty<string>(ref _userName, value);
         }
 
         public string Password
         {
             get => _password;
-            set
-            {
-                if (_password != value)
-                {
-                    _password = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => _SetProperty<string>(ref _password, value);
         }
     }
 }

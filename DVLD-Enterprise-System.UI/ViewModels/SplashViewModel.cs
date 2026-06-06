@@ -27,14 +27,7 @@ namespace DVLD_Enterprise_System.UI.ViewModels
         public double Opacity
         {
             get => _opacity;
-            set
-            {
-                if (_opacity == value)
-                    return;
-
-                _opacity = value;
-                OnPropertyChanged();
-            }
+            set => _SetProperty<double>(ref _opacity, value);
         }
 
         public async Task StartLoadingAsync()
