@@ -29,20 +29,19 @@ namespace DVLD_Enterprise_System.UI.ViewModels
                 && !string.IsNullOrWhiteSpace(Password);
         }
 
-        private string _userName;
-
-        private string _password;
+        private string _userName = string.Empty;
+        private string _password = string.Empty;
 
         public string UserName
         {
             get => _userName;
-            set => _SetProperty<string>(ref _userName, value);
+            set => _SetProperty(ref _userName, value);
         }
 
         public string Password
         {
             get => _password;
-            set => _SetProperty<string>(ref _password, value);
+            set => _SetProperty(ref _password, value);
         }
     }
 }

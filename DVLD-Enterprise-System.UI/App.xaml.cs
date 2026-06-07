@@ -1,4 +1,6 @@
-﻿using DVLD_Enterprise_System.UI.Views;
+﻿using DevToolkit.BaseWPF.Services;
+using DVLD_Enterprise_System.UI.Services;
+using DVLD_Enterprise_System.UI.Views;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -19,6 +21,13 @@ namespace DVLD_Enterprise_System.UI
             SplashView splash = new SplashView();
 
             splash.Show();
+
+            StartupService startupService = new StartupService();
+
+            if (startupService.HasUsers())
+                new NavigationService().NavigateTo<LoginView>(splash);
+            else
+                new NavigationService().NavigateTo<RegisterAdminView>(splash);
         }
     }
 }
