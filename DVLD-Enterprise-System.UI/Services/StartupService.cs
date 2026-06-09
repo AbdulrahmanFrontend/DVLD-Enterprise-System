@@ -1,4 +1,7 @@
-﻿using System;
+﻿using DevToolkit.Core.Results;
+using DVLD_Enterprise_System.BLL;
+using DVLD_Enterprise_System.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +11,6 @@ namespace DVLD_Enterprise_System.UI.Services
 {
     public class StartupService
     {
-        public bool HasUsers()
-        {
-            // Implementation for checking if there are any users
-            return false;
-        }
+        public Result<User> HasUsers() => UserService.HasUsers();
     }
 }

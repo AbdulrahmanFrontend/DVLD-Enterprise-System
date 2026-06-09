@@ -31,6 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevToolkit.Core">
+      <HintPath>..\DevToolkit\DevToolkit.Core\bin\Debug\DevToolkit.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DVLD-Enterprise-System.Core">
+      <HintPath>..\DVLD-Enterprise-System.Core\bin\Debug\DVLD-Enterprise-System.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DVLD-Enterprise-System.DAL">
+      <HintPath>..\DVLD-Enterprise-System.DAL\bin\Debug\DVLD-Enterprise-System.DAL.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,8 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

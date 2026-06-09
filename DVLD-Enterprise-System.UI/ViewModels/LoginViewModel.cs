@@ -1,5 +1,7 @@
 ﻿using DevToolkit.BaseWPF.Commands;
 using DevToolkit.BaseWPF.ViewModels;
+using DevToolkit.Core.Results;
+using DVLD_Enterprise_System.UI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace DVLD_Enterprise_System.UI.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         public ICommand LoginCommand { get; }
+        private readonly AuthenticationService _authenticationService;
 
         public LoginViewModel()
         {
@@ -20,7 +23,12 @@ namespace DVLD_Enterprise_System.UI.ViewModels
 
         private void Login()
         {
-            // login logic
+            Result result = _authenticationService.Login(UserName);
+
+            if (result.IsSuccess)
+            {
+                // Navigate to MainView
+            }
         }
 
         private bool CanLogin()

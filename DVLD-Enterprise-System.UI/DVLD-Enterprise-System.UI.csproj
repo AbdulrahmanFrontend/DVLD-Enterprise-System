@@ -35,8 +35,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevToolkit.BaseWPF">
+    <Reference Include="DevToolkit.BaseWPF, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DevToolkit\DevToolkit.BaseWPF\bin\Debug\DevToolkit.BaseWPF.dll</HintPath>
+    </Reference>
+    <Reference Include="DevToolkit.Core">
+      <HintPath>..\DevToolkit\DevToolkit.Core\bin\Debug\DevToolkit.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DVLD-Enterprise-System.BLL">
+      <HintPath>..\DVLD-Enterprise-System.BLL\bin\Debug\DVLD-Enterprise-System.BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="DVLD-Enterprise-System.Core">
+      <HintPath>..\DVLD-Enterprise-System.Core\bin\Debug\DVLD-Enterprise-System.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
