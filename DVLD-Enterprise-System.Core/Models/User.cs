@@ -14,14 +14,17 @@ namespace DVLD_Enterprise_System.Core.Models
         public int UserID { get; set; }
 
         [Required]
+        public int PersonID { get; set; }
+
+        [Required]
         [MinLength(1)]
         [MaxLength(20)]
         public string UserName { get; set; }
 
         [Required]
-        [MaxLength(20)]
+        [MaxLength(255)]
         [MinLength(1)]
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public bool IsActive { get; set; } = true;
     }
 }

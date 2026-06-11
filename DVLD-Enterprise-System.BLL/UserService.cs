@@ -32,6 +32,6 @@ namespace DVLD_Enterprise_System.BLL
 
         protected override Result _Update() => Result.Success();
 
-        public static Result<User> HasUsers() => UserData.HasUsers();
+        public static Result<User> GetAdminUser() => UserData.GetAdminUser();
     }
 }

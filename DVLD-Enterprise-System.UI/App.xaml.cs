@@ -24,7 +24,7 @@ namespace DVLD_Enterprise_System.UI
 
             StartupService startupService = new StartupService();
 
-            if (startupService.HasUsers().IsSuccess)
+            if (startupService.GetAdminUser().IsSuccess)
                 new NavigationService().NavigateTo<LoginView>(splash);
             else
                 new NavigationService().NavigateTo<RegisterAdminView>(splash);

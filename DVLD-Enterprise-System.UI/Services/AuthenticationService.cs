@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DVLD_Enterprise_System.UI.Services
 {
-    public class AuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         public Result Login(string userName)
             => userName == "admin" ? Result.Success() : Result.Failure("Failed to login");

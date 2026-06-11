@@ -1,7 +1,7 @@
 USE [DVLDSystemDb]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 6/4/2026 4:27:31 PM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 6/11/2026 9:44:52 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -12,7 +12,7 @@ CREATE TABLE [dbo].[Users](
 	[UserID] [int] IDENTITY(1,1) NOT NULL,
 	[PersonID] [int] NOT NULL,
 	[UserName] [nvarchar](20) NOT NULL,
-	[Password] [nvarchar](20) NOT NULL,
+	[PasswordHash] [nvarchar](255) NOT NULL,
 	[IsActive] [bit] NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (

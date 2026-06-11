@@ -14,10 +14,12 @@ namespace DVLD_Enterprise_System.UI.ViewModels
     public class LoginViewModel : BaseViewModel
     {
         public ICommand LoginCommand { get; }
-        private readonly AuthenticationService _authenticationService;
+        private readonly IAuthenticationService _authenticationService;
 
         public LoginViewModel()
         {
+            _authenticationService = new AuthenticationService();
+
             LoginCommand = new RelayCommand(Login, CanLogin);
         }
 
