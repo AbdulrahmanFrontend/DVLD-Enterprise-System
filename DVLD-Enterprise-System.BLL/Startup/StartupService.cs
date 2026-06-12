@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DVLD_Enterprise_System.UI.Services
+namespace DVLD_Enterprise_System.BLL.Startup
 {
     public class StartupService
     {

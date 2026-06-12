@@ -8,8 +8,11 @@ using System.Threading.Tasks;
 
 namespace DVLD_Enterprise_System.Core.Models
 {
-    public abstract class Person : BaseEntity
+    public abstract class Person
     {
+        [Required]
+        public int PersonID { get; set; }
+
         [Required]
         [NationalNo]
         [Length(14)]
