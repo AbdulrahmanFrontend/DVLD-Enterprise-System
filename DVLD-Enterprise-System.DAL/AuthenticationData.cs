@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using DevToolkit.Data;
 using DVLD_Enterprise_System.Core.Models;
+using DevToolkit.Core.Guards;
 
 namespace DVLD_Enterprise_System.DAL
 {
@@ -35,8 +36,13 @@ namespace DVLD_Enterprise_System.DAL
                 },
             };
 
-            return DataQueryService.FirstOrDefault<User>(CommandType.StoredProcedure, 
+            var result = DataQueryService.FirstOrDefault<User>(CommandType.StoredProcedure, 
                 "sp_Login", parameters);
+
+            if (result != null && result.IsSuccess)
+                return Result<User>.Success(result.Data);
+
+            return Result<User>.Failure("UserName or Password not valid or User not found;");
         }
     }
 }

@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace DVLD_Enterprise_System.Core.Models
 {
-    public class User : Person, IBaseEntity
+    public class User : Person
     {
         [Required]
-        [Column("UserID")]
-        public int ID { get; set; }
+        public int UserID { get; set; }
 
         [Required]
         [MinLength(1)]

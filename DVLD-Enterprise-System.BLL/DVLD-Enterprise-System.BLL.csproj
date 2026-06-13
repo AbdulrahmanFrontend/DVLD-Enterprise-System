@@ -34,6 +34,9 @@
     <Reference Include="DevToolkit.Core">
       <HintPath>..\DevToolkit\DevToolkit.Core\bin\Debug\DevToolkit.Core.dll</HintPath>
     </Reference>
+    <Reference Include="DevToolkit.Security">
+      <HintPath>..\DevToolkit\DevToolkit.Security\bin\Debug\DevToolkit.Security.dll</HintPath>
+    </Reference>
     <Reference Include="DVLD-Enterprise-System.Core">
       <HintPath>..\DVLD-Enterprise-System.Core\bin\Debug\DVLD-Enterprise-System.Core.dll</HintPath>
     </Reference>

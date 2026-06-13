@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using DVLD_Enterprise_System.UI.ViewModels;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -22,6 +23,8 @@ namespace DVLD_Enterprise_System.UI.Views
         public LoginView()
         {
             InitializeComponent();
+            LoginViewModel viewModel = new LoginViewModel();
+            this.DataContext = viewModel;
         }
     }
 }
