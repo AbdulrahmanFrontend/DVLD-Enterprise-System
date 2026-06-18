@@ -1,4 +1,4 @@
-﻿using DevToolkit.BaseWPF.Services;
+﻿using DevToolkit.BaseWPF.Services.Navigation;
 using DevToolkit.Data.Core;
 using DevToolkit.Infrastructure.Registry;
 using DevToolkit.Logging.Providers;
@@ -20,7 +20,9 @@ namespace DVLD_Enterprise_System.UI
     /// </summary>
     public partial class App : Application
     {
-        private void Application_Startup(object sender, StartupEventArgs e)
+        private async void Application_Startup(
+            object sender, 
+            StartupEventArgs e)
         {
             DataConfiguration.Configure(ConfigurationManager
                 .ConnectionStrings["ConnectionString"]?
@@ -31,18 +33,23 @@ namespace DVLD_Enterprise_System.UI
             RegistryConfiguration.CompanyName = "Abdulrahman Nasser";
             RegistryConfiguration.ApplicationName = "DVLD-Enterprise-System";
 
-            DbManager.Initialize(DevToolkit.Data.Core.DbProviderFactory.DbProvider.SqlServer);
+            DbManager.Initialize(
+                DevToolkit.Data.Core.DbProviderFactory.DbProvider.SqlServer);
 
             SplashView splash = new SplashView();
 
             splash.Show();
 
+            await Task.Delay(7500);
+
             StartupService startupService = new StartupService();
 
+            INavigationService navigation = new NavigationService();
+
             if (startupService.GetAdminUser().IsSuccess)
-                new NavigationService().NavigateTo<LoginView>(splash);
+                navigation.NavigateTo<LoginView>(splash);
             else
-                new NavigationService().NavigateTo<RegisterAdminView>(splash);
+                navigation.NavigateTo<RegisterAdminView>(splash);
         }
     }
 }

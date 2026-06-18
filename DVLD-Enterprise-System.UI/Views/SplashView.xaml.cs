@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DVLD_Enterprise_System.UI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using DVLD_Enterprise_System.UI.ViewModels;
 
 namespace DVLD_Enterprise_System.UI.Views
 {
@@ -20,22 +20,22 @@ namespace DVLD_Enterprise_System.UI.Views
     /// </summary>
     public partial class SplashView : Window
     {
-        private SplashViewModel _viewModel;
+        private SplashViewModel _ViewModel;
 
         public SplashView()
         {
             InitializeComponent();
 
-            _viewModel = new SplashViewModel();
+            _ViewModel = new SplashViewModel();
 
-            SplashControl.DataContext = _viewModel.SplashData;
+            DataContext = _ViewModel;
 
-            DataContext = _viewModel;
+            SplashControl.DataContext = _ViewModel.SplashData;
 
-            Loaded += SplashView_Loaded;
+            this.Loaded += SplashView_Loaded;
         }
 
         private async void SplashView_Loaded(object sender, RoutedEventArgs e)
-            => await _viewModel.StartLoadingAsync();
+            => await _ViewModel.StartLoadingAsync();
     }
 }

@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DVLD_Enterprise_System.UI.Views"
         mc:Ignorable="d" Title="Login" Height="450" Width="800" 
-        WindowStartupLocation="CenterScreen" WindowStyle="ToolWindow" ResizeMode="NoResize" 
-        AllowsTransparency="True" Background="Transparent" 
+        WindowStartupLocation="CenterScreen" WindowStyle="None" 
+        ResizeMode="NoResize" AllowsTransparency="True" 
+        Background="Transparent" 
         Foreground="{StaticResource TextPrimaryBrush}">
     <Border CornerRadius="20" Background="{StaticResource SurfaceBrush}">
         <Grid>
@@ -14,49 +15,70 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
-            <Image Grid.Column="0" Stretch="UniformToFill"
+
+            <Image Grid.Column="0"
                    Source="/Assets/Images/login.png" HorizontalAlignment="Left" 
                    VerticalAlignment="Stretch"/>
 
-            <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                  Width="300">
+            <Grid Grid.Column="1" HorizontalAlignment="Center" 
+                  VerticalAlignment="Center" Width="340">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="20"/>
-                    <RowDefinition Height="80"/>
+                    <RowDefinition Height="75"/>
+                    <RowDefinition Height="70"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="100"/>
                 </Grid.RowDefinitions>
-                
-                <StackPanel Grid.Row="0">
-                    <TextBlock Text="Username" Margin="0,0,0,5"/>
-                    <TextBox x:Name="UsernameInput" Height="30" Margin="0,0,0,15" 
-                             VerticalContentAlignment="Center" 
-                             Text="{Binding UserName, UpdateSourceTrigger=PropertyChanged}"/>
+                <StackPanel Grid.Row="0" HorizontalAlignment="Center">
+                    <TextBlock Text="Welcome Back" FontSize="24" FontWeight="Bold" 
+                               HorizontalAlignment="Center" Margin="0,0,0,5"/>
+                    <TextBlock Text="Sign in to continue" 
+                               Foreground="{StaticResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="1">
-                    <TextBlock Text="Password" Margin="0,0,0,5"/>
-                    <PasswordBox x:Name="PasswordInput" Height="30" Margin="0,0,0,25"
-                                 VerticalContentAlignment="Center" 
-                                 TextInput="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBlock Text="Username" Margin="0,0,0,5"/>
+                    <TextBox x:Name="UsernameInput" Height="40" 
+                             VerticalContentAlignment="Center" Padding="10,0,0,0" 
+                             Text="{Binding UserName, 
+                        UpdateSourceTrigger=PropertyChanged}" 
+                             BorderBrush="{StaticResource BordersBrush}"
+                             BorderThickness="1"/>
                 </StackPanel>
 
-                <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Grid.Row="2">
+                    <TextBlock Text="Password" Margin="0,0,0,5"/>
+                    <PasswordBox x:Name="PasswordInput" Height="40" 
+                                 Margin="0,0,0,25" Padding="10,0,0,0"
+                                 VerticalContentAlignment="Center" 
+                                 PasswordChanged="PasswordInput_PasswordChanged"
+                                 BorderBrush="{StaticResource BordersBrush}"
+                                 BorderThickness="1"/>
+                </StackPanel>
+
+                <Grid Grid.Row="3" HorizontalAlignment="Center" 
+                      VerticalAlignment="Center">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <CheckBox Grid.Column="1"/>
-                    <TextBlock Text="Remember Me" Grid.Column="1" Margin="25,0,0,0"/>
+                    <TextBlock Text="Remember Me" Grid.Column="1" 
+                               Margin="25,0,0,0"/>
                 </Grid>
 
-                <UniformGrid Columns="1" Rows="2" Grid.Row="3">
-                    <Button Content="Login" Height="35" IsDefault="True" BorderThickness="0"
-                            Command="{Binding LoginCommand}"/>
-                    <Button Content="Cancel" Height="35" IsCancel="True" Margin="0,5,0,0" 
-                            BorderThickness="0"/>
+                <UniformGrid Columns="1" Rows="2" Grid.Row="4">
+                    <Button Content="Login" Height="44" IsDefault="True" 
+                            BorderThickness="0" Command="{Binding LoginCommand}" 
+                            Background="{StaticResource PrimaryBrush}" 
+                            Foreground="White" FontWeight="SemiBold"
+                            Cursor="Hand"/>
+                    <Button Content="Cancel" Height="44" IsCancel="True" 
+                            BorderThickness="0"  Margin="0,5,0,0" 
+                            Background="#F1F5F9" Cursor="Hand"
+                            Foreground="{StaticResource TextPrimaryBrush}"/>
                 </UniformGrid>
             </Grid>
         </Grid>

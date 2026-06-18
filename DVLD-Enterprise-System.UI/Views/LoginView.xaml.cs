@@ -26,5 +26,15 @@ namespace DVLD_Enterprise_System.UI.Views
             LoginViewModel viewModel = new LoginViewModel();
             this.DataContext = viewModel;
         }
+
+        private void PasswordInput_PasswordChanged(
+            object sender, 
+            RoutedEventArgs e)
+        {
+            if (DataContext is LoginViewModel vm)
+            {
+                vm.Password = PasswordInput.Password;
+            }
+        }
     }
 }

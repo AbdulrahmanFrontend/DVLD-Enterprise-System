@@ -1,5 +1,5 @@
 ﻿using DevToolkit.BaseWPF.Commands;
-using DevToolkit.BaseWPF.Services;
+using DevToolkit.BaseWPF.Services.Dialogs;
 using DevToolkit.BaseWPF.ViewModels;
 using DevToolkit.Core.Results;
 using DVLD_Enterprise_System.BLL.Authentication;
@@ -31,16 +31,18 @@ namespace DVLD_Enterprise_System.UI.ViewModels
 
         private void Login()
         {
-            Result<User> result = _authenticationService.Login(UserName, Password);
+            Result<User> result = 
+                _authenticationService.Login(UserName, Password);
 
             if (result.IsSuccess)
             {
                 //new DevToolkit.BaseWPF.Services.NavigationService()
-                    //.NavigateTo<MainView>();
+                //    .NavigateTo<MainView>();
             }
             else
             {
-                new DialogService().ShowError(result.Message);
+                IDialogService dialog = new DialogService();
+                dialog.ShowError(result.Message);
             }
         }
 

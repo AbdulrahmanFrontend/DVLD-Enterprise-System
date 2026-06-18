@@ -115,12 +115,12 @@
     <Compile Include="Views\RegisterAdminView.xaml.cs">
       <DependentUpon>RegisterAdminView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SplashView.xaml.cs">
-      <DependentUpon>SplashView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\SplashView.xaml.cs">
+      <DependentUpon>SplashView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\DVLDColors.xaml">
       <SubType>Designer</SubType>
