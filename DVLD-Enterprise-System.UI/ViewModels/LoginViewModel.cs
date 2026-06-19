@@ -34,10 +34,16 @@ namespace DVLD_Enterprise_System.UI.ViewModels
             Result<User> result = 
                 _authenticationService.Login(UserName, Password);
 
-            if (result.IsSuccess)
+            if (result != null && result.IsSuccess)
             {
-                //new DevToolkit.BaseWPF.Services.NavigationService()
-                //    .NavigateTo<MainView>();
+                MainView main = new MainView();
+
+                main.Show();
+
+                Application.Current.Windows
+                    .OfType<LoginView>()
+                    .FirstOrDefault()
+                    ?.Close();
             }
             else
             {
@@ -55,8 +61,6 @@ namespace DVLD_Enterprise_System.UI.ViewModels
         private string _userName = string.Empty;
         private string _password = string.Empty;
         private bool _rememberMe = false;
-        private bool _showPassword = false;
-        private string _errorMessage = string.Empty;
 
         public string UserName
         {
@@ -82,18 +86,6 @@ namespace DVLD_Enterprise_System.UI.ViewModels
         {
             get => _rememberMe;
             set => _SetProperty(ref _rememberMe, value);
-        }
-
-        public bool ShowPassword
-        {
-            get => _showPassword;
-            set => _SetProperty(ref _showPassword, value);
-        }
-
-        public string ErrorMessage
-        {
-            get => _errorMessage;
-            set => _SetProperty(ref _errorMessage, value);
         }
     }
 }

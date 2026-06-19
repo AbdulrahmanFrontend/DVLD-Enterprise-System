@@ -15,7 +15,19 @@ namespace DVLD_Enterprise_System.BLL.Authentication
         public Result<User> Login(string userName, string password)
         {
             string PasswordHash = PasswordHasher.HashPassword(password);
-            return AuthenticationData.Login(userName, PasswordHash);
+
+            var result = AuthenticationData.Login(userName, PasswordHash);
+
+            if (result != null && result.IsSuccess)
+            {
+                if (result.Data != null)
+                    return result;
+
+                return Result<User>.Failure(
+                    "UserName or Password not valid or User not found;");
+            }
+
+            return Result<User>.Failure(result.Message);
         }
     }
 }

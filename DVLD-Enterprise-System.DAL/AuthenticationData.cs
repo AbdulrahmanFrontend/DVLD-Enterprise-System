@@ -22,27 +22,28 @@ namespace DVLD_Enterprise_System.DAL
             {
                 new DbParameterInfo
                 { 
-                    Name = "UserName",
+                    Name = "@UserName",
                     Value = userName,
                     DbType = DbType.String, 
                     Size = 20,
                 },
                 new DbParameterInfo
                 {
-                    Name = "PasswordHash",
+                    Name = "@PasswordHash",
                     Value = passwordHash,
                     DbType = DbType.String,
                     Size = 255,
                 },
             };
 
-            var result = DataQueryService.FirstOrDefault<User>(CommandType.StoredProcedure, 
+            var result = DataQueryService.FirstOrDefault<User>(
+                CommandType.StoredProcedure, 
                 "sp_Login", parameters);
 
             if (result != null && result.IsSuccess)
-                return Result<User>.Success(result.Data);
+                return result;
 
-            return Result<User>.Failure("UserName or Password not valid or User not found;");
+            return Result<User>.Failure("Authentication Failed;");
         }
     }
 }

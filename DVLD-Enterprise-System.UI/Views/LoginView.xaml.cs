@@ -36,5 +36,8 @@ namespace DVLD_Enterprise_System.UI.Views
                 vm.Password = PasswordInput.Password;
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+            => this.Close();
     }
 }

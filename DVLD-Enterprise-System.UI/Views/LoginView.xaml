@@ -5,11 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DVLD_Enterprise_System.UI.Views"
         mc:Ignorable="d" Title="Login" Height="450" Width="800" 
-        WindowStartupLocation="CenterScreen" WindowStyle="None" 
-        ResizeMode="NoResize" AllowsTransparency="True" 
-        Background="Transparent" 
+        WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" 
+        ResizeMode="NoResize" Icon="/Assets/Icons/dvld-logo-light.ico"
         Foreground="{StaticResource TextPrimaryBrush}">
-    <Border CornerRadius="20" Background="{StaticResource SurfaceBrush}">
+    <Border Background="{StaticResource SurfaceBrush}">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -18,7 +17,7 @@
 
             <Image Grid.Column="0"
                    Source="/Assets/Images/login.png" HorizontalAlignment="Left" 
-                   VerticalAlignment="Stretch"/>
+                   VerticalAlignment="Center" Stretch="Uniform"/>
 
             <Grid Grid.Column="1" HorizontalAlignment="Center" 
                   VerticalAlignment="Center" Width="340">
@@ -64,9 +63,10 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox Grid.Column="1"/>
+                    <CheckBox Grid.Column="0" IsChecked="{Binding RememberMe}"/>
                     <TextBlock Text="Remember Me" Grid.Column="1" 
-                               Margin="25,0,0,0"/>
+                               Margin="10,0,0,0" VerticalAlignment="Top"
+                               />
                 </Grid>
 
                 <UniformGrid Columns="1" Rows="2" Grid.Row="4">
@@ -75,10 +75,10 @@
                             Background="{StaticResource PrimaryBrush}" 
                             Foreground="White" FontWeight="SemiBold"
                             Cursor="Hand"/>
-                    <Button Content="Cancel" Height="44" IsCancel="True" 
+                    <Button Content="Cancel" Height="44" IsCancel="True"
                             BorderThickness="0"  Margin="0,5,0,0" 
                             Background="#F1F5F9" Cursor="Hand"
-                            Foreground="{StaticResource TextPrimaryBrush}"/>
+                            Foreground="{StaticResource TextPrimaryBrush}" Click="Button_Click"/>
                 </UniformGrid>
             </Grid>
         </Grid>

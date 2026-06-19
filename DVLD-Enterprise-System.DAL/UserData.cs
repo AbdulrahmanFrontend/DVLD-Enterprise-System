@@ -13,7 +13,8 @@ namespace DVLD_Enterprise_System.DAL
     public class UserData
     {
         public static Result<User> GetAdminUser()
-            => DataQueryService
-            .FirstOrDefault<User>(CommandType.StoredProcedure, "sp_GetAdminUser");
+            => DataQueryService.FirstOrDefault<User>(
+                CommandType.StoredProcedure,
+                "sp_GetAdminUser");
     }
 }
