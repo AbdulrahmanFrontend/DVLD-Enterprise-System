@@ -12,9 +12,16 @@ namespace DVLD_Enterprise_System.DAL
 {
     public class UserData
     {
-        public static Result<User> GetAdminUser()
-            => DataQueryService.FirstOrDefault<User>(
+        public static Result<bool> IsAdminFound()
+        {
+            var result = DataQueryService.Scalar<bool>(
                 CommandType.StoredProcedure,
-                "sp_GetAdminUser");
+                "sp_IsAdminFound");
+
+            if (result != null && result.IsSuccess)
+                return result;
+
+            return Result<bool>.Failure("Failed to check admin is found;");
+        }
     }
 }

@@ -1,9 +1,11 @@
 ﻿using DevToolkit.BaseWPF.Commands;
 using DevToolkit.BaseWPF.Services.Dialogs;
+using DevToolkit.BaseWPF.Services.Navigation;
 using DevToolkit.BaseWPF.ViewModels;
 using DevToolkit.Core.Results;
 using DVLD_Enterprise_System.BLL.Authentication;
 using DVLD_Enterprise_System.Core.Models;
+using DVLD_Enterprise_System.Core.Settings;
 using DVLD_Enterprise_System.UI.Views;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace DVLD_Enterprise_System.UI.ViewModels
 {
@@ -36,14 +37,31 @@ namespace DVLD_Enterprise_System.UI.ViewModels
 
             if (result != null && result.IsSuccess)
             {
-                MainView main = new MainView();
+                IDialogService dialogService = new DialogService();
+                
+                var resultRememberMe = SettingsManager.SaveRememberMe(
+                    RememberMe);
 
-                main.Show();
+                if (!resultRememberMe.IsSuccess)
+                    dialogService.ShowError(resultRememberMe?.Message);
+                else
+                {
+                    var resultCurrentUser = SettingsManager.SaveCurrentUserName(
+                        UserName);
 
-                Application.Current.Windows
+                    if (!resultCurrentUser.IsSuccess)
+                        dialogService.ShowError(resultCurrentUser?.Message);
+                }
+
+                var loginView = Application.Current.Windows
                     .OfType<LoginView>()
-                    .FirstOrDefault()
-                    ?.Close();
+                    .FirstOrDefault();
+
+                if (loginView != null)
+                {
+                    INavigationService navigation = new NavigationService();
+                    navigation.NavigateTo<MainView>(loginView);
+                }
             }
             else
             {

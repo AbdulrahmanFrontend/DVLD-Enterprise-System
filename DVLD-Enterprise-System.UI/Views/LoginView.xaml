@@ -7,7 +7,7 @@
         mc:Ignorable="d" Title="Login" Height="450" Width="800" 
         WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" 
         ResizeMode="NoResize" Icon="/Assets/Icons/dvld-logo-light.ico"
-        Foreground="{StaticResource TextPrimaryBrush}">
+        Foreground="{StaticResource TextPrimaryBrush}" Loaded="Window_Loaded">
     <Border Background="{StaticResource SurfaceBrush}">
         <Grid>
             <Grid.ColumnDefinitions>

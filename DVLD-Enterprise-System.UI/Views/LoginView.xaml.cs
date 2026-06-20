@@ -39,5 +39,8 @@ namespace DVLD_Enterprise_System.UI.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
             => this.Close();
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+            => UsernameInput.Focus();
     }
 }

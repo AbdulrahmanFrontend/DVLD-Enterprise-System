@@ -40,14 +40,16 @@ namespace DVLD_Enterprise_System.UI
 
             splash.Show();
 
-            await Task.Delay(7500);
+            await Task.Delay(7000);
 
             StartupService startupService = new StartupService();
 
             INavigationService navigation = new NavigationService();
 
-            if (startupService.GetAdminUser().IsSuccess)
-                navigation.NavigateTo<LoginView>(splash);
+            if (startupService.IsAdminFound().IsSuccess)
+            { 
+                navigation.NavigateTo<LoginView>(splash); 
+            }
             else
                 navigation.NavigateTo<RegisterAdminView>(splash);
         }

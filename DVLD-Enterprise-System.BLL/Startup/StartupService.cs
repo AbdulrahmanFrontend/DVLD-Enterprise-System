@@ -11,6 +11,6 @@ namespace DVLD_Enterprise_System.BLL.Startup
 {
     public class StartupService
     {
-        public Result<User> GetAdminUser() => UserService.GetAdminUser();
+        public Result<bool> IsAdminFound() => UserService.IsAdminFound();
     }
 }

@@ -32,6 +32,19 @@ namespace DVLD_Enterprise_System.BLL
 
         protected override Result _Update() => Result.Success();
 
-        public static Result<User> GetAdminUser() => UserData.GetAdminUser();
+        public static Result<bool> IsAdminFound()
+        {
+            var result = UserData.IsAdminFound();
+
+            if (result != null && result.IsSuccess)
+            {
+                if (result.Data)
+                    return result;
+
+                return Result<bool>.Failure("Admin not found;");
+            }
+
+            return Result<bool>.Failure(result?.Message);
+        }
     }
 }
