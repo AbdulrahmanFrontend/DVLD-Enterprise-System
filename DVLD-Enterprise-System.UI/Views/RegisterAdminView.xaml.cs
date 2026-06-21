@@ -23,5 +23,8 @@ namespace DVLD_Enterprise_System.UI.Views
         {
             InitializeComponent();
         }
+
+        public delegate void DataBackRegistrationSucceed();
+        public event DataBackRegistrationSucceed RegistrationSucceed;
     }
 }

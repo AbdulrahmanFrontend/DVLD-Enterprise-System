@@ -1,8 +1,11 @@
 ﻿using DevToolkit.BaseWPF.Services.Navigation;
+using DevToolkit.Core.Guards;
 using DevToolkit.Data.Core;
 using DevToolkit.Infrastructure.Registry;
 using DevToolkit.Logging.Providers;
 using DVLD_Enterprise_System.BLL.Startup;
+using DVLD_Enterprise_System.Core.Models;
+using DVLD_Enterprise_System.Core.Settings;
 using DVLD_Enterprise_System.UI.Views;
 using System;
 using System.Collections.Generic;
@@ -47,11 +50,37 @@ namespace DVLD_Enterprise_System.UI
             INavigationService navigation = new NavigationService();
 
             if (startupService.IsAdminFound().IsSuccess)
-            { 
-                navigation.NavigateTo<LoginView>(splash); 
+            {
+                var resultRemember = SettingsManager.GetRememberMe();
+                if (resultRemember != null && resultRemember.IsSuccess &&
+                    resultRemember.Data)
+                {
+                    var resultCurrentUser =
+                            SettingsManager.GetCurrentUserName();
+
+                    if (resultCurrentUser != null &&
+                        resultCurrentUser.IsSuccess)
+                    {
+                        if (Guard.HasValue(resultCurrentUser.Data))
+                            CurrentUser.UserName =
+                                resultCurrentUser.Data;
+                    }
+                }
+                else
+                    navigation.NavigateTo<LoginView>(splash);
             }
             else
-                navigation.NavigateTo<RegisterAdminView>(splash);
+            {
+                var window = new RegisterAdminView();
+
+                window.Show();
+
+                splash.Close();
+
+                window.RegistrationSucceed += () => window.Close();
+
+
+            }
         }
     }
 }

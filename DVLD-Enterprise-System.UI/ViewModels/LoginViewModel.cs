@@ -44,23 +44,24 @@ namespace DVLD_Enterprise_System.UI.ViewModels
 
                 if (!resultRememberMe.IsSuccess)
                     dialogService.ShowError(resultRememberMe?.Message);
-                else
-                {
-                    var resultCurrentUser = SettingsManager.SaveCurrentUserName(
-                        UserName);
 
-                    if (!resultCurrentUser.IsSuccess)
-                        dialogService.ShowError(resultCurrentUser?.Message);
-                }
+                var resultCurrentUser = SettingsManager.SaveCurrentUserName(
+                    UserName);
 
-                var loginView = Application.Current.Windows
+                CurrentUser.UserName = UserName;
+
+                if (!resultCurrentUser.IsSuccess)
+                    dialogService.ShowError(resultCurrentUser?.Message);
+
+                LoginView loginView = Application.Current.Windows
                     .OfType<LoginView>()
                     .FirstOrDefault();
 
                 if (loginView != null)
                 {
-                    INavigationService navigation = new NavigationService();
-                    navigation.NavigateTo<MainView>(loginView);
+                    INavigationService navigationService = new NavigationService();
+
+                    navigationService.NavigateTo<MainView>(loginView);
                 }
             }
             else
