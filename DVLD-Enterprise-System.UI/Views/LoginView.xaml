@@ -38,22 +38,20 @@
 
                 <StackPanel Grid.Row="1">
                     <TextBlock Text="Username" Margin="0,0,0,5"/>
-                    <TextBox x:Name="UsernameInput" Height="40" 
-                             VerticalContentAlignment="Center" Padding="10,0,0,0" 
+                    <TextBox x:Name="UsernameInput" 
+                             VerticalContentAlignment="Center" 
                              Text="{Binding UserName, 
-                        UpdateSourceTrigger=PropertyChanged}" 
-                             BorderBrush="{StaticResource BordersBrush}"
-                             BorderThickness="1"/>
+                        UpdateSourceTrigger=PropertyChanged}"
+                             Style="{StaticResource DVLDTextBoxStyle}"/>
                 </StackPanel>
 
                 <StackPanel Grid.Row="2">
                     <TextBlock Text="Password" Margin="0,0,0,5"/>
-                    <PasswordBox x:Name="PasswordInput" Height="40" 
-                                 Margin="0,0,0,25" Padding="10,0,0,0"
+                    <PasswordBox x:Name="PasswordInput" Margin="0,0,0,25"
                                  VerticalContentAlignment="Center" 
                                  PasswordChanged="PasswordInput_PasswordChanged"
                                  BorderBrush="{StaticResource BordersBrush}"
-                                 BorderThickness="1"/>
+                                 Style="{StaticResource DVLDPasswordBoxStyle}"/>
                 </StackPanel>
 
                 <Grid Grid.Row="3" HorizontalAlignment="Center" 
@@ -70,15 +68,14 @@
                 </Grid>
 
                 <UniformGrid Columns="1" Rows="2" Grid.Row="4">
-                    <Button Content="Login" Height="44" IsDefault="True" 
-                            BorderThickness="0" Command="{Binding LoginCommand}" 
-                            Background="{StaticResource PrimaryBrush}" 
-                            Foreground="White" FontWeight="SemiBold"
-                            Cursor="Hand"/>
-                    <Button Content="Cancel" Height="44" IsCancel="True"
-                            BorderThickness="0"  Margin="0,5,0,0" 
-                            Background="#F1F5F9" Cursor="Hand"
-                            Foreground="{StaticResource TextPrimaryBrush}" Click="Button_Click"/>
+                    <Button Content="Login" IsDefault="True" 
+                            Command="{Binding LoginCommand}" 
+                            Background="{StaticResource PrimaryBrush}"
+                            Style="{StaticResource DVLDButtonStyle}"/>
+                    <Button Content="Cancel" IsCancel="True" Margin="0,5,0,0" 
+                            Background="#F1F5F9" 
+                            Style="{StaticResource DVLDButtonStyle}" 
+                            Click="Button_Click"/>
                 </UniformGrid>
             </Grid>
         </Grid>
