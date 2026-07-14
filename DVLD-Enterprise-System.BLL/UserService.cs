@@ -14,15 +14,15 @@ namespace DVLD_Enterprise_System.BLL
 {
     public class UserService : BaseBusiness
     {
-        public User userModel { get; private set; }
+        public UserModel userModel { get; private set; }
 
         public UserService()
         {
-            this.userModel = new User();
+            this.userModel = new UserModel();
             this.Mode = Mode.AddNew;
         }
 
-        private UserService(User user)
+        private UserService(UserModel user)
         {
             this.userModel = user;
             this.Mode = Mode.Update;
@@ -44,7 +44,7 @@ namespace DVLD_Enterprise_System.BLL
                 return Result<bool>.Failure("Admin not found;");
             }
 
-            return Result<bool>.Failure(result?.Message);
+            return Result<bool>.Failure(result.Message);
         }
     }
 }

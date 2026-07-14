@@ -12,7 +12,7 @@ namespace DVLD_Enterprise_System.BLL.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
-        public Result<User> Login(string userName, string password)
+        public Result<UserModel> Login(string userName, string password)
         {
             string PasswordHash = PasswordHasher.HashPassword(password);
 
@@ -23,11 +23,11 @@ namespace DVLD_Enterprise_System.BLL.Authentication
                 if (result.Data != null)
                     return result;
 
-                return Result<User>.Failure(
+                return Result<UserModel>.Failure(
                     "UserName or Password not valid or User not found;");
             }
 
-            return Result<User>.Failure(result.Message);
+            return Result<UserModel>.Failure(result.Message);
         }
     }
 }

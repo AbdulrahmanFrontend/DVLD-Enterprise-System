@@ -14,6 +14,8 @@ namespace DVLD_Enterprise_System.UI
         [STAThread]
         static void Main()
         {
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmMain());

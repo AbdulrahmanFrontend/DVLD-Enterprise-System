@@ -18,7 +18,7 @@ namespace DVLD_Enterprise_System.DAL
                 CommandType.StoredProcedure,
                 "sp_IsAdminFound");
 
-            if (result != null && result.IsSuccess)
+            if (result.IsSuccess)
                 return result;
 
             return Result<bool>.Failure("Failed to check admin is found;");

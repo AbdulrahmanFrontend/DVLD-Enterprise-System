@@ -8,20 +8,18 @@ using System.Threading.Tasks;
 
 namespace DVLD_Enterprise_System.Core.Models
 {
-    public class User : Person
+    public class UserModel : PersonModel
     {
-        [Required]
-        public int UserID { get; set; }
+        public int UserID { get; set; } = 0;
 
         [Required]
-        [MinLength(1)]
         [MaxLength(20)]
-        public string UserName { get; set; }
+        public string UserName { get; set; } = string.Empty;
 
         [Required]
         [MaxLength(255)]
-        [MinLength(1)]
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; set; } = string.Empty;
+
         public bool IsActive { get; set; } = true;
     }
 }

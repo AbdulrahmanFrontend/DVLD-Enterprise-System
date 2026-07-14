@@ -16,7 +16,7 @@ namespace DVLD_Enterprise_System.DAL
 {
     public static class AuthenticationData
     {
-        public static Result<User> Login(string userName, string passwordHash)
+        public static Result<UserModel> Login(string userName, string passwordHash)
         {
             DbParameterInfo[] parameters = new DbParameterInfo[]
             {
@@ -36,14 +36,15 @@ namespace DVLD_Enterprise_System.DAL
                 },
             };
 
-            var result = DataQueryService.FirstOrDefault<User>(
+            var result = DataQueryService.FirstOrDefault<UserModel>(
                 CommandType.StoredProcedure, 
-                "sp_Login", parameters);
+                "sp_Login", 
+                parameters);
 
-            if (result != null && result.IsSuccess)
+            if (result.IsSuccess)
                 return result;
 
-            return Result<User>.Failure("Authentication Failed;");
+            return Result<UserModel>.Failure("Authentication Failed;");
         }
     }
 }

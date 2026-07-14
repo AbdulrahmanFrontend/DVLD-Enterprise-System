@@ -10,6 +10,6 @@ namespace DVLD_Enterprise_System.BLL.Authentication
 {
     public interface IAuthenticationService
     {
-        Result<User> Login(string userName, string PasswordHash);
+        Result<UserModel> Login(string userName, string PasswordHash);
     }
 }
