@@ -202,25 +202,9 @@ namespace DVLD_Enterprise_System.BLL
             return Result.Success();
         }
 
-        protected override Result _AddNew()
-        {
-            var result = Valid();
+        protected override Result _AddNew() => PersonData.AddNew(this.Model);
 
-            if(!result.IsSuccess)
-                return result;
-
-            return PersonData.AddNew(this.Model);
-        }
-
-        protected override Result _Update()
-        {
-            var result = Valid();
-
-            if (!result.IsSuccess)
-                return result;
-
-            return PersonData.Update(this.Model);
-        }
+        protected override Result _Update() => PersonData.Update(this.Model);
 
         public static Result<DataTable> GetPeople(
             int currentPage,
