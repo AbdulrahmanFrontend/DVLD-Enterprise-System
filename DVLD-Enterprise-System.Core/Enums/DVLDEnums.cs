@@ -14,9 +14,9 @@ namespace DVLD_Enterprise_System.Core.Enums
 
     public enum Gender
     {
-        Unknown = 0,
-        Male = 1,
-        Female = 2,
+        Male = 0,
+        Female = 1,
+        Other = 2,
     }
 
     public enum PeopleFilterMethods

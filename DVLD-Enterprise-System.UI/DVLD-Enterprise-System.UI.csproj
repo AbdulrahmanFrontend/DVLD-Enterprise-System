@@ -37,6 +37,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DevToolkit\DevToolkit.BaseWinForms\bin\Debug\DevToolkit.BaseWinForms.dll</HintPath>
     </Reference>
+    <Reference Include="DevToolkit.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DevToolkit\DevToolkit.Core\bin\Debug\DevToolkit.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DVLD-Enterprise-System.BLL">
+      <HintPath>..\DVLD-Enterprise-System.BLL\bin\Debug\DVLD-Enterprise-System.BLL.dll</HintPath>
+    </Reference>
+    <Reference Include="DVLD-Enterprise-System.Core">
+      <HintPath>..\DVLD-Enterprise-System.Core\bin\Debug\DVLD-Enterprise-System.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,16 +60,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\BaseForms\frmAddUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Core\BaseForms\frmAddUpdate.Designer.cs">
+      <DependentUpon>frmAddUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="People\Controls\ctrlPersonCard.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="People\Controls\ctrlPersonCard.Designer.cs">
+      <DependentUpon>ctrlPersonCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="People\Forms\frmAddUpdatePerson.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="People\Forms\frmAddUpdatePerson.Designer.cs">
+      <DependentUpon>frmAddUpdatePerson.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Core\BaseForms\frmAddUpdate.resx">
+      <DependentUpon>frmAddUpdate.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="People\Controls\ctrlPersonCard.resx">
+      <DependentUpon>ctrlPersonCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="People\Forms\frmAddUpdatePerson.resx">
+      <DependentUpon>frmAddUpdatePerson.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -173,6 +210,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Logo Final.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Male 512.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
