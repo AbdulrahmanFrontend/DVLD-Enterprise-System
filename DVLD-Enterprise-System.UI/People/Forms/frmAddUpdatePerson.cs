@@ -17,7 +17,7 @@ using System.Windows.Forms;
 
 namespace DVLD_Enterprise_System.UI.People.Forms
 {
-    public partial class frmAddUpdatePerson : frmAddUpdate
+    public partial class frmAddUpdatePerson : Form
     {
         // Declare a delegate
         public delegate void DataBackEventHandler(object sender, int PersonID);
@@ -28,25 +28,11 @@ namespace DVLD_Enterprise_System.UI.People.Forms
         public frmAddUpdatePerson()
         {
             InitializeComponent();
-
-            this.ButtonDeleteVisible = false;
-            this.Title = "Add New Person";
-            ctrlPersonCard Card = new ctrlPersonCard();
-            ScreenManager.ShowScreen(this.Container, Card);
         }
 
         public frmAddUpdatePerson(int id)
         {
             InitializeComponent();
-
-            this.Title = "Update Person Info";
-            var result = PersonService.Find(id);
-            if (result.IsSuccess)
-            {
-                MessageBoxManager.ShowError(result.Message, Language.en);
-                this.DialogResult = DialogResult.Cancel;
-                return;
-            }
         }
 
         private void frmAddUpdatePerson_Load(object sender, EventArgs e)

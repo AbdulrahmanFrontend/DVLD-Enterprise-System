@@ -60,12 +60,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\BaseForms\frmAddUpdate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Core\BaseForms\frmAddUpdate.Designer.cs">
-      <DependentUpon>frmAddUpdate.cs</DependentUpon>
-    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,9 +80,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Core\BaseForms\frmAddUpdate.resx">
-      <DependentUpon>frmAddUpdate.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -211,9 +202,32 @@
   <ItemGroup>
     <None Include="Resources\Logo Final.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\Number 32.png" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Male 512.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Person 32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Phone 32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Calendar 32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Man 32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Country 32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Email 32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Address 32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
