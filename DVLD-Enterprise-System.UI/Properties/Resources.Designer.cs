@@ -143,6 +143,16 @@ namespace DVLD_Enterprise_System.UI.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Close_32 {
+            get {
+                object obj = ResourceManager.GetObject("Close 32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Country_32 {
             get {
                 object obj = ResourceManager.GetObject("Country 32", resourceCulture);
@@ -226,6 +236,16 @@ namespace DVLD_Enterprise_System.UI.Properties {
         internal static System.Drawing.Bitmap Email_32 {
             get {
                 object obj = ResourceManager.GetObject("Email 32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Female_512 {
+            get {
+                object obj = ResourceManager.GetObject("Female 512", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -396,6 +416,16 @@ namespace DVLD_Enterprise_System.UI.Properties {
         internal static System.Drawing.Bitmap Retake_Test_32 {
             get {
                 object obj = ResourceManager.GetObject("Retake Test 32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Save_32 {
+            get {
+                object obj = ResourceManager.GetObject("Save 32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
