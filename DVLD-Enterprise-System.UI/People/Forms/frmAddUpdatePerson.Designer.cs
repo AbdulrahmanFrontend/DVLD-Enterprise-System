@@ -32,57 +32,58 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAddUpdatePerson));
             this.epPerson = new System.Windows.Forms.ErrorProvider(this.components);
             this.flpFooter = new System.Windows.Forms.FlowLayoutPanel();
+            this.ctrlbtnClose = new DevToolkit.BaseWinForms.Controls.CustomControls.ccButton();
+            this.ctrlbtnSave = new DevToolkit.BaseWinForms.Controls.CustomControls.ccButton();
             this.lblTitle = new System.Windows.Forms.Label();
             this.tlpBody = new System.Windows.Forms.TableLayoutPanel();
             this.tlpImage = new System.Windows.Forms.TableLayoutPanel();
+            this.pbPersonImage = new System.Windows.Forms.PictureBox();
             this.llSetImage = new System.Windows.Forms.LinkLabel();
             this.llRemoveImage = new System.Windows.Forms.LinkLabel();
             this.tlpContainer = new System.Windows.Forms.TableLayoutPanel();
             this.tlpAddress = new System.Windows.Forms.TableLayoutPanel();
+            this.lblAddress = new System.Windows.Forms.Label();
             this.txtAddress = new System.Windows.Forms.TextBox();
             this.tlpFields = new System.Windows.Forms.TableLayoutPanel();
             this.tlpEmail = new System.Windows.Forms.TableLayoutPanel();
+            this.lblEmail = new System.Windows.Forms.Label();
             this.txtEmail = new System.Windows.Forms.TextBox();
             this.tlpCountry = new System.Windows.Forms.TableLayoutPanel();
+            this.lblCountry = new System.Windows.Forms.Label();
             this.cbCountries = new System.Windows.Forms.ComboBox();
             this.tlpGender = new System.Windows.Forms.TableLayoutPanel();
+            this.lblGender = new System.Windows.Forms.Label();
             this.cbGenders = new System.Windows.Forms.ComboBox();
             this.tlpDateOfBirth = new System.Windows.Forms.TableLayoutPanel();
+            this.lblDateOfBirth = new System.Windows.Forms.Label();
             this.dtpDateOfBirth = new System.Windows.Forms.DateTimePicker();
             this.tlpPhone = new System.Windows.Forms.TableLayoutPanel();
+            this.lblPhone = new System.Windows.Forms.Label();
             this.txtPhone = new System.Windows.Forms.TextBox();
             this.tlpNationalNo = new System.Windows.Forms.TableLayoutPanel();
+            this.lblNationalNo = new System.Windows.Forms.Label();
             this.txtNationalNo = new System.Windows.Forms.TextBox();
             this.tlpPersonID = new System.Windows.Forms.TableLayoutPanel();
+            this.lblPersonID = new System.Windows.Forms.Label();
             this.tbPersonID = new System.Windows.Forms.TextBox();
             this.tlpLastName = new System.Windows.Forms.TableLayoutPanel();
+            this.lblLastName = new System.Windows.Forms.Label();
             this.txtLastName = new System.Windows.Forms.TextBox();
             this.tlpThirdName = new System.Windows.Forms.TableLayoutPanel();
+            this.lblThirdName = new System.Windows.Forms.Label();
             this.txtThirdName = new System.Windows.Forms.TextBox();
             this.tlpSecondName = new System.Windows.Forms.TableLayoutPanel();
+            this.lblSecondName = new System.Windows.Forms.Label();
             this.txtSecondName = new System.Windows.Forms.TextBox();
             this.tlpFirstName = new System.Windows.Forms.TableLayoutPanel();
+            this.lblFirstName = new System.Windows.Forms.Label();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.ofdPersonImage = new System.Windows.Forms.OpenFileDialog();
-            this.ctrlbtnSave = new DevToolkit.BaseWinForms.Controls.CustomControls.ccButton();
-            this.ctrlbtnClose = new DevToolkit.BaseWinForms.Controls.CustomControls.ccButton();
-            this.pbPersonImage = new System.Windows.Forms.PictureBox();
-            this.lblAddress = new System.Windows.Forms.Label();
-            this.lblEmail = new System.Windows.Forms.Label();
-            this.lblCountry = new System.Windows.Forms.Label();
-            this.lblGender = new System.Windows.Forms.Label();
-            this.lblDateOfBirth = new System.Windows.Forms.Label();
-            this.lblPhone = new System.Windows.Forms.Label();
-            this.lblNationalNo = new System.Windows.Forms.Label();
-            this.lblPersonID = new System.Windows.Forms.Label();
-            this.lblLastName = new System.Windows.Forms.Label();
-            this.lblThirdName = new System.Windows.Forms.Label();
-            this.lblSecondName = new System.Windows.Forms.Label();
-            this.lblFirstName = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.epPerson)).BeginInit();
             this.flpFooter.SuspendLayout();
             this.tlpBody.SuspendLayout();
             this.tlpImage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPersonImage)).BeginInit();
             this.tlpContainer.SuspendLayout();
             this.tlpAddress.SuspendLayout();
             this.tlpFields.SuspendLayout();
@@ -97,7 +98,6 @@
             this.tlpThirdName.SuspendLayout();
             this.tlpSecondName.SuspendLayout();
             this.tlpFirstName.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPersonImage)).BeginInit();
             this.SuspendLayout();
             // 
             // epPerson
@@ -115,6 +115,54 @@
             this.flpFooter.Name = "flpFooter";
             this.flpFooter.Size = new System.Drawing.Size(1073, 43);
             this.flpFooter.TabIndex = 1;
+            // 
+            // ctrlbtnClose
+            // 
+            this.ctrlbtnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.ctrlbtnClose.ButtonStyle = DevToolkit.BaseWinForms.Theming.ButtonStyle.Primary;
+            this.ctrlbtnClose.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ctrlbtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.ctrlbtnClose.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
+            this.ctrlbtnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(64)))), ((int)(((byte)(175)))));
+            this.ctrlbtnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
+            this.ctrlbtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ctrlbtnClose.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.ctrlbtnClose.ForeColor = System.Drawing.Color.White;
+            this.ctrlbtnClose.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Close_32;
+            this.ctrlbtnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ctrlbtnClose.Location = new System.Drawing.Point(963, 3);
+            this.ctrlbtnClose.Margin = new System.Windows.Forms.Padding(3, 3, 4, 3);
+            this.ctrlbtnClose.Name = "ctrlbtnClose";
+            this.ctrlbtnClose.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
+            this.ctrlbtnClose.Size = new System.Drawing.Size(106, 37);
+            this.ctrlbtnClose.TabIndex = 2;
+            this.ctrlbtnClose.Text = "Close";
+            this.ctrlbtnClose.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ctrlbtnClose.UseVisualStyleBackColor = false;
+            // 
+            // ctrlbtnSave
+            // 
+            this.ctrlbtnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(163)))), ((int)(((byte)(74)))));
+            this.ctrlbtnSave.ButtonStyle = DevToolkit.BaseWinForms.Theming.ButtonStyle.Success;
+            this.ctrlbtnSave.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ctrlbtnSave.FlatAppearance.BorderSize = 0;
+            this.ctrlbtnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(101)))), ((int)(((byte)(47)))));
+            this.ctrlbtnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(145)))), ((int)(((byte)(74)))));
+            this.ctrlbtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ctrlbtnSave.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.ctrlbtnSave.ForeColor = System.Drawing.Color.White;
+            this.ctrlbtnSave.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Save_32;
+            this.ctrlbtnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.ctrlbtnSave.Location = new System.Drawing.Point(850, 3);
+            this.ctrlbtnSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ctrlbtnSave.Name = "ctrlbtnSave";
+            this.ctrlbtnSave.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
+            this.ctrlbtnSave.Size = new System.Drawing.Size(106, 37);
+            this.ctrlbtnSave.TabIndex = 1;
+            this.ctrlbtnSave.Text = "Save";
+            this.ctrlbtnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.ctrlbtnSave.UseVisualStyleBackColor = false;
+            this.ctrlbtnSave.Click += new System.EventHandler(this.ctrlbtnSave_Click);
             // 
             // lblTitle
             // 
@@ -161,6 +209,19 @@
             this.tlpImage.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpImage.Size = new System.Drawing.Size(316, 470);
             this.tlpImage.TabIndex = 6;
+            // 
+            // pbPersonImage
+            // 
+            this.pbPersonImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.pbPersonImage.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Male_512;
+            this.pbPersonImage.Location = new System.Drawing.Point(3, 3);
+            this.pbPersonImage.Name = "pbPersonImage";
+            this.pbPersonImage.Size = new System.Drawing.Size(310, 410);
+            this.pbPersonImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pbPersonImage.TabIndex = 0;
+            this.pbPersonImage.TabStop = false;
             // 
             // llSetImage
             // 
@@ -219,6 +280,18 @@
             this.tlpAddress.Size = new System.Drawing.Size(739, 174);
             this.tlpAddress.TabIndex = 25;
             // 
+            // lblAddress
+            // 
+            this.lblAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAddress.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Address_32;
+            this.lblAddress.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblAddress.Location = new System.Drawing.Point(3, 0);
+            this.lblAddress.Name = "lblAddress";
+            this.lblAddress.Size = new System.Drawing.Size(733, 22);
+            this.lblAddress.TabIndex = 0;
+            this.lblAddress.Text = "Address:";
+            this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // txtAddress
             // 
             this.txtAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -231,6 +304,7 @@
             this.txtAddress.Name = "txtAddress";
             this.txtAddress.Size = new System.Drawing.Size(718, 146);
             this.txtAddress.TabIndex = 1;
+            this.txtAddress.Validating += new System.ComponentModel.CancelEventHandler(this.txtAddress_Validating);
             // 
             // tlpFields
             // 
@@ -275,6 +349,18 @@
             this.tlpEmail.Size = new System.Drawing.Size(240, 65);
             this.tlpEmail.TabIndex = 23;
             // 
+            // lblEmail
+            // 
+            this.lblEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblEmail.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Email_32;
+            this.lblEmail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblEmail.Location = new System.Drawing.Point(3, 1);
+            this.lblEmail.Name = "lblEmail";
+            this.lblEmail.Size = new System.Drawing.Size(234, 31);
+            this.lblEmail.TabIndex = 0;
+            this.lblEmail.Text = "Email:";
+            this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // txtEmail
             // 
             this.txtEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -284,6 +370,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(219, 25);
             this.txtEmail.TabIndex = 1;
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.txtEmail_Validating);
             // 
             // tlpCountry
             // 
@@ -299,6 +386,18 @@
             this.tlpCountry.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.12281F));
             this.tlpCountry.Size = new System.Drawing.Size(240, 65);
             this.tlpCountry.TabIndex = 22;
+            // 
+            // lblCountry
+            // 
+            this.lblCountry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblCountry.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Country_32;
+            this.lblCountry.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblCountry.Location = new System.Drawing.Point(3, 3);
+            this.lblCountry.Name = "lblCountry";
+            this.lblCountry.Size = new System.Drawing.Size(234, 27);
+            this.lblCountry.TabIndex = 0;
+            this.lblCountry.Text = "Country:";
+            this.lblCountry.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // cbCountries
             // 
@@ -334,6 +433,18 @@
             this.tlpGender.Size = new System.Drawing.Size(241, 64);
             this.tlpGender.TabIndex = 21;
             // 
+            // lblGender
+            // 
+            this.lblGender.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblGender.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Man_32;
+            this.lblGender.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblGender.Location = new System.Drawing.Point(3, 2);
+            this.lblGender.Name = "lblGender";
+            this.lblGender.Size = new System.Drawing.Size(235, 27);
+            this.lblGender.TabIndex = 0;
+            this.lblGender.Text = "Gender:";
+            this.lblGender.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // cbGenders
             // 
             this.cbGenders.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -366,6 +477,18 @@
             this.tlpDateOfBirth.Size = new System.Drawing.Size(240, 64);
             this.tlpDateOfBirth.TabIndex = 20;
             // 
+            // lblDateOfBirth
+            // 
+            this.lblDateOfBirth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDateOfBirth.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Calendar_32;
+            this.lblDateOfBirth.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblDateOfBirth.Location = new System.Drawing.Point(3, 1);
+            this.lblDateOfBirth.Name = "lblDateOfBirth";
+            this.lblDateOfBirth.Size = new System.Drawing.Size(234, 31);
+            this.lblDateOfBirth.TabIndex = 0;
+            this.lblDateOfBirth.Text = "Date Of Birth:";
+            this.lblDateOfBirth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // dtpDateOfBirth
             // 
             this.dtpDateOfBirth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -378,6 +501,7 @@
             this.dtpDateOfBirth.Size = new System.Drawing.Size(219, 25);
             this.dtpDateOfBirth.TabIndex = 1;
             this.dtpDateOfBirth.Value = new System.DateTime(2026, 7, 19, 0, 19, 27, 0);
+            this.dtpDateOfBirth.Validating += new System.ComponentModel.CancelEventHandler(this.dtpDateOfBirth_Validating);
             // 
             // tlpPhone
             // 
@@ -394,6 +518,18 @@
             this.tlpPhone.Size = new System.Drawing.Size(240, 64);
             this.tlpPhone.TabIndex = 19;
             // 
+            // lblPhone
+            // 
+            this.lblPhone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPhone.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Phone_32;
+            this.lblPhone.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPhone.Location = new System.Drawing.Point(3, 1);
+            this.lblPhone.Name = "lblPhone";
+            this.lblPhone.Size = new System.Drawing.Size(234, 31);
+            this.lblPhone.TabIndex = 0;
+            this.lblPhone.Text = "Phone:";
+            this.lblPhone.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // txtPhone
             // 
             this.txtPhone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -403,6 +539,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(219, 25);
             this.txtPhone.TabIndex = 1;
+            this.txtPhone.Validating += new System.ComponentModel.CancelEventHandler(this.txtPhone_Validating);
             // 
             // tlpNationalNo
             // 
@@ -419,6 +556,18 @@
             this.tlpNationalNo.Size = new System.Drawing.Size(241, 64);
             this.tlpNationalNo.TabIndex = 18;
             // 
+            // lblNationalNo
+            // 
+            this.lblNationalNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblNationalNo.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Number_32;
+            this.lblNationalNo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblNationalNo.Location = new System.Drawing.Point(3, 1);
+            this.lblNationalNo.Name = "lblNationalNo";
+            this.lblNationalNo.Size = new System.Drawing.Size(235, 31);
+            this.lblNationalNo.TabIndex = 0;
+            this.lblNationalNo.Text = "National No:";
+            this.lblNationalNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // txtNationalNo
             // 
             this.txtNationalNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -428,6 +577,7 @@
             this.txtNationalNo.Name = "txtNationalNo";
             this.txtNationalNo.Size = new System.Drawing.Size(220, 25);
             this.txtNationalNo.TabIndex = 1;
+            this.txtNationalNo.Validating += new System.ComponentModel.CancelEventHandler(this.txtNationalNo_Validating);
             // 
             // tlpPersonID
             // 
@@ -443,6 +593,18 @@
             this.tlpPersonID.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpPersonID.Size = new System.Drawing.Size(240, 64);
             this.tlpPersonID.TabIndex = 17;
+            // 
+            // lblPersonID
+            // 
+            this.lblPersonID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblPersonID.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Number_32;
+            this.lblPersonID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblPersonID.Location = new System.Drawing.Point(3, 1);
+            this.lblPersonID.Name = "lblPersonID";
+            this.lblPersonID.Size = new System.Drawing.Size(234, 31);
+            this.lblPersonID.TabIndex = 0;
+            this.lblPersonID.Text = "Person ID:";
+            this.lblPersonID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tbPersonID
             // 
@@ -469,6 +631,18 @@
             this.tlpLastName.Size = new System.Drawing.Size(240, 64);
             this.tlpLastName.TabIndex = 16;
             // 
+            // lblLastName
+            // 
+            this.lblLastName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblLastName.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Person_32;
+            this.lblLastName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblLastName.Location = new System.Drawing.Point(3, 1);
+            this.lblLastName.Name = "lblLastName";
+            this.lblLastName.Size = new System.Drawing.Size(234, 31);
+            this.lblLastName.TabIndex = 0;
+            this.lblLastName.Text = "Last Name:";
+            this.lblLastName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // txtLastName
             // 
             this.txtLastName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -478,6 +652,7 @@
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(219, 25);
             this.txtLastName.TabIndex = 1;
+            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.txtLastName_Validating);
             // 
             // tlpThirdName
             // 
@@ -493,6 +668,18 @@
             this.tlpThirdName.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpThirdName.Size = new System.Drawing.Size(240, 64);
             this.tlpThirdName.TabIndex = 13;
+            // 
+            // lblThirdName
+            // 
+            this.lblThirdName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblThirdName.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Person_32;
+            this.lblThirdName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblThirdName.Location = new System.Drawing.Point(3, 1);
+            this.lblThirdName.Name = "lblThirdName";
+            this.lblThirdName.Size = new System.Drawing.Size(234, 31);
+            this.lblThirdName.TabIndex = 0;
+            this.lblThirdName.Text = "Third Name:";
+            this.lblThirdName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // txtThirdName
             // 
@@ -519,6 +706,18 @@
             this.tlpSecondName.Size = new System.Drawing.Size(241, 64);
             this.tlpSecondName.TabIndex = 12;
             // 
+            // lblSecondName
+            // 
+            this.lblSecondName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblSecondName.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Person_32;
+            this.lblSecondName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.lblSecondName.Location = new System.Drawing.Point(3, 1);
+            this.lblSecondName.Name = "lblSecondName";
+            this.lblSecondName.Size = new System.Drawing.Size(235, 31);
+            this.lblSecondName.TabIndex = 0;
+            this.lblSecondName.Text = "Second Name:";
+            this.lblSecondName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // txtSecondName
             // 
             this.txtSecondName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -544,212 +743,6 @@
             this.tlpFirstName.Size = new System.Drawing.Size(240, 64);
             this.tlpFirstName.TabIndex = 0;
             // 
-            // txtFirstName
-            // 
-            this.txtFirstName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtFirstName.Location = new System.Drawing.Point(3, 36);
-            this.txtFirstName.Margin = new System.Windows.Forms.Padding(3, 3, 18, 3);
-            this.txtFirstName.MaxLength = 20;
-            this.txtFirstName.Name = "txtFirstName";
-            this.txtFirstName.Size = new System.Drawing.Size(219, 25);
-            this.txtFirstName.TabIndex = 1;
-            // 
-            // ofdPersonImage
-            // 
-            this.ofdPersonImage.FileName = "openFileDialog1";
-            // 
-            // ctrlbtnSave
-            // 
-            this.ctrlbtnSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(163)))), ((int)(((byte)(74)))));
-            this.ctrlbtnSave.ButtonStyle = DevToolkit.BaseWinForms.Theming.ButtonStyle.Success;
-            this.ctrlbtnSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ctrlbtnSave.FlatAppearance.BorderSize = 0;
-            this.ctrlbtnSave.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(14)))), ((int)(((byte)(101)))), ((int)(((byte)(47)))));
-            this.ctrlbtnSave.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(22)))), ((int)(((byte)(145)))), ((int)(((byte)(74)))));
-            this.ctrlbtnSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ctrlbtnSave.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.ctrlbtnSave.ForeColor = System.Drawing.Color.White;
-            this.ctrlbtnSave.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Save_32;
-            this.ctrlbtnSave.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ctrlbtnSave.Location = new System.Drawing.Point(850, 3);
-            this.ctrlbtnSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ctrlbtnSave.Name = "ctrlbtnSave";
-            this.ctrlbtnSave.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
-            this.ctrlbtnSave.Size = new System.Drawing.Size(106, 37);
-            this.ctrlbtnSave.TabIndex = 1;
-            this.ctrlbtnSave.Text = "Save";
-            this.ctrlbtnSave.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ctrlbtnSave.UseVisualStyleBackColor = false;
-            // 
-            // ctrlbtnClose
-            // 
-            this.ctrlbtnClose.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
-            this.ctrlbtnClose.ButtonStyle = DevToolkit.BaseWinForms.Theming.ButtonStyle.Primary;
-            this.ctrlbtnClose.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ctrlbtnClose.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.ctrlbtnClose.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(203)))), ((int)(((byte)(213)))), ((int)(((byte)(225)))));
-            this.ctrlbtnClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(64)))), ((int)(((byte)(175)))));
-            this.ctrlbtnClose.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
-            this.ctrlbtnClose.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ctrlbtnClose.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
-            this.ctrlbtnClose.ForeColor = System.Drawing.Color.White;
-            this.ctrlbtnClose.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Close_32;
-            this.ctrlbtnClose.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.ctrlbtnClose.Location = new System.Drawing.Point(963, 3);
-            this.ctrlbtnClose.Margin = new System.Windows.Forms.Padding(3, 3, 4, 3);
-            this.ctrlbtnClose.Name = "ctrlbtnClose";
-            this.ctrlbtnClose.Padding = new System.Windows.Forms.Padding(9, 0, 9, 0);
-            this.ctrlbtnClose.Size = new System.Drawing.Size(106, 37);
-            this.ctrlbtnClose.TabIndex = 2;
-            this.ctrlbtnClose.Text = "Close";
-            this.ctrlbtnClose.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ctrlbtnClose.UseVisualStyleBackColor = false;
-            // 
-            // pbPersonImage
-            // 
-            this.pbPersonImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.pbPersonImage.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Male_512;
-            this.pbPersonImage.Location = new System.Drawing.Point(3, 3);
-            this.pbPersonImage.Name = "pbPersonImage";
-            this.pbPersonImage.Size = new System.Drawing.Size(310, 410);
-            this.pbPersonImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pbPersonImage.TabIndex = 0;
-            this.pbPersonImage.TabStop = false;
-            // 
-            // lblAddress
-            // 
-            this.lblAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblAddress.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Address_32;
-            this.lblAddress.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblAddress.Location = new System.Drawing.Point(3, 0);
-            this.lblAddress.Name = "lblAddress";
-            this.lblAddress.Size = new System.Drawing.Size(733, 22);
-            this.lblAddress.TabIndex = 0;
-            this.lblAddress.Text = "Address:";
-            this.lblAddress.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblEmail
-            // 
-            this.lblEmail.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblEmail.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Email_32;
-            this.lblEmail.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblEmail.Location = new System.Drawing.Point(3, 1);
-            this.lblEmail.Name = "lblEmail";
-            this.lblEmail.Size = new System.Drawing.Size(234, 31);
-            this.lblEmail.TabIndex = 0;
-            this.lblEmail.Text = "Email:";
-            this.lblEmail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblCountry
-            // 
-            this.lblCountry.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblCountry.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Country_32;
-            this.lblCountry.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblCountry.Location = new System.Drawing.Point(3, 3);
-            this.lblCountry.Name = "lblCountry";
-            this.lblCountry.Size = new System.Drawing.Size(234, 27);
-            this.lblCountry.TabIndex = 0;
-            this.lblCountry.Text = "Country:";
-            this.lblCountry.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblGender
-            // 
-            this.lblGender.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblGender.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Man_32;
-            this.lblGender.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblGender.Location = new System.Drawing.Point(3, 2);
-            this.lblGender.Name = "lblGender";
-            this.lblGender.Size = new System.Drawing.Size(235, 27);
-            this.lblGender.TabIndex = 0;
-            this.lblGender.Text = "Gender:";
-            this.lblGender.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblDateOfBirth
-            // 
-            this.lblDateOfBirth.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblDateOfBirth.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Calendar_32;
-            this.lblDateOfBirth.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblDateOfBirth.Location = new System.Drawing.Point(3, 1);
-            this.lblDateOfBirth.Name = "lblDateOfBirth";
-            this.lblDateOfBirth.Size = new System.Drawing.Size(234, 31);
-            this.lblDateOfBirth.TabIndex = 0;
-            this.lblDateOfBirth.Text = "Date Of Birth:";
-            this.lblDateOfBirth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblPhone
-            // 
-            this.lblPhone.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPhone.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Phone_32;
-            this.lblPhone.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPhone.Location = new System.Drawing.Point(3, 1);
-            this.lblPhone.Name = "lblPhone";
-            this.lblPhone.Size = new System.Drawing.Size(234, 31);
-            this.lblPhone.TabIndex = 0;
-            this.lblPhone.Text = "Phone:";
-            this.lblPhone.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblNationalNo
-            // 
-            this.lblNationalNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblNationalNo.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Number_32;
-            this.lblNationalNo.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblNationalNo.Location = new System.Drawing.Point(3, 1);
-            this.lblNationalNo.Name = "lblNationalNo";
-            this.lblNationalNo.Size = new System.Drawing.Size(235, 31);
-            this.lblNationalNo.TabIndex = 0;
-            this.lblNationalNo.Text = "National No:";
-            this.lblNationalNo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblPersonID
-            // 
-            this.lblPersonID.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblPersonID.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Number_32;
-            this.lblPersonID.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblPersonID.Location = new System.Drawing.Point(3, 1);
-            this.lblPersonID.Name = "lblPersonID";
-            this.lblPersonID.Size = new System.Drawing.Size(234, 31);
-            this.lblPersonID.TabIndex = 0;
-            this.lblPersonID.Text = "Person ID:";
-            this.lblPersonID.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblLastName
-            // 
-            this.lblLastName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblLastName.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Person_32;
-            this.lblLastName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblLastName.Location = new System.Drawing.Point(3, 1);
-            this.lblLastName.Name = "lblLastName";
-            this.lblLastName.Size = new System.Drawing.Size(234, 31);
-            this.lblLastName.TabIndex = 0;
-            this.lblLastName.Text = "Last Name:";
-            this.lblLastName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblThirdName
-            // 
-            this.lblThirdName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblThirdName.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Person_32;
-            this.lblThirdName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblThirdName.Location = new System.Drawing.Point(3, 1);
-            this.lblThirdName.Name = "lblThirdName";
-            this.lblThirdName.Size = new System.Drawing.Size(234, 31);
-            this.lblThirdName.TabIndex = 0;
-            this.lblThirdName.Text = "Third Name:";
-            this.lblThirdName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblSecondName
-            // 
-            this.lblSecondName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblSecondName.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Person_32;
-            this.lblSecondName.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.lblSecondName.Location = new System.Drawing.Point(3, 1);
-            this.lblSecondName.Name = "lblSecondName";
-            this.lblSecondName.Size = new System.Drawing.Size(235, 31);
-            this.lblSecondName.TabIndex = 0;
-            this.lblSecondName.Text = "Second Name:";
-            this.lblSecondName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // lblFirstName
             // 
             this.lblFirstName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
@@ -761,6 +754,21 @@
             this.lblFirstName.TabIndex = 0;
             this.lblFirstName.Text = "First Name:";
             this.lblFirstName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // txtFirstName
+            // 
+            this.txtFirstName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFirstName.Location = new System.Drawing.Point(3, 36);
+            this.txtFirstName.Margin = new System.Windows.Forms.Padding(3, 3, 18, 3);
+            this.txtFirstName.MaxLength = 20;
+            this.txtFirstName.Name = "txtFirstName";
+            this.txtFirstName.Size = new System.Drawing.Size(219, 25);
+            this.txtFirstName.TabIndex = 1;
+            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.txtFirstName_Validating);
+            // 
+            // ofdPersonImage
+            // 
+            this.ofdPersonImage.FileName = "openFileDialog1";
             // 
             // frmAddUpdatePerson
             // 
@@ -787,6 +795,7 @@
             this.tlpBody.ResumeLayout(false);
             this.tlpImage.ResumeLayout(false);
             this.tlpImage.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbPersonImage)).EndInit();
             this.tlpContainer.ResumeLayout(false);
             this.tlpAddress.ResumeLayout(false);
             this.tlpAddress.PerformLayout();
@@ -810,7 +819,6 @@
             this.tlpSecondName.PerformLayout();
             this.tlpFirstName.ResumeLayout(false);
             this.tlpFirstName.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbPersonImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

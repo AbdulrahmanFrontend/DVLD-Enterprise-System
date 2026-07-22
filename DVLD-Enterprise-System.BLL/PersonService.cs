@@ -105,6 +105,16 @@ namespace DVLD_Enterprise_System.BLL
         public Result ValidateLastName()
             => _ValidateProperty(this.Model.LastName, this.Model);
 
+        public Result ValidateDateOfBirth()
+        {
+            if (this.Model.DateOfBirth >= DateTime.Now.AddYears(-18) &&
+                this.Model.DateOfBirth <= DateTime.Now.AddYears(-100))
+                return Result.Success();
+
+            return Result.Failure("age of person must be less than or equal 18 years " +
+                "and larger than or equal 100 years!");
+        }
+
         public Result ValidateAddress()
             => _ValidateProperty(this.Model.Address, this.Model);
 

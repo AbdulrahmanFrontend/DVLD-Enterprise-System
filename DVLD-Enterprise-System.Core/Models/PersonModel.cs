@@ -13,24 +13,24 @@ namespace DVLD_Enterprise_System.Core.Models
     {
         public int PersonID { get; set; } = 0;
 
-        [Required]
-        [NationalNo]
-        [MaxLength(20)]
+        [Required("National No is required")]
+        [NationalNo("Invalid")]
+        [MaxLength(20, "National No must be less than or equal 20 characters")]
         public string NationalNo { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(20)]
+        [Required("First Name is required")]
+        [MaxLength(20, "First Name must be less than or equal 20 characters")]
         public string FirstName { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(20)]
+        [Required("Second Name is required")]
+        [MaxLength(20, "Second Name must be less than or equal 20 characters")]
         public string SecondName { get; set; } = string.Empty;
 
-        [MaxLength(20)]
+        [MaxLength(20, "Third Name must be less than or equal 20 characters")]
         public string ThirdName { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(20)]
+        [Required("Third Name is required")]
+        [MaxLength(20, "Last Name must be less than or equal 20 characters")]
         public string LastName { get; set; } = string.Empty;
 
         public string FullName => 
@@ -40,23 +40,23 @@ namespace DVLD_Enterprise_System.Core.Models
 
         public Gender Gender { get; set; }
 
-        [Required]
-        [MaxLength(500)]
+        [Required("Address is required")]
+        [MaxLength(500, "Address must be less than or equal 500 characters")]
         public string Address { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(20)]
-        [MinLength(7)]
-        [PhoneNo]
+        [Required("Phone is required")]
+        [MaxLength(20, "Phone must be less than or equal 20 characters")]
+        [MinLength(7, "Phone must be larger than or equal 7 characters")]
+        [PhoneNo("Invalid")]
         public string Phone { get; set; } = string.Empty;
 
-        [MaxLength(50)]
-        [EmailAddr]
+        [MaxLength(50, "Email must be less than or equal 50 characters")]
+        [EmailAddr("Invalid")]
         public string Email { get; set; } = string.Empty;
 
         public int NationalityCountryID { get; set; } = 0;
 
-        [MaxLength(250)]
+        [MaxLength(250, "Image Path must be less than or equal 250 characters")]
         public string ImagePath { get; set; } = string.Empty;
     }
 }
