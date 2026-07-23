@@ -41,6 +41,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\DevToolkit\DevToolkit.Core\bin\Debug\DevToolkit.Core.dll</HintPath>
     </Reference>
+    <Reference Include="DevToolkit.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DevToolkit\DevToolkit.Logging\bin\Debug\DevToolkit.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="DVLD-Enterprise-System.BLL">
       <HintPath>..\DVLD-Enterprise-System.BLL\bin\Debug\DVLD-Enterprise-System.BLL.dll</HintPath>
     </Reference>

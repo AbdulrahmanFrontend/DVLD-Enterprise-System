@@ -205,28 +205,40 @@ namespace DVLD_Enterprise_System.UI.People.Forms
         }
 
         private void txtFirstName_Validating(object sender, CancelEventArgs e)
-            => Validate(sender, e, _Person.ValidateFirstName());
+        {
+            _Person.Model.FirstName = txtFirstName.Text.Trim();
+            Validate(sender, e, _Person.ValidateFirstName());
+        }
 
         private void txtSecondName_Validating(object sender, CancelEventArgs e)
-            => Validate(sender, e, _Person.ValidateSecondName());
+        {
+            _Person.Model.SecondName = txtSecondName.Text.Trim();
+            Validate(sender, e, _Person.ValidateSecondName());
+        }
 
         private void txtLastName_Validating(object sender, CancelEventArgs e)
-            => Validate(sender, e, _Person.ValidateLastName());
+        {
+            _Person.Model.LastName = txtLastName.Text.Trim();
+            Validate(sender, e, _Person.ValidateLastName());
+        }
 
         private void txtNationalNo_Validating(object sender, CancelEventArgs e)
-            => Validate(sender, e, _Person.ValidateNationalNo());
+        {
+            _Person.Model.NationalNo = txtNationalNo.Text.Trim();
+            Validate(sender, e, _Person.ValidateNationalNo());
+        }
 
         private void txtPhone_Validating(object sender, CancelEventArgs e)
-            => Validate(sender, e, _Person.ValidatePhone());
-
-        private void dtpDateOfBirth_Validating(object sender, CancelEventArgs e)
-            => Validate(sender, e, _Person.ValidateDateOfBirth());
+        {
+            _Person.Model.Phone = txtPhone.Text.Trim();
+            Validate(sender, e, _Person.ValidatePhone());
+        }
 
         private void txtEmail_Validating(object sender, CancelEventArgs e)
-            => Validate(sender, e, _Person.ValidateEmail());
-
-        private void txtAddress_Validating(object sender, CancelEventArgs e)
-            => Validate(sender, e, _Person.ValidateAddress());
+        {
+            _Person.Model.Email = txtEmail.Text.Trim();
+            Validate(sender, e, _Person.ValidateEmail());
+        }
 
         private void ctrlbtnSave_Click(object sender, EventArgs e)
         {
@@ -250,13 +262,7 @@ namespace DVLD_Enterprise_System.UI.People.Forms
                 return;
             }
 
-            _Person.Model.FirstName = txtFirstName.Text.Trim();
-            _Person.Model.SecondName = txtSecondName.Text.Trim();
             _Person.Model.ThirdName = txtThirdName.Text.Trim();
-            _Person.Model.LastName = txtLastName.Text.Trim();
-            _Person.Model.NationalNo = txtNationalNo.Text.Trim();
-            _Person.Model.Email = txtEmail.Text.Trim();
-            _Person.Model.Phone = txtPhone.Text.Trim();
             _Person.Model.Address = txtAddress.Text.Trim();
             _Person.Model.DateOfBirth = dtpDateOfBirth.Value;
 
