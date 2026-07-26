@@ -281,7 +281,7 @@ namespace DVLD_Enterprise_System.UI.People.Forms
 
             if (result.IsSuccess)
             {
-                lblPersonID.Text = _Person.Model.PersonID.ToString();
+                tbPersonID.Text = _Person.Model.PersonID.ToString();
                 //change form mode to update.
                 _Mode = Mode.Update;
                 lblTitle.Text = "Update Person";
