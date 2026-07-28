@@ -28,48 +28,41 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tlpFilter = new System.Windows.Forms.TableLayoutPanel();
-            this.ctrlPersonCard1 = new DVLD_Enterprise_System.UI.People.Controls.ctrlPersonCard();
+            this.components = new System.ComponentModel.Container();
+            this.tlpFilters = new System.Windows.Forms.TableLayoutPanel();
             this.lblFilterBy = new System.Windows.Forms.Label();
             this.cbFilterMethods = new System.Windows.Forms.ComboBox();
-            this.tbInput = new System.Windows.Forms.TextBox();
+            this.txtFilterValue = new System.Windows.Forms.TextBox();
             this.btnFind = new System.Windows.Forms.Button();
             this.btnAddNewPerson = new System.Windows.Forms.Button();
-            this.tlpFilter.SuspendLayout();
+            this.PersonCard = new DVLD_Enterprise_System.UI.People.Controls.ctrlPersonCard();
+            this.epFilterValue = new System.Windows.Forms.ErrorProvider(this.components);
+            this.tlpFilters.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.epFilterValue)).BeginInit();
             this.SuspendLayout();
             // 
-            // tlpFilter
+            // tlpFilters
             // 
-            this.tlpFilter.AutoSize = true;
-            this.tlpFilter.ColumnCount = 5;
-            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.11152F));
-            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.88847F));
-            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlpFilter.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tlpFilter.Controls.Add(this.lblFilterBy, 0, 0);
-            this.tlpFilter.Controls.Add(this.cbFilterMethods, 1, 0);
-            this.tlpFilter.Controls.Add(this.tbInput, 2, 0);
-            this.tlpFilter.Controls.Add(this.btnFind, 3, 0);
-            this.tlpFilter.Controls.Add(this.btnAddNewPerson, 4, 0);
-            this.tlpFilter.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tlpFilter.Location = new System.Drawing.Point(0, 0);
-            this.tlpFilter.Name = "tlpFilter";
-            this.tlpFilter.Padding = new System.Windows.Forms.Padding(5);
-            this.tlpFilter.RowCount = 1;
-            this.tlpFilter.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tlpFilter.Size = new System.Drawing.Size(993, 51);
-            this.tlpFilter.TabIndex = 0;
-            // 
-            // ctrlPersonCard1
-            // 
-            this.ctrlPersonCard1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ctrlPersonCard1.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ctrlPersonCard1.Location = new System.Drawing.Point(0, 51);
-            this.ctrlPersonCard1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.ctrlPersonCard1.Name = "ctrlPersonCard1";
-            this.ctrlPersonCard1.Size = new System.Drawing.Size(993, 376);
-            this.ctrlPersonCard1.TabIndex = 3;
+            this.tlpFilters.AutoSize = true;
+            this.tlpFilters.ColumnCount = 5;
+            this.tlpFilters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpFilters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30.11152F));
+            this.tlpFilters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 69.88847F));
+            this.tlpFilters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpFilters.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tlpFilters.Controls.Add(this.lblFilterBy, 0, 0);
+            this.tlpFilters.Controls.Add(this.cbFilterMethods, 1, 0);
+            this.tlpFilters.Controls.Add(this.txtFilterValue, 2, 0);
+            this.tlpFilters.Controls.Add(this.btnFind, 3, 0);
+            this.tlpFilters.Controls.Add(this.btnAddNewPerson, 4, 0);
+            this.tlpFilters.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tlpFilters.Location = new System.Drawing.Point(0, 0);
+            this.tlpFilters.Name = "tlpFilters";
+            this.tlpFilters.Padding = new System.Windows.Forms.Padding(5);
+            this.tlpFilters.RowCount = 1;
+            this.tlpFilters.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tlpFilters.Size = new System.Drawing.Size(993, 51);
+            this.tlpFilters.TabIndex = 0;
             // 
             // lblFilterBy
             // 
@@ -89,19 +82,23 @@
             this.cbFilterMethods.FormattingEnabled = true;
             this.cbFilterMethods.Items.AddRange(new object[] {
             "Person ID",
-            "National No"});
+            "National No."});
             this.cbFilterMethods.Location = new System.Drawing.Point(70, 13);
             this.cbFilterMethods.Name = "cbFilterMethods";
-            this.cbFilterMethods.Size = new System.Drawing.Size(227, 25);
+            this.cbFilterMethods.Size = new System.Drawing.Size(226, 25);
             this.cbFilterMethods.TabIndex = 1;
+            this.cbFilterMethods.SelectedIndexChanged += new System.EventHandler(this.cbFilterMethods_SelectedIndexChanged);
             // 
-            // tbInput
+            // txtFilterValue
             // 
-            this.tbInput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbInput.Location = new System.Drawing.Point(303, 13);
-            this.tbInput.Name = "tbInput";
-            this.tbInput.Size = new System.Drawing.Size(536, 25);
-            this.tbInput.TabIndex = 2;
+            this.txtFilterValue.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtFilterValue.Location = new System.Drawing.Point(302, 13);
+            this.txtFilterValue.Margin = new System.Windows.Forms.Padding(3, 3, 20, 3);
+            this.txtFilterValue.Name = "txtFilterValue";
+            this.txtFilterValue.Size = new System.Drawing.Size(516, 25);
+            this.txtFilterValue.TabIndex = 2;
+            this.txtFilterValue.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtFilterValue_KeyPress);
+            this.txtFilterValue.Validating += new System.ComponentModel.CancelEventHandler(this.txtFilterValue_Validating);
             // 
             // btnFind
             // 
@@ -113,11 +110,12 @@
             this.btnFind.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnFind.FlatAppearance.BorderSize = 0;
             this.btnFind.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnFind.Location = new System.Drawing.Point(845, 8);
+            this.btnFind.Location = new System.Drawing.Point(841, 8);
             this.btnFind.Name = "btnFind";
             this.btnFind.Size = new System.Drawing.Size(66, 35);
             this.btnFind.TabIndex = 3;
             this.btnFind.UseVisualStyleBackColor = true;
+            this.btnFind.Click += new System.EventHandler(this.btnFind_Click);
             // 
             // btnAddNewPerson
             // 
@@ -129,23 +127,40 @@
             this.btnAddNewPerson.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnAddNewPerson.FlatAppearance.BorderSize = 0;
             this.btnAddNewPerson.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddNewPerson.Location = new System.Drawing.Point(917, 8);
+            this.btnAddNewPerson.Location = new System.Drawing.Point(913, 8);
             this.btnAddNewPerson.Name = "btnAddNewPerson";
-            this.btnAddNewPerson.Size = new System.Drawing.Size(68, 35);
+            this.btnAddNewPerson.Size = new System.Drawing.Size(72, 35);
             this.btnAddNewPerson.TabIndex = 4;
             this.btnAddNewPerson.UseVisualStyleBackColor = true;
+            this.btnAddNewPerson.Click += new System.EventHandler(this.btnAddNewPerson_Click);
+            // 
+            // PersonCard
+            // 
+            this.PersonCard.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PersonCard.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.PersonCard.Location = new System.Drawing.Point(0, 51);
+            this.PersonCard.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.PersonCard.Name = "PersonCard";
+            this.PersonCard.Size = new System.Drawing.Size(993, 376);
+            this.PersonCard.TabIndex = 3;
+            // 
+            // epFilterValue
+            // 
+            this.epFilterValue.ContainerControl = this;
             // 
             // ctrlPersonCardWithFilter
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.ctrlPersonCard1);
-            this.Controls.Add(this.tlpFilter);
+            this.Controls.Add(this.PersonCard);
+            this.Controls.Add(this.tlpFilters);
             this.Font = new System.Drawing.Font("Segoe UI", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ctrlPersonCardWithFilter";
             this.Size = new System.Drawing.Size(993, 427);
-            this.tlpFilter.ResumeLayout(false);
-            this.tlpFilter.PerformLayout();
+            this.Load += new System.EventHandler(this.ctrlPersonCardWithFilter_Load);
+            this.tlpFilters.ResumeLayout(false);
+            this.tlpFilters.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.epFilterValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -153,12 +168,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TableLayoutPanel tlpFilter;
+        private System.Windows.Forms.TableLayoutPanel tlpFilters;
         private System.Windows.Forms.Label lblFilterBy;
-        private ctrlPersonCard ctrlPersonCard1;
+        private ctrlPersonCard PersonCard;
         private System.Windows.Forms.ComboBox cbFilterMethods;
-        private System.Windows.Forms.TextBox tbInput;
+        private System.Windows.Forms.TextBox txtFilterValue;
         private System.Windows.Forms.Button btnFind;
         private System.Windows.Forms.Button btnAddNewPerson;
+        private System.Windows.Forms.ErrorProvider epFilterValue;
     }
 }
