@@ -79,7 +79,6 @@
             this.lblFirstName = new System.Windows.Forms.Label();
             this.txtFirstName = new System.Windows.Forms.TextBox();
             this.ofdPersonImage = new System.Windows.Forms.OpenFileDialog();
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7 = new System.Windows.Forms.Form();
             ((System.ComponentModel.ISupportInitialize)(this.epPerson)).BeginInit();
             this.flpFooter.SuspendLayout();
             this.tlpBody.SuspendLayout();
@@ -113,7 +112,7 @@
             this.flpFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.flpFooter.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
             this.flpFooter.Location = new System.Drawing.Point(0, 606);
-            this.flpFooter.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.flpFooter.Margin = new System.Windows.Forms.Padding(4);
             this.flpFooter.Name = "flpFooter";
             this.flpFooter.Size = new System.Drawing.Size(957, 43);
             this.flpFooter.TabIndex = 1;
@@ -169,8 +168,10 @@
             // lblTitle
             // 
             this.lblTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTitle.ForeColor = System.Drawing.Color.Red;
+            this.lblTitle.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Person_32;
+            this.lblTitle.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.lblTitle.Location = new System.Drawing.Point(0, 0);
             this.lblTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblTitle.Name = "lblTitle";
@@ -188,7 +189,7 @@
             this.tlpBody.Controls.Add(this.tlpContainer, 0, 0);
             this.tlpBody.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpBody.Location = new System.Drawing.Point(0, 53);
-            this.tlpBody.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpBody.Margin = new System.Windows.Forms.Padding(4);
             this.tlpBody.Name = "tlpBody";
             this.tlpBody.RowCount = 1;
             this.tlpBody.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -206,7 +207,7 @@
             this.tlpImage.Controls.Add(this.llSetImage, 0, 1);
             this.tlpImage.Controls.Add(this.llRemoveImage, 0, 2);
             this.tlpImage.Location = new System.Drawing.Point(673, 4);
-            this.tlpImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpImage.Margin = new System.Windows.Forms.Padding(4);
             this.tlpImage.Name = "tlpImage";
             this.tlpImage.RowCount = 3;
             this.tlpImage.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -222,7 +223,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pbPersonImage.Image = global::DVLD_Enterprise_System.UI.Properties.Resources.Male_512;
             this.pbPersonImage.Location = new System.Drawing.Point(4, 4);
-            this.pbPersonImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pbPersonImage.Margin = new System.Windows.Forms.Padding(4);
             this.pbPersonImage.Name = "pbPersonImage";
             this.pbPersonImage.Size = new System.Drawing.Size(272, 463);
             this.pbPersonImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -262,7 +263,7 @@
             this.tlpContainer.Controls.Add(this.tlpFields, 0, 0);
             this.tlpContainer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpContainer.Location = new System.Drawing.Point(4, 4);
-            this.tlpContainer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpContainer.Margin = new System.Windows.Forms.Padding(4);
             this.tlpContainer.Name = "tlpContainer";
             this.tlpContainer.RowCount = 2;
             this.tlpContainer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -280,7 +281,7 @@
             this.tlpAddress.Controls.Add(this.lblAddress, 0, 0);
             this.tlpAddress.Controls.Add(this.txtAddress, 0, 1);
             this.tlpAddress.Location = new System.Drawing.Point(4, 305);
-            this.tlpAddress.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpAddress.Margin = new System.Windows.Forms.Padding(4);
             this.tlpAddress.Name = "tlpAddress";
             this.tlpAddress.RowCount = 2;
             this.tlpAddress.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -333,7 +334,7 @@
             this.tlpFields.Controls.Add(this.tlpFirstName, 1, 0);
             this.tlpFields.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tlpFields.Location = new System.Drawing.Point(4, 4);
-            this.tlpFields.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpFields.Margin = new System.Windows.Forms.Padding(4);
             this.tlpFields.Name = "tlpFields";
             this.tlpFields.RowCount = 4;
             this.tlpFields.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25F));
@@ -351,7 +352,7 @@
             this.tlpEmail.Controls.Add(this.lblEmail, 0, 0);
             this.tlpEmail.Controls.Add(this.txtEmail, 0, 1);
             this.tlpEmail.Location = new System.Drawing.Point(221, 223);
-            this.tlpEmail.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpEmail.Margin = new System.Windows.Forms.Padding(4);
             this.tlpEmail.Name = "tlpEmail";
             this.tlpEmail.RowCount = 2;
             this.tlpEmail.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -391,7 +392,7 @@
             this.tlpCountry.Controls.Add(this.lblCountry, 0, 0);
             this.tlpCountry.Controls.Add(this.cbCountries, 0, 1);
             this.tlpCountry.Location = new System.Drawing.Point(4, 223);
-            this.tlpCountry.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpCountry.Margin = new System.Windows.Forms.Padding(4);
             this.tlpCountry.Name = "tlpCountry";
             this.tlpCountry.RowCount = 2;
             this.tlpCountry.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.87719F));
@@ -439,7 +440,7 @@
             this.tlpGender.Controls.Add(this.lblGender, 0, 0);
             this.tlpGender.Controls.Add(this.cbGenders, 0, 1);
             this.tlpGender.Location = new System.Drawing.Point(438, 150);
-            this.tlpGender.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpGender.Margin = new System.Windows.Forms.Padding(4);
             this.tlpGender.Name = "tlpGender";
             this.tlpGender.RowCount = 2;
             this.tlpGender.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.87719F));
@@ -485,7 +486,7 @@
             this.tlpDateOfBirth.Controls.Add(this.lblDateOfBirth, 0, 0);
             this.tlpDateOfBirth.Controls.Add(this.dtpDateOfBirth, 0, 1);
             this.tlpDateOfBirth.Location = new System.Drawing.Point(221, 150);
-            this.tlpDateOfBirth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpDateOfBirth.Margin = new System.Windows.Forms.Padding(4);
             this.tlpDateOfBirth.Name = "tlpDateOfBirth";
             this.tlpDateOfBirth.RowCount = 2;
             this.tlpDateOfBirth.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -527,7 +528,7 @@
             this.tlpPhone.Controls.Add(this.lblPhone, 0, 0);
             this.tlpPhone.Controls.Add(this.txtPhone, 0, 1);
             this.tlpPhone.Location = new System.Drawing.Point(4, 150);
-            this.tlpPhone.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpPhone.Margin = new System.Windows.Forms.Padding(4);
             this.tlpPhone.Name = "tlpPhone";
             this.tlpPhone.RowCount = 2;
             this.tlpPhone.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -567,7 +568,7 @@
             this.tlpNationalNo.Controls.Add(this.lblNationalNo, 0, 0);
             this.tlpNationalNo.Controls.Add(this.txtNationalNo, 0, 1);
             this.tlpNationalNo.Location = new System.Drawing.Point(438, 77);
-            this.tlpNationalNo.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpNationalNo.Margin = new System.Windows.Forms.Padding(4);
             this.tlpNationalNo.Name = "tlpNationalNo";
             this.tlpNationalNo.RowCount = 2;
             this.tlpNationalNo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -607,7 +608,7 @@
             this.tlpPersonID.Controls.Add(this.lblPersonID, 0, 0);
             this.tlpPersonID.Controls.Add(this.tbPersonID, 0, 1);
             this.tlpPersonID.Location = new System.Drawing.Point(4, 4);
-            this.tlpPersonID.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpPersonID.Margin = new System.Windows.Forms.Padding(4);
             this.tlpPersonID.Name = "tlpPersonID";
             this.tlpPersonID.RowCount = 2;
             this.tlpPersonID.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -646,7 +647,7 @@
             this.tlpLastName.Controls.Add(this.lblLastName, 0, 0);
             this.tlpLastName.Controls.Add(this.txtLastName, 0, 1);
             this.tlpLastName.Location = new System.Drawing.Point(221, 77);
-            this.tlpLastName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpLastName.Margin = new System.Windows.Forms.Padding(4);
             this.tlpLastName.Name = "tlpLastName";
             this.tlpLastName.RowCount = 2;
             this.tlpLastName.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -686,7 +687,7 @@
             this.tlpThirdName.Controls.Add(this.lblThirdName, 0, 0);
             this.tlpThirdName.Controls.Add(this.txtThirdName, 0, 1);
             this.tlpThirdName.Location = new System.Drawing.Point(4, 77);
-            this.tlpThirdName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpThirdName.Margin = new System.Windows.Forms.Padding(4);
             this.tlpThirdName.Name = "tlpThirdName";
             this.tlpThirdName.RowCount = 2;
             this.tlpThirdName.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -725,7 +726,7 @@
             this.tlpSecondName.Controls.Add(this.lblSecondName, 0, 0);
             this.tlpSecondName.Controls.Add(this.txtSecondName, 0, 1);
             this.tlpSecondName.Location = new System.Drawing.Point(438, 4);
-            this.tlpSecondName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpSecondName.Margin = new System.Windows.Forms.Padding(4);
             this.tlpSecondName.Name = "tlpSecondName";
             this.tlpSecondName.RowCount = 2;
             this.tlpSecondName.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -764,7 +765,7 @@
             this.tlpFirstName.Controls.Add(this.lblFirstName, 0, 0);
             this.tlpFirstName.Controls.Add(this.txtFirstName, 0, 1);
             this.tlpFirstName.Location = new System.Drawing.Point(221, 4);
-            this.tlpFirstName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tlpFirstName.Margin = new System.Windows.Forms.Padding(4);
             this.tlpFirstName.Name = "tlpFirstName";
             this.tlpFirstName.RowCount = 2;
             this.tlpFirstName.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
@@ -800,22 +801,6 @@
             // 
             this.ofdPersonImage.FileName = "openFileDialog1";
             // 
-            // object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7
-            // 
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.BackColor = System.Drawing.SystemColors.Control;
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.ClientSize = new System.Drawing.Size(956, 678);
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.Icon = ((System.Drawing.Icon)(resources.GetObject("object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.Icon")));
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.Location = new System.Drawing.Point(19, 19);
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.Margin = new System.Windows.Forms.Padding(4);
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.MaximizeBox = false;
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.MinimizeBox = false;
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.Name = "object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7";
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7.Visible = false;
-            // 
             // frmAddUpdatePerson
             // 
             this.AcceptButton = this.ctrlbtnSave;
@@ -831,7 +816,7 @@
             this.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmAddUpdatePerson";
@@ -922,6 +907,5 @@
         private System.Windows.Forms.Label lblFirstName;
         private System.Windows.Forms.TextBox txtFirstName;
         private System.Windows.Forms.OpenFileDialog ofdPersonImage;
-        private System.Windows.Forms.Form object_cad7e261_f8a2_4f19_ba2b_a432a75cb7e7;
     }
 }
