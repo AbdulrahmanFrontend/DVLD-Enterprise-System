@@ -1,5 +1,4 @@
-﻿using DVLD_Enterprise_System.UI.People.Forms;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -11,17 +10,11 @@ using System.Windows.Forms;
 
 namespace DVLD_Enterprise_System.UI
 {
-    public partial class frmMain : Form
+    public partial class ctrlSearchbar : UserControl
     {
-        public frmMain()
+        public ctrlSearchbar()
         {
             InitializeComponent();
-        }
-
-        private void tsmiPeople_Click(object sender, EventArgs e)
-        {
-            Form frm = new frmListPeople();
-            frm.ShowDialog();
         }
     }
 }

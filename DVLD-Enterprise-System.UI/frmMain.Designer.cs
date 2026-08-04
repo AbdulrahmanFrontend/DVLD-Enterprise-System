@@ -337,6 +337,7 @@
             this.tsmiPeople.Name = "tsmiPeople";
             this.tsmiPeople.Size = new System.Drawing.Size(93, 27);
             this.tsmiPeople.Text = "People";
+            this.tsmiPeople.Click += new System.EventHandler(this.tsmiPeople_Click);
             // 
             // tsmiDrivers
             // 

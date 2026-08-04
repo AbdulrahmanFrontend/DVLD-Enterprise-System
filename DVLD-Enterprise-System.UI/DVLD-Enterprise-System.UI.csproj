@@ -64,6 +64,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ctrlSearchbar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ctrlSearchbar.Designer.cs">
+      <DependentUpon>ctrlSearchbar.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,12 @@
     <Compile Include="People\Forms\frmFindPerson.Designer.cs">
       <DependentUpon>frmFindPerson.cs</DependentUpon>
     </Compile>
+    <Compile Include="People\Forms\frmListPeople.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="People\Forms\frmListPeople.Designer.cs">
+      <DependentUpon>frmListPeople.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\Forms\frmShowPersonInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +115,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ctrlSearchbar.resx">
+      <DependentUpon>ctrlSearchbar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,6 +132,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="People\Forms\frmFindPerson.resx">
       <DependentUpon>frmFindPerson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="People\Forms\frmListPeople.resx">
+      <DependentUpon>frmListPeople.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\Forms\frmShowPersonInfo.resx">
       <DependentUpon>frmShowPersonInfo.cs</DependentUpon>
@@ -275,6 +293,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\SearchPerson.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
