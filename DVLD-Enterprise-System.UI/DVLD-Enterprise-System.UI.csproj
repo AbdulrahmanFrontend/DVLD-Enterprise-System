@@ -76,7 +76,13 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="Global Classes\Utils.cs" />
+    <Compile Include="Global\Classes\Utils.cs" />
+    <Compile Include="Global\Controls\ctrlDataGridView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Global\Controls\ctrlDataGridView.Designer.cs">
+      <DependentUpon>ctrlDataGridView.cs</DependentUpon>
+    </Compile>
     <Compile Include="People\Controls\ctrlPersonCard.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -120,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Global\Controls\ctrlDataGridView.resx">
+      <DependentUpon>ctrlDataGridView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="People\Controls\ctrlPersonCard.resx">
       <DependentUpon>ctrlPersonCard.cs</DependentUpon>

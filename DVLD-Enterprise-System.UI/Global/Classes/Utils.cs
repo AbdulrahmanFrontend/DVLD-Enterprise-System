@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DVLD_Enterprise_System.UI.Global_Classes
+namespace DVLD_Enterprise_System.UI.Global.Classes
 {
     internal static class Utils
     {
