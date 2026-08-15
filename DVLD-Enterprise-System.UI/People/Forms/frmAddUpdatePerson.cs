@@ -4,7 +4,7 @@ using DevToolkit.Core.Results;
 using DVLD_Enterprise_System.BLL;
 using DVLD_Enterprise_System.Core.Enums;
 using DVLD_Enterprise_System.Core.Models;
-using DVLD_Enterprise_System.UI.Global_Classes;
+using DVLD_Enterprise_System.UI.Global.Classes;
 using DVLD_Enterprise_System.UI.People.Controls;
 using DVLD_Enterprise_System.UI.Properties;
 using System;

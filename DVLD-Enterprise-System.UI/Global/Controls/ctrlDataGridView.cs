@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DVLD_Enterprise_System.UI.Global.Controls
 {
@@ -31,7 +32,11 @@ namespace DVLD_Enterprise_System.UI.Global.Controls
         {
             cbFilterMethod.Items.Clear();
             if (Guard.HasItems(filterMethods))
+            {
                 cbFilterMethod.Items.AddRange(filterMethods.ToArray());
+
+                cbFilterMethod.SelectedIndex = 0;
+            }
         }
 
         public void SetFilteringValues(IEnumerable<string> filterValues)
@@ -45,39 +50,11 @@ namespace DVLD_Enterprise_System.UI.Global.Controls
             }
         }
 
-        private void tbInput_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            tbInput.Text = string.Empty;
-            cbFilterMethod.SelectedIndex = -1;
-        }
-
-        [Category("Custom Properties")]
-        public bool ShowCancelButton
-        {
-            get => btnCancel.Visible;
-            set => btnCancel.Visible = value;
-        }
-
-        private void cbFilterMethod_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void tbInput_KeyPress(object sender, KeyPressEventArgs e)
             => InputEntered?.Invoke(this, EventArgs.Empty);
 
         [Category("Custom Events")]
         public event EventHandler InputEntered;
-
-        private void cbFilterValue_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
 
         [Category("Custom Properties")]
         public DataGridViewColumnCollection Columns => ctrlDgvMain.Columns;
@@ -98,37 +75,16 @@ namespace DVLD_Enterprise_System.UI.Global.Controls
                 ctrlDgvMain.DataSource = value;
 
                 if (value is IList list)
-                    _SetRecordsCount(list.Count);
+                    lblRecordsCount.Text = $"Records: {list.Count}";
                 else if (value is IListSource listSource)
-                    _SetRecordsCount(listSource.GetList().Count);
+                    lblRecordsCount.Text = $"Records: {listSource.GetList().Count}";
                 else if (value is IBindingList bindingList)
-                    _SetRecordsCount(bindingList.Count);
+                    lblRecordsCount.Text = $"Records: {bindingList.Count}";
                 else if (value is IBindingListView listView)
-                    _SetRecordsCount(listView.Count);
+                    lblRecordsCount.Text = $"Records: {listView.Count}";
                 else
-                    _SetRecordsCount(0);
+                    lblRecordsCount.Text = $"Records: {0}";
             }
-        }
-
-        [Category("Custom Properties")]
-        public bool ImportButtonVisible
-        {
-            get => btnImport.Visible;
-            set => btnImport.Visible = value;
-        }
-
-        [Category("Custom Properties")]
-        public string AddNewButtonText
-        {
-            get => btnAddNew.Text;
-            set => btnAddNew.Text = value;
-        }
-
-        [Category("Custom Properties")]
-        public string ImportButtonText
-        {
-            get => btnImport.Text;
-            set => btnImport.Text = value;
         }
 
         [Category("Custom Properties")]
@@ -138,186 +94,11 @@ namespace DVLD_Enterprise_System.UI.Global.Controls
             set => btnAddNew.BackgroundImage = value;
         }
 
-        [Category("Custom Properties")]
-        public Image ImportButtonImage
-        {
-            get => btnImport.BackgroundImage;
-            set => btnImport.BackgroundImage = value;
-        }
-
-        [Category("Custom Properties")]
-        public Color AddNewButtonColor
-        {
-            get => btnAddNew.BackColor;
-            set => btnAddNew.BackColor = value;
-        }
-
-        [Category("Custom Properties")]
-        public Color ImportButtonColor
-        {
-            get => btnImport.BackColor;
-            set => btnImport.BackColor = value;
-        }
-
-        private void _SetRecordsCount(int count)
-        {
-            if (RightToLeft == RightToLeft.Yes)
-                lblRecordsCount.Text = $"عدد الصفوف: {count}";
-            else
-                lblRecordsCount.Text = $"Records Count: {count}";
-        }
-
         public object GetSelectedRow(string columnName)
             => ctrlDgvMain.GetSelectedRow(columnName);
 
         public object GetSelectedRow(int columnIndex)
             => ctrlDgvMain.GetSelectedRow(columnIndex);
-
-        public void SetPagesCount(int count)
-        {
-            cbPagesNumbers.Items.Clear();
-
-            int i = 1;
-            do
-            {
-                cbPagesNumbers.Items.Add(i.ToString());
-                i++;
-            } while (i <= count);
-
-            cbPagesNumbers.SelectedIndex = 0;
-        }
-
-        public void SetPageSizes(IEnumerable<int> pageSizes)
-        {
-            cbPageSizes.Items.Clear();
-
-            if (pageSizes != null && pageSizes.Any())
-            {
-                foreach (var size in pageSizes)
-                    cbPageSizes.Items.Add(size.ToString());
-
-                cbPageSizes.SelectedIndex = 0;
-            }
-        }
-
-        private void cbPagesNumbers_SelectedIndexChanged(
-            object sender,
-            EventArgs e)
-        {
-            if (int.TryParse(cbPagesNumbers.Text?.ToString(), out int pageNumber) &&
-                int.TryParse(cbPageSizes.Text?.ToString(), out int pageSize))
-                Filter?.Invoke(this,
-                    new FilterEventArgs(
-                        pageNumber,
-                        pageSize,
-                        cbFilterMethod.SelectedIndex,
-                        cbFilterValue.SelectedIndex,
-                        tbInput.Text));
-        }
-
-        [Category("Custom Events")]
-        public event EventHandler<FilterEventArgs> Filter;
-
-        public class FilterEventArgs : EventArgs
-        {
-            public int PageNumber { get; }
-
-            public int PageSize { get; }
-
-            public int FilteringMethodIndex { get; }
-
-            public string Input { get; }
-
-            public int FilteringValueIndex { get; }
-
-            public FilterEventArgs(
-                int pageNumber,
-                int pageSize,
-                int filteringMethodIndex,
-                int filteringValueIndex,
-                string input)
-            {
-                PageNumber = pageNumber;
-                PageSize = pageSize;
-                FilteringMethodIndex = filteringMethodIndex;
-                Input = input;
-                FilteringValueIndex = filteringValueIndex;
-            }
-        }
-
-        private void btnFirst_Click(object sender, EventArgs e)
-        {
-            if (cbPagesNumbers.Items.Count == 0) return;
-
-            cbPagesNumbers.SelectedIndex = 0;
-
-            if (int.TryParse(cbPagesNumbers.Text?.ToString(), out int pageNumber) &&
-                int.TryParse(cbPageSizes.Text?.ToString(), out int pageSize))
-                Filter?.Invoke(this,
-                    new FilterEventArgs(
-                        pageNumber,
-                        pageSize,
-                        cbFilterMethod.SelectedIndex,
-                        cbFilterValue.SelectedIndex,
-                        tbInput.Text));
-        }
-
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            int Index = cbPagesNumbers.SelectedIndex;
-
-            if (Index > 0)
-            {
-                cbPagesNumbers.SelectedIndex--;
-
-                if (int.TryParse(cbPagesNumbers.Text?.ToString(), out int pageNumber) &&
-                    int.TryParse(cbPageSizes.Text?.ToString(), out int pageSize))
-                    Filter?.Invoke(this,
-                        new FilterEventArgs(
-                            pageNumber,
-                            pageSize,
-                            cbFilterMethod.SelectedIndex,
-                            cbFilterValue.SelectedIndex,
-                            tbInput.Text));
-            }
-        }
-
-        private void btnNext_Click(object sender, EventArgs e)
-        {
-            int Index = cbPagesNumbers.SelectedIndex;
-
-            if (Index < cbPagesNumbers.Items.Count - 1)
-            {
-                cbPagesNumbers.SelectedIndex++;
-
-                if (int.TryParse(cbPagesNumbers.Text?.ToString(), out int pageNumber) &&
-                    int.TryParse(cbPageSizes.Text?.ToString(), out int pageSize))
-                    Filter?.Invoke(this,
-                        new FilterEventArgs(
-                            pageNumber,
-                            pageSize,
-                            cbFilterMethod.SelectedIndex,
-                            cbFilterValue.SelectedIndex,
-                            tbInput.Text));
-            }
-        }
-
-        private void btnLast_Click(object sender, EventArgs e)
-        {
-            if (cbPagesNumbers.Items.Count == 0) return;
-
-            cbPagesNumbers.SelectedIndex = cbPagesNumbers.Items.Count - 1;
-
-            if (int.TryParse(cbPagesNumbers.Text?.ToString(), out int pageNumber) &&
-                int.TryParse(cbPageSizes.Text?.ToString(), out int pageSize))
-                Filter?.Invoke(this,
-                    new FilterEventArgs(
-                        pageNumber,
-                        pageSize,
-                        cbFilterMethod.SelectedIndex,
-                        cbFilterValue.SelectedIndex,
-                        tbInput.Text));
-        }
 
         private void ctrlDgvMain_CellDoubleClick(
             object sender,
@@ -327,41 +108,68 @@ namespace DVLD_Enterprise_System.UI.Global.Controls
         [Category("Custom Events")]
         public event EventHandler RowDoubleClicked;
 
-        private void ctrlDgvMain_CellFormatting(
-            object sender,
-            DataGridViewCellFormattingEventArgs e)
-            => CellFormatting?.Invoke(this, e);
-
-        [Category("Custom Events")]
-        public event EventHandler<DataGridViewCellFormattingEventArgs> CellFormatting;
-
-        private void cbPageSizes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (int.TryParse(cbPagesNumbers.Text?.ToString(), out int pageNumber) &&
-                int.TryParse(cbPageSizes.Text?.ToString(), out int pageSize))
-                Filter?.Invoke(this,
-                    new FilterEventArgs(
-                        pageNumber,
-                        pageSize,
-                        cbFilterMethod.SelectedIndex,
-                        cbFilterValue.SelectedIndex,
-                        tbInput.Text));
-        }
-
         private void btnAddNew_Click(object sender, EventArgs e)
-        {
-            AddNewClicked?.Invoke(this, EventArgs.Empty);
-        }
+            => AddNewClicked?.Invoke(this, EventArgs.Empty);
 
         [Category("Custom Events")]
         public event EventHandler AddNewClicked;
 
-        private void btnImport_Click(object sender, EventArgs e)
+        private void tbInput_TextChanged(object sender, EventArgs e)
         {
-            ImportClicked?.Invoke(this, EventArgs.Empty);
+            FilterClicked?.Invoke(
+                this,
+                new FilterEventArgs(
+                    cbFilterMethod.SelectedIndex,
+                    cbFilterValue.SelectedIndex,
+                    tbInput.Text));
+        }
+
+        private void cbFilterValue_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FilterClicked?.Invoke(
+                this,
+                new FilterEventArgs(
+                    cbFilterMethod.SelectedIndex,
+                    cbFilterValue.SelectedIndex,
+                    tbInput.Text));
+        }
+
+        private void cbFilterMethod_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(cbFilterMethod.SelectedIndex == 0)
+                tbInput.Visible = false;
+            else
+            {
+                tbInput.Visible = true;
+                tbInput.Focus();
+            }
+
+            FilterClicked?.Invoke(
+                this,
+                new FilterEventArgs(
+                    cbFilterMethod.SelectedIndex,
+                    cbFilterValue.SelectedIndex,
+                    tbInput.Text));
+        }
+
+        public class FilterEventArgs : EventArgs
+        {
+            public int FilterMethodIndex { get; }
+            public int FilterValueIndex { get; }
+            public string Input { get; }
+
+            public FilterEventArgs(
+                int filterMethodIndex,
+                int filterValueIndex, 
+                string input)
+            {
+                FilterMethodIndex = filterMethodIndex;
+                FilterValueIndex = filterValueIndex;
+                Input = input;
+            }
         }
 
         [Category("Custom Events")]
-        public event EventHandler ImportClicked;
+        public EventHandler<FilterEventArgs> FilterClicked;
     }
 }
