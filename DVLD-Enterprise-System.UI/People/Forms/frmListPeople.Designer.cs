@@ -31,10 +31,10 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmListPeople));
             this.tlpContainer = new System.Windows.Forms.TableLayoutPanel();
-            this.cmsPeople = new DevToolkit.BaseWinForms.Controls.CustomControls.ccContextMenuStrip();
             this.btnClose = new DevToolkit.BaseWinForms.Controls.CustomControls.ccButton();
             this.lblTitle = new System.Windows.Forms.Label();
             this.ctrlDgvData = new DVLD_Enterprise_System.UI.Global.Controls.ctrlDataGridView();
+            this.cmsPeople = new DevToolkit.BaseWinForms.Controls.CustomControls.ccContextMenuStrip();
             this.showDetailsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addNewPersonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,7 +47,7 @@
             this.SecondName = new System.Windows.Forms.DataGridViewColumn();
             this.ThirdName = new System.Windows.Forms.DataGridViewColumn();
             this.LastName = new System.Windows.Forms.DataGridViewColumn();
-            this.Gender = new System.Windows.Forms.DataGridViewColumn();
+            this.GenderCaption = new System.Windows.Forms.DataGridViewColumn();
             this.DateOfBirth = new System.Windows.Forms.DataGridViewColumn();
             this.Nationality = new System.Windows.Forms.DataGridViewColumn();
             this.Phone = new System.Windows.Forms.DataGridViewColumn();
@@ -72,20 +72,6 @@
             this.tlpContainer.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tlpContainer.Size = new System.Drawing.Size(1241, 881);
             this.tlpContainer.TabIndex = 4;
-            // 
-            // cmsPeople
-            // 
-            this.cmsPeople.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cmsPeople.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(243)))), ((int)(((byte)(244)))));
-            this.cmsPeople.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.showDetailsToolStripMenuItem,
-            this.addNewPersonToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.deleteToolStripMenuItem,
-            this.sendEmailToolStripMenuItem,
-            this.phoneCallToolStripMenuItem});
-            this.cmsPeople.Name = "cmsPeople";
-            this.cmsPeople.Size = new System.Drawing.Size(207, 172);
             // 
             // btnClose
             // 
@@ -141,6 +127,24 @@
             this.ctrlDgvData.ShowFilterValue = false;
             this.ctrlDgvData.Size = new System.Drawing.Size(1235, 403);
             this.ctrlDgvData.TabIndex = 17;
+            this.ctrlDgvData.InputEntered += new System.EventHandler(this.ctrlDgvData_InputEntered);
+            this.ctrlDgvData.RowDoubleClicked += new System.EventHandler(this.ctrlDgvData_RowDoubleClicked);
+            this.ctrlDgvData.AddNewClicked += new System.EventHandler(this.ctrlDgvData_AddNewClicked);
+            // 
+            // cmsPeople
+            // 
+            this.cmsPeople.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cmsPeople.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(241)))), ((int)(((byte)(243)))), ((int)(((byte)(244)))));
+            this.cmsPeople.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showDetailsToolStripMenuItem,
+            this.addNewPersonToolStripMenuItem,
+            this.editToolStripMenuItem,
+            this.deleteToolStripMenuItem,
+            this.sendEmailToolStripMenuItem,
+            this.phoneCallToolStripMenuItem});
+            this.cmsPeople.Name = "cmsPeople";
+            this.cmsPeople.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cmsPeople.Size = new System.Drawing.Size(207, 172);
             // 
             // showDetailsToolStripMenuItem
             // 
@@ -196,6 +200,7 @@
             this.PersonID.MinimumWidth = 6;
             this.PersonID.Name = "PersonID";
             this.PersonID.ReadOnly = true;
+            this.PersonID.Width = 125;
             // 
             // NationalNo
             // 
@@ -204,6 +209,7 @@
             this.NationalNo.MinimumWidth = 6;
             this.NationalNo.Name = "NationalNo";
             this.NationalNo.ReadOnly = true;
+            this.NationalNo.Width = 125;
             // 
             // FirstName
             // 
@@ -212,6 +218,7 @@
             this.FirstName.MinimumWidth = 6;
             this.FirstName.Name = "FirstName";
             this.FirstName.ReadOnly = true;
+            this.FirstName.Width = 125;
             // 
             // SecondName
             // 
@@ -220,6 +227,7 @@
             this.SecondName.MinimumWidth = 6;
             this.SecondName.Name = "SecondName";
             this.SecondName.ReadOnly = true;
+            this.SecondName.Width = 125;
             // 
             // ThirdName
             // 
@@ -228,6 +236,7 @@
             this.ThirdName.MinimumWidth = 6;
             this.ThirdName.Name = "ThirdName";
             this.ThirdName.ReadOnly = true;
+            this.ThirdName.Width = 125;
             // 
             // LastName
             // 
@@ -236,14 +245,16 @@
             this.LastName.MinimumWidth = 6;
             this.LastName.Name = "LastName";
             this.LastName.ReadOnly = true;
+            this.LastName.Width = 125;
             // 
-            // Gender
+            // GenderCaption
             // 
-            this.Gender.DataPropertyName = "Gender";
-            this.Gender.HeaderText = "Gender";
-            this.Gender.MinimumWidth = 6;
-            this.Gender.Name = "Gender";
-            this.Gender.ReadOnly = true;
+            this.GenderCaption.DataPropertyName = "GenderCaption";
+            this.GenderCaption.HeaderText = "Gender";
+            this.GenderCaption.MinimumWidth = 6;
+            this.GenderCaption.Name = "GenderCaption";
+            this.GenderCaption.ReadOnly = true;
+            this.GenderCaption.Width = 125;
             // 
             // DateOfBirth
             // 
@@ -255,14 +266,16 @@
             this.DateOfBirth.MinimumWidth = 6;
             this.DateOfBirth.Name = "DateOfBirth";
             this.DateOfBirth.ReadOnly = true;
+            this.DateOfBirth.Width = 125;
             // 
             // Nationality
             // 
-            this.Nationality.DataPropertyName = "Nationality";
+            this.Nationality.DataPropertyName = "CountryName";
             this.Nationality.HeaderText = "Nationality";
             this.Nationality.MinimumWidth = 6;
             this.Nationality.Name = "Nationality";
             this.Nationality.ReadOnly = true;
+            this.Nationality.Width = 125;
             // 
             // Phone
             // 
@@ -271,6 +284,7 @@
             this.Phone.MinimumWidth = 6;
             this.Phone.Name = "Phone";
             this.Phone.ReadOnly = true;
+            this.Phone.Width = 125;
             // 
             // Email
             // 
@@ -279,6 +293,7 @@
             this.Email.MinimumWidth = 6;
             this.Email.Name = "Email";
             this.Email.ReadOnly = true;
+            this.Email.Width = 125;
             // 
             // frmListPeople
             // 
@@ -296,6 +311,7 @@
             this.Name = "frmListPeople";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "List People";
+            this.Load += new System.EventHandler(this.frmListPeople_Load);
             this.tlpContainer.ResumeLayout(false);
             this.cmsPeople.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -325,5 +341,6 @@
         private System.Windows.Forms.DataGridViewColumn Nationality;
         private System.Windows.Forms.DataGridViewColumn Phone;
         private System.Windows.Forms.DataGridViewColumn Email;
+        private System.Windows.Forms.DataGridViewColumn GenderCaption;
     }
 }

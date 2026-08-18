@@ -216,19 +216,9 @@ namespace DVLD_Enterprise_System.BLL
 
         protected override Result _Update() => PersonData.Update(this.Model);
 
-        public static Result<DataTable> GetPeople(
-            int currentPage,
-            int pageSize,
-            PeopleFilterMethods filterMethod,
-            string filterValue)
+        public static Result<DataTable> GetAll()
         {
-            int Offset = (currentPage - 1) * pageSize;
-
-            var result = PersonData.GetPeople(
-                Offset,
-                pageSize, 
-                filterMethod, 
-                filterValue);
+            var result = PersonData.GetAll();
 
             if (result.IsSuccess)
                 return result;
