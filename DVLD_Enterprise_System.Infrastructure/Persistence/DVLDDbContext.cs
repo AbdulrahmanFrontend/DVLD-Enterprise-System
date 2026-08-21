@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DVLD_Enterprise_System.Infrastructure.Persistence
 {
-    internal class DVLDDbContext : DbContext
+    public class DVLDDbContext : DbContext
     {
         public DVLDDbContext(DbContextOptions<DVLDDbContext> options)
         : base(options)
