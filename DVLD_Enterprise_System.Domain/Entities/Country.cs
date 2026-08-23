@@ -8,7 +8,7 @@ namespace DVLD_Enterprise_System.Domain.Entities
 {
     public class Country
     {
-        public int CountryID { get; set; } = 0;
+        public int CountryID { get; set; }
 
         public string CountryName { get; set; } = string.Empty;
 

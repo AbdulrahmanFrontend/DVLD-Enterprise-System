@@ -45,5 +45,27 @@ namespace DVLD_Enterprise_System.API.Controllers
                 new { id = person.PersonID },
                 person);
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> Update(int id, UpdatePersonDto dto)
+        {
+            var person = await _personService.UpdateAsync(id, dto);
+
+            if (person == null)
+                return NotFound();
+
+            return Ok(person);
+        }
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleted = await _personService.DeleteAsync(id);
+
+            if (!deleted)
+                return NotFound();
+
+            return NoContent();
+        }
     }
 }

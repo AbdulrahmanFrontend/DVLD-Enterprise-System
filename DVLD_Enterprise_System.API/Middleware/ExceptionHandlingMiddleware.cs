@@ -1,4 +1,5 @@
 ﻿using DVLD_Enterprise_System.API.DTOs.Errors;
+using DVLD_Enterprise_System.API.Exceptions;
 using System.Text.Json;
 
 namespace DVLD_Enterprise_System.API.Middleware
@@ -28,23 +29,35 @@ namespace DVLD_Enterprise_System.API.Middleware
                     ex,
                     "Unhandled exception occurred.");
 
-                await HandleExceptionAsync(context);
+                await HandleExceptionAsync(context, ex);
             }
         }
 
         private static async Task HandleExceptionAsync(
-            HttpContext context)
+            HttpContext context,
+            Exception exception)
         {
-            context.Response.StatusCode =
-                StatusCodes.Status500InternalServerError;
+            var statusCode = StatusCodes.Status500InternalServerError;
+            var message = "An unexpected error occurred.";
 
-            context.Response.ContentType =
-                "application/json";
+            if (exception is NotFoundException)
+            {
+                statusCode = StatusCodes.Status404NotFound;
+                message = exception.Message;
+            }
+            else if (exception is ConflictException)
+            {
+                statusCode = StatusCodes.Status409Conflict;
+                message = exception.Message;
+            }
+
+            context.Response.StatusCode = statusCode;
+            context.Response.ContentType = "application/json";
 
             var response = new ApiErrorResponse
             {
-                StatusCode = 500,
-                Message = "An unexpected error occurred."
+                StatusCode = statusCode,
+                Message = message,
             };
 
             await context.Response.WriteAsync(

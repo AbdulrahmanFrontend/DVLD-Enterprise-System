@@ -9,5 +9,9 @@ namespace DVLD_Enterprise_System.API.Services.People
         Task<PersonDto?> GetByIdAsync(int id);
 
         Task<PersonDto> CreateAsync(CreatePersonDto dto);
+
+        Task<PersonDto?> UpdateAsync(int id, UpdatePersonDto dto);
+
+        Task<bool> DeleteAsync(int id);
     }
 }

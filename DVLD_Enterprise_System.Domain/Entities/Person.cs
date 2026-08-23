@@ -17,7 +17,7 @@ namespace DVLD_Enterprise_System.Domain.Entities
 
         public string SecondName { get; set; } = string.Empty;
 
-        public string ThirdName { get; set; } = string.Empty;
+        public string? ThirdName { get; set; }
 
         public string LastName { get; set; } = string.Empty;
 
@@ -32,11 +32,11 @@ namespace DVLD_Enterprise_System.Domain.Entities
 
         public string Phone { get; set; } = string.Empty;
 
-        public string Email { get; set; } = string.Empty;
+        public string? Email { get; set; }
 
-        public int NationalityCountryID { get; set; } = 0;
+        public int NationalityCountryID { get; set; }
 
-        public string ImagePath { get; set; } = string.Empty;
+        public string? ImagePath { get; set; }
 
         public Country? NationalityCountry { get; set; }
     }
