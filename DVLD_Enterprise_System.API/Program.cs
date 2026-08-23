@@ -1,5 +1,7 @@
 using DVLD_Enterprise_System.API.Services.Countries;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
+using DVLD_Enterprise_System.API.Services.People;
+using DVLD_Enterprise_System.API.Middleware;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,12 +18,15 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
 });
 
 builder.Services.AddScoped<ICountryService, CountryService>();
+builder.Services.AddScoped<IPersonService, PersonService>();
 
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
