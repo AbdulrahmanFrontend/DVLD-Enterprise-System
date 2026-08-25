@@ -1,6 +1,6 @@
-﻿using DVLD_Enterprise_System.API.DTOs.People;
+﻿using DVLD_Enterprise_System.Application.DTOs.People;
 
-namespace DVLD_Enterprise_System.API.Services.People
+namespace DVLD_Enterprise_System.Application.Services.People
 {
     public interface IPersonService
     {

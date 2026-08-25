@@ -1,4 +1,4 @@
-﻿namespace DVLD_Enterprise_System.API.DTOs.Errors
+﻿namespace DVLD_Enterprise_System.Application.DTOs.Errors
 {
     public class ApiErrorResponse
     {

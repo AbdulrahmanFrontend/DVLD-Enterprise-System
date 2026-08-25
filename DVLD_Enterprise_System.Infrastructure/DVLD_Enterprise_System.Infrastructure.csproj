@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="DVLD_Enterprise_System.Application">
+      <HintPath>..\DVLD_Enterprise_System.Application\bin\Debug\net10.0\DVLD_Enterprise_System.Application.dll</HintPath>
+    </Reference>
     <Reference Include="DVLD_Enterprise_System.Domain">
       <HintPath>..\DVLD_Enterprise_System.Domain\bin\Debug\net10.0\DVLD_Enterprise_System.Domain.dll</HintPath>
     </Reference>

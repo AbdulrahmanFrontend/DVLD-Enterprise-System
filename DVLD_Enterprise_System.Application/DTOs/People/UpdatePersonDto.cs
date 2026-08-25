@@ -1,9 +1,9 @@
 ﻿using DVLD_Enterprise_System.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-namespace DVLD_Enterprise_System.API.DTOs.People
+namespace DVLD_Enterprise_System.Application.DTOs.People
 {
-    public class CreatePersonDto
+    public class UpdatePersonDto
     {
         [Required]
         [MaxLength(20)]

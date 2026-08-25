@@ -1,81 +1,93 @@
-﻿using DVLD_Enterprise_System.API.DTOs.People;
-using DVLD_Enterprise_System.API.Exceptions;
+﻿using DVLD_Enterprise_System.Application.DTOs.People;
+using DVLD_Enterprise_System.Application.Exceptions;
+using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Domain.Entities;
-using DVLD_Enterprise_System.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace DVLD_Enterprise_System.API.Services.People
+namespace DVLD_Enterprise_System.Application.Services.People
 {
     public class PersonService : IPersonService
     {
-        private readonly DVLDDbContext _context;
+        private readonly IPersonRepository _personRepository;
+        private readonly ICountryRepository _countryRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PersonService(DVLDDbContext context)
+        public PersonService(
+            IPersonRepository personRepository,
+            ICountryRepository countryRepository,
+            IUnitOfWork unitOfWork)
         {
-            _context = context;
+            _personRepository = personRepository;
+            _countryRepository = countryRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<IEnumerable<PersonDto>> GetAllAsync()
         {
-            return await _context.People
-                .AsNoTracking()
-                .Select(p => new PersonDto
+            var People = await _personRepository.GetAllAsync();
+
+            var PeopleDto = new List<PersonDto>();
+
+            foreach (var Person in People)
+            {
+                PeopleDto.Add(new PersonDto
                 {
-                    PersonID = p.PersonID,
-                    NationalNo = p.NationalNo,
-                    FirstName = p.FirstName,
-                    SecondName = p.SecondName,
-                    ThirdName = p.ThirdName,
-                    LastName = p.LastName,
-                    FullName = p.FullName,
-                    DateOfBirth = p.DateOfBirth,
-                    Gender = p.Gender,
-                    Address = p.Address,
-                    Phone = p.Phone,
-                    Email = p.Email,
-                    NationalityCountryID = p.NationalityCountryID,
-                    ImagePath = p.ImagePath,
+                    PersonID = Person.PersonID,
+                    NationalNo = Person.NationalNo,
+                    FirstName = Person.FirstName,
+                    SecondName = Person.SecondName,
+                    ThirdName = Person.ThirdName,
+                    LastName = Person.LastName,
+                    DateOfBirth = Person.DateOfBirth,
+                    Gender = Person.Gender,
+                    Phone = Person.Phone,
+                    Address = Person.Address,
+                    NationalityCountryID = Person.NationalityCountryID,
+                    Email = Person.Email,
+                    ImagePath = Person.ImagePath,
                     NationalityCountryName =
-                        p.NationalityCountry != null
-                            ? p.NationalityCountry.CountryName
+                        Person.NationalityCountry != null
+                            ? Person.NationalityCountry.CountryName
                             : null
-                })
-                .ToListAsync();
+                });
+            }
+
+            return PeopleDto;
         }
 
         public async Task<PersonDto?> GetByIdAsync(int id)
         {
-            return await _context.People
-                .AsNoTracking()
-                .Where(p => p.PersonID == id)
-                .Select(p => new PersonDto
-                {
-                    PersonID = p.PersonID,
-                    NationalNo = p.NationalNo,
-                    FirstName = p.FirstName,
-                    SecondName = p.SecondName,
-                    ThirdName = p.ThirdName,
-                    LastName = p.LastName,
-                    FullName = p.FullName,
-                    DateOfBirth = p.DateOfBirth,
-                    Gender = p.Gender,
-                    Address = p.Address,
-                    Phone = p.Phone,
-                    Email = p.Email,
-                    NationalityCountryID = p.NationalityCountryID,
-                    ImagePath = p.ImagePath,
-                    NationalityCountryName =
-                        p.NationalityCountry != null
-                            ? p.NationalityCountry.CountryName
+            var Person = await _personRepository.GetByIdAsync(id);
+
+            if (Person == null)
+                return null;
+
+            return new PersonDto
+            {
+                PersonID = Person.PersonID,
+                NationalNo = Person.NationalNo,
+                FirstName = Person.FirstName,
+                SecondName = Person.SecondName,
+                ThirdName = Person.ThirdName,
+                LastName = Person.LastName,
+                DateOfBirth = Person.DateOfBirth,
+                Gender = Person.Gender,
+                Phone = Person.Phone,
+                Address = Person.Address,
+                NationalityCountryID = Person.NationalityCountryID,
+                Email = Person.Email,
+                ImagePath = Person.ImagePath,
+                NationalityCountryName =
+                        Person.NationalityCountry != null
+                            ? Person.NationalityCountry.CountryName
                             : null
-                })
-                .FirstOrDefaultAsync();
+            };
         }
 
         public async Task<PersonDto> CreateAsync(CreatePersonDto dto)
         {
-            var countryExists = await _context.Countries
-                .AnyAsync(c => c.CountryID == dto.NationalityCountryID);
+            var countryExists = await _countryRepository
+                .ExistsAsync(dto.NationalityCountryID);
 
             if (!countryExists)
             {
@@ -83,8 +95,8 @@ namespace DVLD_Enterprise_System.API.Services.People
                     "Nationality country was not found.");
             }
 
-            var nationalNoExists = await _context.People
-                .AnyAsync(p => p.NationalNo == dto.NationalNo);
+            var nationalNoExists = await _personRepository
+                .ExistsByNationalNoAsync(dto.NationalNo);
 
             if (nationalNoExists)
             {
@@ -92,8 +104,7 @@ namespace DVLD_Enterprise_System.API.Services.People
                     "National number already exists.");
             }
 
-            var phoneExists = await _context.People
-                .AnyAsync(p => p.Phone == dto.Phone);
+            var phoneExists = await _personRepository.ExistsByPhoneAsync(dto.Phone);
 
             if (phoneExists)
             {
@@ -117,9 +128,9 @@ namespace DVLD_Enterprise_System.API.Services.People
                 ImagePath = dto.ImagePath
             };
 
-            _context.People.Add(person);
+            await _personRepository.AddAsync(person);
 
-            await _context.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return new PersonDto
             {
@@ -142,14 +153,13 @@ namespace DVLD_Enterprise_System.API.Services.People
 
         public async Task<PersonDto?> UpdateAsync(int id, UpdatePersonDto dto)
         {
-            var person = await _context.People
-                .FirstOrDefaultAsync(p => p.PersonID == id);
+            var person = await _personRepository.GetByIdAsync(id);
 
             if (person == null)
                 return null;
 
-            var countryExists = await _context.Countries
-                .AnyAsync(c => c.CountryID == dto.NationalityCountryID);
+            var countryExists = await _countryRepository
+                .ExistsAsync(dto.NationalityCountryID);
 
             if (!countryExists)
             {
@@ -157,10 +167,8 @@ namespace DVLD_Enterprise_System.API.Services.People
                     "Nationality country was not found.");
             }
 
-            var nationalNoExists = await _context.People
-                .AnyAsync(p =>
-                    p.NationalNo == dto.NationalNo &&
-                    p.PersonID != id);
+            var nationalNoExists = await _personRepository
+                .ExistsByNationalNoAsync(dto.NationalNo, person.PersonID);
 
             if (nationalNoExists)
             {
@@ -168,10 +176,8 @@ namespace DVLD_Enterprise_System.API.Services.People
                     "National number already exists.");
             }
 
-            var phoneExists = await _context.People
-                .AnyAsync(p =>
-                    p.Phone == dto.Phone &&
-                    p.PersonID != id);
+            var phoneExists = await _personRepository
+                .ExistsByPhoneAsync(dto.Phone, person.PersonID);
 
             if (phoneExists)
             {
@@ -192,7 +198,7 @@ namespace DVLD_Enterprise_System.API.Services.People
             person.NationalityCountryID = dto.NationalityCountryID;
             person.ImagePath = dto.ImagePath;
 
-            await _context.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return new PersonDto
             {
@@ -215,15 +221,14 @@ namespace DVLD_Enterprise_System.API.Services.People
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var person = await _context.People
-                .FirstOrDefaultAsync(c => c.PersonID == id);
+            var person = await _personRepository.GetByIdAsync(id);
 
             if (person == null)
                 return false;
 
-            _context.People.Remove(person);
+            await _personRepository.DeleteAsync(person);
 
-            await _context.SaveChangesAsync();
+            await _unitOfWork.SaveChangesAsync();
 
             return true;
         }

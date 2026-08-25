@@ -1,4 +1,4 @@
-﻿namespace DVLD_Enterprise_System.API.Exceptions
+﻿namespace DVLD_Enterprise_System.Application.Exceptions
 {
     public class NotFoundException : Exception
     {

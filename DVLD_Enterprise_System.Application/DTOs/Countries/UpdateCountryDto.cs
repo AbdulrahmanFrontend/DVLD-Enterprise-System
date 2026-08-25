@@ -1,4 +1,4 @@
-﻿namespace DVLD_Enterprise_System.API.DTOs.Countries
+﻿namespace DVLD_Enterprise_System.Application.DTOs.Countries
 {
     public class UpdateCountryDto
     {
