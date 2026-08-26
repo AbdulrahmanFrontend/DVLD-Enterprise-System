@@ -117,6 +117,33 @@ namespace DVLD_Enterprise_System.API.Controllers
         }
 
         /// <summary>
+        /// Returns a specific person by National Number.
+        ///
+        /// HTTP:
+        /// GET /api/People/national-no/{nationalNo}
+        ///
+        /// Example:
+        /// GET /api/People/national-no/N10
+        ///
+        /// A dedicated route segment is used instead of relying on a
+        /// string route constraint. This avoids ambiguity with the
+        /// GET /api/People/{id:int} endpoint.
+        /// </summary>
+        [HttpGet("national-no/{nationalNo}")]
+        public async Task<IActionResult> GetByNationalNo(string nationalNo)
+        {
+            // Delegate the lookup operation to the application service.
+            var person = await _personService.GetByNationalNoAsync(nationalNo);
+
+            // Return 404 when no person matches the supplied National Number.
+            if (person == null)
+                return NotFound();
+
+            // Return 200 OK with the requested person.
+            return Ok(person);
+        }
+
+        /// <summary>
         /// Creates a new person.
         ///
         /// HTTP:

@@ -8,6 +8,8 @@ namespace DVLD_Enterprise_System.Application.Services.People
 
         Task<PersonDto?> GetByIdAsync(int id);
 
+        Task<PersonDto?> GetByNationalNoAsync(string nationalNo);
+
         Task<PersonDto> CreateAsync(CreatePersonDto dto);
 
         Task<PersonDto?> UpdateAsync(int id, UpdatePersonDto dto);

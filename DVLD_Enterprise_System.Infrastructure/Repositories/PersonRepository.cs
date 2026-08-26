@@ -2,31 +2,27 @@
 using DVLD_Enterprise_System.Domain.Entities;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Security;
-using System.Text;
 
 namespace DVLD_Enterprise_System.Infrastructure.Repositories
 {
     /// <summary>
-    /// Provides the actual data-access implementation for Person entities.
+    /// Provides the Infrastructure implementation of IPersonRepository.
     ///
-    /// This class belongs to Infrastructure because it uses EF Core
-    /// and DVLDDbContext directly.
+    /// This class contains the actual persistence/data-access code
+    /// for Person entities.
     ///
-    /// Application does not know about this class.
-    /// Application only knows about IPersonRepository.
+    /// Infrastructure is allowed to depend on EF Core and DbContext.
+    /// The Application layer is not aware of these implementation details.
     /// </summary>
     public class PersonRepository : IPersonRepository
     {
         private readonly DVLDDbContext _context;
 
         /// <summary>
-        /// DVLDDbContext is injected by ASP.NET Core Dependency Injection.
+        /// Receives the application's DbContext through Dependency Injection.
         ///
-        /// The repository does not create the DbContext itself.
-        /// Instead, the DI container provides the DbContext instance.
+        /// The repository does not create or dispose the DbContext itself.
+        /// ASP.NET Core manages its lifetime.
         /// </summary>
         public PersonRepository(DVLDDbContext context)
         {
@@ -34,11 +30,9 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Retrieves all people from the database.
+        /// Retrieves all people including their related nationality country.
         ///
         /// AsNoTracking is used because this operation is read-only.
-        /// EF Core therefore does not need to track the returned entities
-        /// for later updates.
         /// </summary>
         public async Task<IEnumerable<Person>> GetAllAsync()
         {
@@ -51,6 +45,9 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         /// <summary>
         /// Retrieves a person by primary key.
         ///
+        /// The nationality country is included because the application
+        /// may need its name when building the response DTO.
+        ///
         /// Returns null when the person does not exist.
         /// </summary>
         public async Task<Person?> GetByIdAsync(int id)
@@ -61,15 +58,28 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         }
 
         /// <summary>
+        /// Retrieves a person by National Number.
+        ///
+        /// The related nationality country is included for response mapping.
+        /// Returns null when no matching person exists.
+        /// </summary>
+        public async Task<Person?> GetByNationalNoAsync(string nationalNo)
+        {
+            return await _context.People
+                .Include(p => p.NationalityCountry)
+                .FirstOrDefaultAsync(p => p.NationalNo == nationalNo);
+        }
+
+        /// <summary>
         /// Checks whether a National Number already exists.
         ///
-        /// excludedPersonId is useful during updates.
+        /// During an update, the current person's ID can be supplied
+        /// through excludedPersonId so that the person's existing value
+        /// is not considered a duplicate of itself.
         ///
-        /// Example:
-        /// Person 10 currently has NationalNo = "N10".
-        ///
-        /// When updating Person 10, "N10" should NOT be considered
-        /// a duplicate of itself.
+        /// This is an application-level pre-check.
+        /// The database UNIQUE constraint remains the final protection
+        /// against duplicate values.
         /// </summary>
         public async Task<bool> ExistsByNationalNoAsync(
             string nationalNo,
@@ -85,8 +95,10 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         /// <summary>
         /// Checks whether a phone number already exists.
         ///
-        /// During an update, the current person's own phone number
-        /// is excluded from the duplicate check.
+        /// During an update, the current person's ID can be excluded
+        /// from the duplicate check.
+        ///
+        /// The database UNIQUE constraint remains the final protection.
         /// </summary>
         public async Task<bool> ExistsByPhoneAsync(
             string phone,
@@ -100,10 +112,11 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Adds a new Person entity to the EF Core change tracker.
+        /// Adds a Person entity to the EF Core change tracker.
         ///
-        /// The actual INSERT statement is not executed here.
-        /// It is executed when SaveChangesAsync is called.
+        /// This method prepares the entity for insertion.
+        /// The actual SQL INSERT is executed only when SaveChangesAsync
+        /// is called by the Unit of Work.
         /// </summary>
         public async Task AddAsync(Person person)
         {
@@ -111,10 +124,10 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Marks the person for deletion.
+        /// Marks a Person entity as deleted in the EF Core change tracker.
         ///
-        /// The actual DELETE statement is executed by
-        /// SaveChangesAsync.
+        /// The actual SQL DELETE is executed when SaveChangesAsync
+        /// is called by the Unit of Work.
         /// </summary>
         public Task DeleteAsync(Person person)
         {

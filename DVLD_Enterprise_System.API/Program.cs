@@ -43,24 +43,43 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
 
 
 // ============================================================
-// 2. تسجيل Application Services
+// Application Services
 // ============================================================
 //
-// عندما يطلب Controller:
+// Controllers depend on application-service abstractions.
+//
+// Example:
 //
 // IPersonService
-//
-// يقوم DI Container بإعطائه:
-//
+//      ↓
 // PersonService
 //
-// Scoped يعني أن نفس instance من الـ Service
-// يستخدم خلال HTTP Request واحد.
-//
+// The service contains application-level orchestration and rules.
 // ============================================================
 
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
+
+
+// ============================================================
+// Infrastructure Implementations
+// ============================================================
+//
+// Application depends only on repository abstractions:
+//
+// IPersonRepository
+// ICountryRepository
+// IUnitOfWork
+//
+// Infrastructure provides their concrete implementations:
+//
+// IPersonRepository → PersonRepository
+// ICountryRepository → CountryRepository
+// IUnitOfWork → UnitOfWork
+//
+// This allows Application to remain independent from EF Core
+// and SQL Server implementation details.
+// ============================================================
 
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();

@@ -2,10 +2,24 @@
 using DVLD_Enterprise_System.Application.Exceptions;
 using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace DVLD_Enterprise_System.Application.Services.People
 {
+    /// <summary>
+    /// Coordinates application operations related to Person entities.
+    ///
+    /// This layer contains application rules such as:
+    ///
+    /// - Checking whether referenced countries exist.
+    /// - Checking duplicate National Numbers.
+    /// - Checking duplicate phone numbers.
+    /// - Creating and updating Domain entities.
+    /// - Coordinating persistence through repositories and Unit of Work.
+    /// - Mapping Domain entities to Application DTOs.
+    ///
+    /// It does not know how data is stored because it depends only
+    /// on repository abstractions.
+    /// </summary>
     public class PersonService : IPersonService
     {
         private readonly IPersonRepository _personRepository;
@@ -84,8 +98,41 @@ namespace DVLD_Enterprise_System.Application.Services.People
             };
         }
 
+        public async Task<PersonDto?> GetByNationalNoAsync(string nationalNo)
+        {
+            var Person = await _personRepository.GetByNationalNoAsync(nationalNo);
+
+            if (Person == null)
+                return null;
+
+            return new PersonDto
+            {
+                PersonID = Person.PersonID,
+                NationalNo = Person.NationalNo,
+                FirstName = Person.FirstName,
+                SecondName = Person.SecondName,
+                ThirdName = Person.ThirdName,
+                LastName = Person.LastName,
+                DateOfBirth = Person.DateOfBirth,
+                Gender = Person.Gender,
+                Phone = Person.Phone,
+                Address = Person.Address,
+                NationalityCountryID = Person.NationalityCountryID,
+                Email = Person.Email,
+                ImagePath = Person.ImagePath,
+                NationalityCountryName =
+                        Person.NationalityCountry != null
+                            ? Person.NationalityCountry.CountryName
+                            : null
+            };
+        }
+
         public async Task<PersonDto> CreateAsync(CreatePersonDto dto)
         {
+            // Validate the foreign-key reference before creating/updating the entity.
+            //
+            // This provides a clear application-level error to the client instead
+            // of relying only on the database foreign-key constraint.
             var countryExists = await _countryRepository
                 .ExistsAsync(dto.NationalityCountryID);
 
@@ -95,6 +142,11 @@ namespace DVLD_Enterprise_System.Application.Services.People
                     "Nationality country was not found.");
             }
 
+            // Perform an early duplicate check to provide a meaningful application
+            // response.
+            //
+            // The database UNIQUE constraint remains necessary because this check
+            // cannot completely prevent race conditions between concurrent requests.
             var nationalNoExists = await _personRepository
                 .ExistsByNationalNoAsync(dto.NationalNo);
 

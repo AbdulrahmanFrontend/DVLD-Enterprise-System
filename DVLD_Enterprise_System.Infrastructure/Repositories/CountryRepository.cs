@@ -2,21 +2,20 @@
 using DVLD_Enterprise_System.Domain.Entities;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DVLD_Enterprise_System.Infrastructure.Repositories
 {
+    /// <summary>
+    /// Provides the Infrastructure implementation of ICountryRepository.
+    ///
+    /// This class belongs to Infrastructure because it uses EF Core
+    /// and DVLDDbContext directly.
+    ///
+    /// The Application layer does not depend on this implementation.
+    /// It depends only on ICountryRepository.
+    /// </summary>
     public class CountryRepository : ICountryRepository
     {
-        /// <summary>
-        /// Provides read-only data access for Country entities.
-        ///
-        /// Countries are reference/master data in the DVLD system.
-        /// According to the system requirements, they can be retrieved
-        /// through the API but cannot be created, updated, or deleted.
-        /// </summary>
         private readonly DVLDDbContext _context;
 
         public CountryRepository(DVLDDbContext context)
@@ -27,8 +26,9 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         /// <summary>
         /// Retrieves all countries.
         ///
-        /// Countries are read-only, therefore only query operations
-        /// are exposed by this repository.
+        /// AsNoTracking is used because countries are read-only
+        /// in this application and the returned entities are not
+        /// intended to be updated through this repository.
         /// </summary>
         public async Task<IEnumerable<Country>> GetAllAsync()
         {
@@ -38,7 +38,7 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Retrieves a country by its primary key.
+        /// Retrieves a country by primary key.
         ///
         /// Returns null when the country does not exist.
         /// </summary>
@@ -50,11 +50,10 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Checks whether a country exists.
+        /// Determines whether a country exists.
         ///
-        /// This is useful when creating or updating a Person,
-        /// because Person.NationalityCountryID is a foreign key
-        /// referencing Countries.CountryID.
+        /// AnyAsync is used because only existence is required;
+        /// loading the complete entity would be unnecessary.
         /// </summary>
         public async Task<bool> ExistsAsync(int id)
         {
