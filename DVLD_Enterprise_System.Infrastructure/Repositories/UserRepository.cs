@@ -26,17 +26,33 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// Retrieves a user account by username.
+        /// Retrieves a user account by its primary key.
         ///
-        /// Returns null when no matching account exists.
-        ///
-        /// The Person navigation property is included because
-        /// authentication may need information about the associated person.
+        /// Returns null when no matching user account exists.
         /// </summary>
         public async Task<User?> GetByUserIdAsync(int id)
             => await _context.Users.FindAsync(id);
 
+        /// <summary>
+        /// Retrieves the user account associated with a specific person.
+        ///
+        /// Returns null when no user account is associated with the person.
+        /// </summary>
         public async Task<User?> GetByPersonIdAsync(int personId)
             => await _context.Users.FirstOrDefaultAsync(u => u.PersonID == personId);
+
+        /// <summary>
+        /// Retrieves a user account by username.
+        ///
+        /// Username is unique in the database, therefore at most
+        /// one user account can match the supplied username.
+        ///
+        /// Returns null when no matching account exists.
+        /// </summary>
+        public async Task<User?> GetByUserNameAsync(string userName)
+        {
+            return await _context.Users
+                .FirstOrDefaultAsync(u => u.UserName == userName);
+        }
     }
 }

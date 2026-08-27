@@ -26,8 +26,6 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         /// </summary>
         public Task<int> SaveChangesAsync(
             CancellationToken cancellationToken = default)
-        {
-            return _context.SaveChangesAsync(cancellationToken);
-        }
+            => _context.SaveChangesAsync(cancellationToken);
     }
 }

@@ -10,5 +10,7 @@ namespace DVLD_Enterprise_System.Application.Interfaces
         Task<User?> GetByUserIdAsync(int id);
 
         Task<User?> GetByPersonIdAsync(int personId);
+
+        Task<User?> GetByUserNameAsync(string userName);
     }
 }

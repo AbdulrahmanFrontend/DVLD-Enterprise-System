@@ -4,6 +4,7 @@ using DVLD_Enterprise_System.Application.Services.Countries;
 using DVLD_Enterprise_System.Application.Services.People;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
 using DVLD_Enterprise_System.Infrastructure.Repositories;
+using DVLD_Enterprise_System.Application.Services.Authentication;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -84,6 +85,7 @@ builder.Services.AddScoped<IPersonService, PersonService>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<ICountryRepository, CountryRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 

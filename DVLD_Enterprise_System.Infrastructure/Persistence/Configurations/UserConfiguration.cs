@@ -17,7 +17,7 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
         /// </summary>
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.ToTable("User");
+            builder.ToTable("Users");
 
             // Primary key.
             builder.HasKey(u => u.UserID);
