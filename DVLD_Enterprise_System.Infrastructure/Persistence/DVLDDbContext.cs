@@ -49,6 +49,8 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence
 
         public DbSet<Country> Countries => Set<Country>();
 
+        public DbSet<User> Users => Set<User>();
+
 
         // ========================================================
         // Model Configuration

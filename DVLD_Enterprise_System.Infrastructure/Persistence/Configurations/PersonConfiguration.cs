@@ -1,4 +1,5 @@
 ﻿using DVLD_Enterprise_System.Domain.Entities;
+using DVLD_Enterprise_System.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -11,7 +12,16 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {
-            builder.ToTable("People");
+            builder.ToTable(
+                "People", 
+                t => {
+                    t.HasCheckConstraint("CK_People_Email", "Email like '%@%.%'");
+                    t.HasCheckConstraint(
+                        "CK_People_ImagePath", 
+                        "ImagePath like '%.jpg' OR ImagePath like '%.jpeg' " +
+                        "OR ImagePath like '%.png' OR ImagePath like '%.gif'");
+                    }
+                );
 
             builder.HasKey(p => p.PersonID);
 
@@ -31,8 +41,7 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
                    .IsRequired();
 
             builder.Property(p => p.ThirdName)
-                   .HasMaxLength(20)
-                   .IsRequired(false);
+                   .HasMaxLength(20);
 
             builder.Property(p => p.LastName)
                    .HasMaxLength(20)
@@ -43,6 +52,7 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.Gender)
                    .HasConversion<byte>()
+                   .HasDefaultValue((GenderType)0)
                    .IsRequired();
 
             builder.Property(p => p.Address)
@@ -72,9 +82,11 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
             builder.HasOne(p => p.NationalityCountry)
                    .WithMany(c => c.People)
                    .HasForeignKey(p => p.NationalityCountryID)
-                   .OnDelete(DeleteBehavior.Restrict);
+                   .OnDelete(DeleteBehavior.Cascade);
 
             builder.Ignore(p => p.FullName);
+
+            builder.Ignore(c => c.GenderCaption);
         }
     }
 }

@@ -7,6 +7,8 @@ namespace DVLD_Enterprise_System.Application.Interfaces
 {
     public interface IUserRepository
     {
-        Task<User?> GetByUserNameAsync(string userName);
+        Task<User?> GetByUserIdAsync(int id);
+
+        Task<User?> GetByPersonIdAsync(int personId);
     }
 }

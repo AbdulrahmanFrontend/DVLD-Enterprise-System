@@ -28,6 +28,8 @@ namespace DVLD_Enterprise_System.Domain.Entities
 
         public GenderType Gender { get; set; }
 
+        public string GenderCaption => Gender.ToString();
+
         public string Address { get; set; } = string.Empty;
 
         public string Phone { get; set; } = string.Empty;

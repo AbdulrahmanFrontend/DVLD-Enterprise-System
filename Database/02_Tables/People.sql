@@ -1,7 +1,7 @@
 USE [DVLDSystemDb]
 GO
 
-/****** Object:  Table [dbo].[People]    Script Date: 6/4/2026 4:20:41 PM ******/
+/****** Object:  Table [dbo].[People]    Script Date: 8/27/2026 4:19:53 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE [dbo].[People](
 	[PersonID] [int] IDENTITY(1,1) NOT NULL,
-	[NationalNo] [nvarchar](20) CHECK (NationalNo LIKE REPLICATE('[0-9]', 14)) UNIQUE NOT NULL,
+	[NationalNo] [nvarchar](20) NOT NULL,
 	[FirstName] [nvarchar](20) NOT NULL,
 	[SecondName] [nvarchar](20) NOT NULL,
 	[ThirdName] [nvarchar](20) NULL,
@@ -18,7 +18,7 @@ CREATE TABLE [dbo].[People](
 	[DateOfBirth] [datetime] NOT NULL,
 	[Gender] [tinyint] NOT NULL,
 	[Address] [nvarchar](500) NOT NULL,
-	[Phone] [nvarchar](20) CHECK (Phone LIKE '01[0125][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]') UNIQUE NOT NULL,
+	[Phone] [nvarchar](20) NOT NULL,
 	[Email] [nvarchar](50) NULL,
 	[NationalityCountryID] [int] NOT NULL,
 	[ImagePath] [nvarchar](250) NULL,
@@ -37,14 +37,14 @@ CREATE TABLE [dbo].[People](
 ) ON [PRIMARY]
 GO
 
-ALTER TABLE [dbo].[People] ADD  CONSTRAINT [DF_People_Gendor]  DEFAULT ((0)) FOR [Gender]
+ALTER TABLE [dbo].[People] ADD  CONSTRAINT [DF_People_Gender]  DEFAULT ((0)) FOR [Gender]
 GO
 
-ALTER TABLE [dbo].[People]  WITH CHECK ADD  CONSTRAINT [FK_People_Countries1] FOREIGN KEY([NationalityCountryID])
+ALTER TABLE [dbo].[People]  WITH CHECK ADD  CONSTRAINT [FK_People_Countries] FOREIGN KEY([NationalityCountryID])
 REFERENCES [dbo].[Countries] ([CountryID])
 GO
 
-ALTER TABLE [dbo].[People] CHECK CONSTRAINT [FK_People_Countries1]
+ALTER TABLE [dbo].[People] CHECK CONSTRAINT [FK_People_Countries]
 GO
 
 ALTER TABLE [dbo].[People]  WITH CHECK ADD  CONSTRAINT [CK_People_Email] CHECK  (([Email] like '%@%.%'))

@@ -1,7 +1,7 @@
 USE [DVLDSystemDb]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 8/26/2026 4:18:28 AM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 8/27/2026 4:21:27 AM ******/
 SET ANSI_NULLS ON
 GO
 

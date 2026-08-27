@@ -21,6 +21,10 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
             builder.Property(c => c.CountryName)
                    .HasMaxLength(50)
                    .IsRequired();
+
+            builder.HasIndex(c => c.CountryName)
+                .HasDatabaseName("UQ_CountryName")
+                .IsUnique();
         }
     }
 }
