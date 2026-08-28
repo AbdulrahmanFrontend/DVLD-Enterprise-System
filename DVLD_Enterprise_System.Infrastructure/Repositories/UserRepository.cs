@@ -25,6 +25,9 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<User>> GetAllAsync()
+            => await _context.Users.AsNoTracking().ToListAsync();
+
         /// <summary>
         /// Retrieves a user account by its primary key.
         ///
@@ -53,6 +56,36 @@ namespace DVLD_Enterprise_System.Infrastructure.Repositories
         {
             return await _context.Users
                 .FirstOrDefaultAsync(u => u.UserName == userName);
+        }
+
+        public async Task<bool> ExistsByPersonIdAsync(
+            int personId,
+            int? excludedUserId = null)
+        {
+            return await _context.Users
+                .AnyAsync(u => u.PersonID == personId && 
+                (!excludedUserId.HasValue || u.PersonID != excludedUserId.Value));
+        }
+
+        public async Task<bool> ExistsByUserNameAsync(
+            string userName,
+            int? excludedUserId = null)
+        {
+            return await _context.Users
+                .AnyAsync(u => u.UserName == userName &&
+                (!excludedUserId.HasValue || u.PersonID != excludedUserId.Value));
+        }
+
+        public async Task AddAsync(User user)
+        {
+            await _context.Users.AddAsync(user);
+        }
+
+        public Task DeleteAsync(User user)
+        {
+            _context.Users.Remove(user);
+
+            return Task.CompletedTask;
         }
     }
 }
