@@ -5,59 +5,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DVLD_Enterprise_System.Domain.Entities
+namespace DVLD_Enterprise_System.Domain.Entities;
+
+/// <summary>
+/// Represents a system user (an employee who can log in to DVLD and perform actions).
+/// Every User is linked 1-to-1 with a Person (a User IS a Person who also has login credentials).
+/// </summary>
+public class User
 {
+    public int UserID { get; set; }
+    public int PersonID { get; set; }
+    public string UserName { get; set; } = string.Empty;
+
     /// <summary>
-    /// Represents a system user account.
-    ///
-    /// A User account is associated with exactly one Person.
-    /// The database enforces this relationship through:
-    ///
-    /// - Users.PersonID → People.PersonID foreign key.
-    /// - UQ_PersonID → ensures one User per Person.
-    ///
-    /// The entity represents domain data only.
-    /// It does not contain authentication logic or database code.
+    /// Stores a HASH of the password, never the plain text password.
+    /// Hashing/verification logic belongs in the Application or Infrastructure layer
+    /// (e.g. using ASP.NET Core Identity's PasswordHasher), not here in the Domain entity.
     /// </summary>
-    public class User
-    {
-        /// <summary>
-        /// Unique identifier of the user account.
-        /// </summary>
-        public int UserID { get; set; }
+    public string PasswordHash { get; set; } = string.Empty;
 
-        /// <summary>
-        /// Foreign key referencing the Person associated
-        /// with this user account.
-        /// </summary>
-        public int PersonID { get; set; }
+    public bool IsActive { get; set; } = true;
 
-        /// <summary>
-        /// Unique username used to identify the account during login.
-        /// </summary>
-        public string UserName { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Stores the hashed password.
-        ///
-        /// The plain-text password must never be stored in the database.
-        /// </summary>
-        public string PasswordHash { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Determines whether the account is currently allowed to log in.
-        ///
-        /// false means the account is disabled.
-        /// </summary>
-        public bool IsActive { get; set; }
-
-        /// <summary>
-        /// Navigation property to the Person associated with this account.
-        ///
-        /// This represents the relationship:
-        ///
-        /// User → Person
-        /// </summary>
-        public Person? Person { get; set; }
-    }
+    public Person Person { get; set; } = null!;
 }
