@@ -84,9 +84,9 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
                    .HasForeignKey(p => p.NationalityCountryID)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Ignore(p => p.FullName);
+            //builder.Ignore(p => p.FullName);
 
-            builder.Ignore(c => c.GenderCaption);
+            //builder.Ignore(c => c.GenderCaption);
         }
     }
 }

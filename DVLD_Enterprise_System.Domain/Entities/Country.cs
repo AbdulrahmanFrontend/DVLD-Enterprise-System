@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DVLD_Enterprise_System.Domain.Entities;
+﻿namespace DVLD_Enterprise_System.Domain.Entities;
 
 /// <summary>
 /// A reference/lookup table of countries. Used mainly for a Person's nationality.
@@ -23,4 +17,3 @@ public class Country
     /// </summary>
     public ICollection<Person> People { get; set; } = new List<Person>();
 }
-

@@ -1,5 +1,5 @@
 ﻿using DVLD_Enterprise_System.Application.DTOs.People;
-using DVLD_Enterprise_System.Application.Services.People;
+using DVLD_Enterprise_System.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DVLD_Enterprise_System.API.Controllers

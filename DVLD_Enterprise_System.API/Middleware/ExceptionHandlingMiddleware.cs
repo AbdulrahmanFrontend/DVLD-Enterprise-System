@@ -125,7 +125,7 @@ namespace DVLD_Enterprise_System.API.Middleware
             // Default response:
             // We do not expose the database's internal error details.
             var statusCode = StatusCodes.Status500InternalServerError;
-            var message = "A database error occurred.";
+            var message = "A database error occurred!";
 
             // SQL Server usually stores the actual SQL Server exception
             // inside DbUpdateException.InnerException.
@@ -147,7 +147,7 @@ namespace DVLD_Enterprise_System.API.Middleware
                     statusCode = StatusCodes.Status409Conflict;
 
                     message =
-                        "A record with the same unique value already exists.";
+                        "A record with the same unique value already exists!";
                 }
             }
 
@@ -185,7 +185,7 @@ namespace DVLD_Enterprise_System.API.Middleware
         {
             // Default behavior for an unknown/unexpected exception.
             var statusCode = StatusCodes.Status500InternalServerError;
-            var message = "An unexpected error occurred.";
+            var message = "An unexpected error occurred!";
 
             // The service can intentionally throw NotFoundException
             // when a required resource does not exist.

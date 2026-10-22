@@ -26,7 +26,7 @@ public class Person
 
     public string LastName { get; set; } = string.Empty;
     public DateTime DateOfBirth { get; set; }
-    public Gender Gender { get; set; }
+    public GenderType Gender { get; set; }
     public string Address { get; set; } = string.Empty;
     public string Phone { get; set; } = string.Empty;
 

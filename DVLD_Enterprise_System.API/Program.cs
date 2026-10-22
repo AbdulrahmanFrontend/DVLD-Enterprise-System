@@ -3,8 +3,6 @@ using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Application.Services.Countries;
 using DVLD_Enterprise_System.Application.Services.People;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
-using DVLD_Enterprise_System.Infrastructure.Repositories;
-using DVLD_Enterprise_System.Application.Services.Authentication;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,6 +56,7 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
 // The service contains application-level orchestration and rules.
 // ============================================================
 
+builder.Services.AddScoped<IAppDbContext, DVLDDbContext>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
 
@@ -81,12 +80,6 @@ builder.Services.AddScoped<IPersonService, PersonService>();
 // This allows Application to remain independent from EF Core
 // and SQL Server implementation details.
 // ============================================================
-
-builder.Services.AddScoped<IPersonRepository, PersonRepository>();
-builder.Services.AddScoped<ICountryRepository, CountryRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
 // ============================================================
@@ -164,7 +157,7 @@ app.UseHttpsRedirection();
 // Middleware الخاص بالـ Authorization.
 // لاحقاً عندما نضيف Authentication + JWT
 // سيصبح هذا مهماً جداً.
-app.UseAuthorization();
+//app.UseAuthorization();
 
 
 // ============================================================

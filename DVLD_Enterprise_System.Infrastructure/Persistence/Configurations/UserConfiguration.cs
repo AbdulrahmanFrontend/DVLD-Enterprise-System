@@ -61,6 +61,8 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
             // This enforces the one-user-per-person rule.
             builder.HasIndex(u => u.PersonID)
                 .IsUnique();
+
+            
         }
     }
 }

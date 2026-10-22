@@ -136,11 +136,11 @@ namespace DVLD_Enterprise_System.Application.Services.People
             var countryExists = await _countryRepository
                 .ExistsAsync(dto.NationalityCountryID);
 
-            if (!countryExists)
-            {
-                throw new NotFoundException(
-                    "Nationality country was not found.");
-            }
+            //if (!countryExists)
+            //{
+            //    throw new NotFoundException(
+            //        "Nationality country was not found.");
+            //}
 
             // Perform an early duplicate check to provide a meaningful application
             // response.
@@ -192,7 +192,7 @@ namespace DVLD_Enterprise_System.Application.Services.People
                 SecondName = person.SecondName,
                 ThirdName = person.ThirdName,
                 LastName = person.LastName,
-                FullName = person.FullName,
+                //FullName = person.FullName,
                 DateOfBirth = person.DateOfBirth,
                 Gender = person.Gender,
                 Address = person.Address,
@@ -213,11 +213,11 @@ namespace DVLD_Enterprise_System.Application.Services.People
             var countryExists = await _countryRepository
                 .ExistsAsync(dto.NationalityCountryID);
 
-            if (!countryExists)
-            {
-                throw new NotFoundException(
-                    "Nationality country was not found.");
-            }
+            //if (!countryExists)
+            //{
+            //    throw new NotFoundException(
+            //        "Nationality country was not found.");
+            //}
 
             var nationalNoExists = await _personRepository
                 .ExistsByNationalNoAsync(dto.NationalNo, person.PersonID);
@@ -260,7 +260,7 @@ namespace DVLD_Enterprise_System.Application.Services.People
                 SecondName = person.SecondName,
                 ThirdName = person.ThirdName,
                 LastName = person.LastName,
-                FullName = person.FullName,
+                //FullName = person.FullName,
                 DateOfBirth = person.DateOfBirth,
                 Gender = person.Gender,
                 Address = person.Address,

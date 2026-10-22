@@ -1,75 +1,52 @@
 ﻿using DVLD_Enterprise_System.Application.DTOs.Countries;
 using DVLD_Enterprise_System.Application.Interfaces;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 
-namespace DVLD_Enterprise_System.Application.Services.Countries
+namespace DVLD_Enterprise_System.Application.Services.Countries;
+
+/// <summary>
+/// Contains application-level operations related to countries.
+///
+/// Countries are read-only reference data in the system.
+///
+/// This service coordinates the operation between the API layer
+/// and the country repository without exposing Infrastructure
+/// implementation details to the API.
+/// </summary>
+public class CountryService : ICountryService
 {
-    /// <summary>
-    /// Contains application-level operations related to countries.
-    ///
-    /// Countries are read-only reference data in the system.
-    ///
-    /// This service coordinates the operation between the API layer
-    /// and the country repository without exposing Infrastructure
-    /// implementation details to the API.
-    /// </summary>
-    public class CountryService : ICountryService
+    private readonly IAppDbContext _context;
+
+    public CountryService(IAppDbContext countryRepository)
     {
-        private readonly ICountryRepository _countryRepository;
+        _context = countryRepository;
+    }
 
-        public CountryService(ICountryRepository countryRepository)
-        {
-            _countryRepository = countryRepository;
-        }
+    /// <summary>
+    /// Retrieves all countries and maps Domain entities to DTOs.
+    /// </summary>
+    public async Task<IEnumerable<CountryDto>> GetAllAsync()
+    {
+        var countries = await _context.Countries
+            .Select(c => c.Adapt<CountryDto>())
+            .AsNoTracking()
+            .ToListAsync();
 
-        /// <summary>
-        /// Retrieves all countries and maps Domain entities to DTOs.
-        /// </summary>
-        public async Task<IEnumerable<CountryDto>> GetAllAsync()
-        {
-            var countries = await _countryRepository.GetAllAsync();
+        return countries;
+    }
 
-            var countryDtos = new List<CountryDto>();
+    /// <summary>
+    /// Retrieves a country by ID and maps it to a DTO.
+    ///
+    /// Returns null when the country does not exist.
+    /// </summary>
+    public async Task<CountryDto?> GetByIdAsync(int id)
+    {
+        var country = await _context.Countries
+            .AsNoTracking()
+            .FirstOrDefaultAsync(c => c.CountryID == id);
 
-            foreach (var country in countries)
-            {
-                countryDtos.Add(new CountryDto
-                {
-                    CountryID = country.CountryID,
-                    CountryName = country.CountryName
-                });
-            }
-
-            return countryDtos;
-        }
-
-        /// <summary>
-        /// Retrieves a country by ID and maps it to a DTO.
-        ///
-        /// Returns null when the country does not exist.
-        /// </summary>
-        public async Task<CountryDto?> GetByIdAsync(int id)
-        {
-            var country = await _countryRepository.GetByIdAsync(id);
-
-            if (country == null)
-                return null;
-
-            return new CountryDto
-            {
-                CountryID = country.CountryID,
-                CountryName = country.CountryName
-            };
-        }
-
-        /// <summary>
-        /// Checks whether a country exists.
-        ///
-        /// This operation is mainly used by other application operations,
-        /// such as creating or updating a Person.
-        /// </summary>
-        public async Task<bool> ExistsAsync(int id)
-        {
-            return await _countryRepository.ExistsAsync(id);
-        }
+        return country?.Adapt<CountryDto>();
     }
 }

@@ -17,7 +17,7 @@ namespace DVLD_Enterprise_System.Domain.Enums;
 /// An enum turns "magic numbers" into self-documenting, compiler-checked names.
 /// EF Core can store this enum as its underlying numeric value automatically.
 /// </summary>
-public enum Gender : byte
+public enum GenderType : byte
 {
     Male = 0,
     Female = 1,

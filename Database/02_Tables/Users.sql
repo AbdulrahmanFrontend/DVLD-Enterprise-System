@@ -1,7 +1,7 @@
 USE [DVLDSystemDb]
 GO
 
-/****** Object:  Table [dbo].[Users]    Script Date: 8/27/2026 4:21:27 AM ******/
+/****** Object:  Table [dbo].[Users]    Script Date: 10/22/2026 2:53:09 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[Users](
 	[UserName] [nvarchar](20) NOT NULL,
 	[PasswordHash] [nvarchar](255) NOT NULL,
 	[IsActive] [bit] NOT NULL,
+	[Permissions] [int] NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
 (
 	[UserID] ASC
@@ -30,6 +31,9 @@ CREATE TABLE [dbo].[Users](
 GO
 
 ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_IsActive]  DEFAULT ((1)) FOR [IsActive]
+GO
+
+ALTER TABLE [dbo].[Users] ADD  CONSTRAINT [DF_Users_Permissions]  DEFAULT ((0)) FOR [Permissions]
 GO
 
 ALTER TABLE [dbo].[Users]  WITH CHECK ADD  CONSTRAINT [FK_Users_People] FOREIGN KEY([PersonID])
