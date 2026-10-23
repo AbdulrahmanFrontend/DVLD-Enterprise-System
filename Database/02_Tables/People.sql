@@ -1,7 +1,7 @@
 USE [DVLDSystemDb]
 GO
 
-/****** Object:  Table [dbo].[People]    Script Date: 10/22/2026 3:16:11 PM ******/
+/****** Object:  Table [dbo].[People]    Script Date: 10/23/2026 10:35:08 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -55,19 +55,7 @@ GO
 ALTER TABLE [dbo].[People] CHECK CONSTRAINT [FK_People_Countries]
 GO
 
-ALTER TABLE [dbo].[People]  WITH CHECK ADD  CONSTRAINT [CK_People_Email] CHECK  (([Email] like '%@%.%'))
-GO
-
-ALTER TABLE [dbo].[People] CHECK CONSTRAINT [CK_People_Email]
-GO
-
-ALTER TABLE [dbo].[People]  WITH CHECK ADD  CONSTRAINT [CK_People_ImagePath] CHECK  (([ImagePath] like '%.jpg' OR [ImagePath] like '%.jpeg' OR [ImagePath] like '%.png' OR [ImagePath] like '%.gif'))
-GO
-
-ALTER TABLE [dbo].[People] CHECK CONSTRAINT [CK_People_ImagePath]
-GO
-
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0 Male , 1 Femail , 2 Other' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'People', @level2type=N'COLUMN',@level2name=N'Gender'
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'0 Unknown , 1 Male , 2 Female' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'People', @level2type=N'COLUMN',@level2name=N'Gender'
 GO
 
 

@@ -4,6 +4,7 @@ using DVLD_Enterprise_System.Application.Services.Countries;
 using DVLD_Enterprise_System.Application.Services.People;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +60,9 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
 builder.Services.AddScoped<IAppDbContext, DVLDDbContext>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
+
+// تسجيل كل الـ Validators الموجودة في الـ Application Assembly بأسطر بسيطة
+builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
 
 
 // ============================================================

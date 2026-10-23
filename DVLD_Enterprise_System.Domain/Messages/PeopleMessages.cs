@@ -93,6 +93,8 @@ public static class PeopleMessages
     }
     public static string InvalidImagePath => 
         GeneralMessages.Invalid(PeopleFieldsNames.ImagePathName);
+    public static string ExistsImagePath =>
+        GeneralMessages.AlreadyExists(PeopleFieldsNames.ImagePathName);
 
     public static string RequiredAddress =>
         GeneralMessages.Required(PeopleFieldsNames.AddressName);

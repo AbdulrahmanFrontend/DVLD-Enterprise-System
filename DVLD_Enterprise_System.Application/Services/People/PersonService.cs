@@ -2,6 +2,8 @@
 using DVLD_Enterprise_System.Application.Exceptions;
 using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Domain.Entities;
+using FluentValidation;
+using Microsoft.Extensions.Logging;
 
 namespace DVLD_Enterprise_System.Application.Services.People
 {
@@ -22,18 +24,21 @@ namespace DVLD_Enterprise_System.Application.Services.People
     /// </summary>
     public class PersonService : IPersonService
     {
-        private readonly IPersonRepository _personRepository;
-        private readonly ICountryRepository _countryRepository;
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAppDbContext _context;
+        private readonly IValidator<CreatePersonDto> _createValidator;
+        private readonly IValidator<UpdatePersonDto> _updateValidator;
+        private readonly ILogger<PersonService> _logger;
 
         public PersonService(
-            IPersonRepository personRepository,
-            ICountryRepository countryRepository,
-            IUnitOfWork unitOfWork)
+            IAppDbContext context,
+            IValidator<CreatePersonDto> createValidator,
+            IValidator<UpdatePersonDto> updateValidator,
+            ILogger<PersonService> logger)
         {
-            _personRepository = personRepository;
-            _countryRepository = countryRepository;
-            _unitOfWork = unitOfWork;
+            _context = context;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<PersonDto>> GetAllAsync()
