@@ -7,22 +7,22 @@ namespace DVLD_Enterprise_System.Application.DTOs.People
     {
         [Required]
         [MaxLength(20)]
-        public string NationalNo { get; set; } = string.Empty;
+        public string NationalNo { get; set; } = null!;
 
         [Required]
         [MaxLength(20)]
-        public string FirstName { get; set; } = string.Empty;
+        public string FirstName { get; set; } = null!;
 
         [Required]
         [MaxLength(20)]
-        public string SecondName { get; set; } = string.Empty;
+        public string SecondName { get; set; } = null!;
 
         [MaxLength(20)]
         public string? ThirdName { get; set; }
 
         [Required]
         [MaxLength(20)]
-        public string LastName { get; set; } = string.Empty;
+        public string LastName { get; set; } = null!;
 
         public DateTime DateOfBirth { get; set; }
 
@@ -30,11 +30,11 @@ namespace DVLD_Enterprise_System.Application.DTOs.People
 
         [Required]
         [MaxLength(500)]
-        public string Address { get; set; } = string.Empty;
+        public string Address { get; set; } = null!;
 
         [Required]
         [MaxLength(20)]
-        public string Phone { get; set; } = string.Empty;
+        public string Phone { get; set; } = null!;
 
         [MaxLength(50)]
         [EmailAddress]

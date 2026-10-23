@@ -2,9 +2,6 @@
 using DVLD_Enterprise_System.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
 {
@@ -52,7 +49,7 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.Gender)
                    .HasConversion<byte>()
-                   .HasDefaultValue((GenderType)0)
+                   .HasDefaultValue(0)
                    .IsRequired();
 
             builder.Property(p => p.Address)
@@ -79,14 +76,16 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
                    .IsUnique()
                    .HasDatabaseName("UQ_Phone");
 
+            builder.HasIndex(p => p.Email)
+                .IsUnique()
+                .HasDatabaseName("UQ_Email");
+
             builder.HasOne(p => p.NationalityCountry)
                    .WithMany(c => c.People)
                    .HasForeignKey(p => p.NationalityCountryID)
                    .OnDelete(DeleteBehavior.Cascade);
 
-            //builder.Ignore(p => p.FullName);
-
-            //builder.Ignore(c => c.GenderCaption);
+            builder.Ignore(p => p.FullName);
         }
     }
 }

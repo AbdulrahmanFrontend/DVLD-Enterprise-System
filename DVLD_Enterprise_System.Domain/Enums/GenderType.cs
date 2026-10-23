@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DVLD_Enterprise_System.Domain.Enums;
+﻿namespace DVLD_Enterprise_System.Domain.Enums;
 
 /// <summary>
 /// Represents the gender of a person.
@@ -19,7 +13,7 @@ namespace DVLD_Enterprise_System.Domain.Enums;
 /// </summary>
 public enum GenderType : byte
 {
-    Male = 0,
-    Female = 1,
-    Other = 2
+    Unknown = 0,
+    Male = 1,
+    Female = 2,
 }

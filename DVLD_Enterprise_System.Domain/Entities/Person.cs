@@ -1,11 +1,4 @@
 ﻿using DVLD_Enterprise_System.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DVLD_Enterprise_System.Domain.Entities;
 
@@ -17,18 +10,29 @@ namespace DVLD_Enterprise_System.Domain.Entities;
 public class Person
 {
     public int PersonID { get; set; }
-    public string NationalNo { get; set; } = string.Empty;
-    public string FirstName { get; set; } = string.Empty;
-    public string SecondName { get; set; } = string.Empty;
+    public string NationalNo { get; set; } = null!;
+    public string FirstName { get; set; } = null!;
+    public string SecondName { get; set; } = null!;
 
     /// <summary>Nullable because the DB column [ThirdName] allows NULL.</summary>
     public string? ThirdName { get; set; }
+    public string LastName { get; set; } = null!;
+    public string FullName
+    {
+        get
+        {
+            string fullName = FirstName + " " + SecondName;
 
-    public string LastName { get; set; } = string.Empty;
+            if (!string.IsNullOrWhiteSpace(ThirdName))
+                return fullName + " " + ThirdName + " " + LastName;
+
+            return fullName + " " + LastName;
+        }
+    }
     public DateTime DateOfBirth { get; set; }
-    public GenderType Gender { get; set; }
-    public string Address { get; set; } = string.Empty;
-    public string Phone { get; set; } = string.Empty;
+    public GenderType Gender { get; set; } = GenderType.Unknown;
+    public string Address { get; set; } = null!;
+    public string Phone { get; set; } = null!;
 
     /// <summary>Nullable because the DB column [Email] allows NULL.</summary>
     public string? Email { get; set; }
@@ -53,5 +57,5 @@ public class Person
     /// </summary>
     public Country NationalityCountry { get; set; } = null!;
 
-    public ICollection<Application> Applications { get; set; } = new List<Application>();
+    //public ICollection<Application> Applications { get; set; } = new List<Application>();
 }
