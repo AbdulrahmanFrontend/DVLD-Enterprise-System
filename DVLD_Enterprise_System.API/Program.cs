@@ -1,10 +1,9 @@
 using DVLD_Enterprise_System.API.Middleware;
 using DVLD_Enterprise_System.Application.Interfaces;
-using DVLD_Enterprise_System.Application.Services.Countries;
-using DVLD_Enterprise_System.Application.Services.People;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using FluentValidation;
+using DVLD_Enterprise_System.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

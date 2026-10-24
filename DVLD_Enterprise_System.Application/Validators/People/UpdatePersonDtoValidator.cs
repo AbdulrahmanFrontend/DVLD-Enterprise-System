@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace DVLD_Enterprise_System.Application.Validators.People;
 
-internal class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
+public class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
 {
     public UpdatePersonDtoValidator()
     {
@@ -16,11 +16,6 @@ internal class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
             .WithMessage(PeopleMessages.RequiredNationalNo)
             .MaximumLength(PeopleFieldsMaxLength.NationalNoMaxLength)
             .WithMessage(PeopleMessages.NationalNoMaxLength);
-            //.MustAsync(async (nationalNo, cancellation) =>
-            //    !await _context.People.AnyAsync(
-            //        p => p.NationalNo == nationalNo && p.PersonID != personId,
-            //        cancellation))
-            //.WithMessage(PeopleMessages.ExistsNationalNo);
 
         RuleFor(p => p.FirstName)
             .NotEmpty()
@@ -49,22 +44,12 @@ internal class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
             .WithMessage(PeopleMessages.EmailMaxLength)
             .EmailAddress().When(p => !string.IsNullOrEmpty(p.Email))
             .WithMessage(PeopleMessages.InvalidEmail);
-        //.MustAsync(async (email, cancellation) =>
-        //    !await _context.People.AnyAsync(
-        //        p => p.Email == email && p.PersonID != personId, 
-        //    cancellation))
-        //.WithMessage(PeopleMessages.ExistsEmail);
 
         RuleFor(p => p.Phone)
             .NotEmpty()
             .WithMessage(PeopleMessages.RequirdPhone)
             .MaximumLength(PeopleFieldsMaxLength.PhoneNumberMaxLength)
             .WithMessage(PeopleMessages.PhoneMaxLength);
-            //.MustAsync(async (phoneNumber, cancellation) =>
-            //    !await _context.People.AnyAsync(
-            //        p => p.Phone == phoneNumber && p.PersonID != personId, 
-            //        cancellation))
-            //.WithMessage(PeopleMessages.ExistsPhone);
 
         RuleFor(p => p.Address)
             .NotEmpty()
@@ -82,17 +67,5 @@ internal class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
             || path.EndsWith(".png")
             || path.EndsWith(".jpeg"))
             .WithMessage(PeopleMessages.InvalidImagePath);
-            //.MustAsync(async (imagePath, cancellation) =>
-            //    !await _context.People.AnyAsync(
-            //        p => p.ImagePath == imagePath && p.PersonID != personId,
-            //        cancellation))
-            //.WithMessage(PeopleMessages.ExistsImagePath);
-
-        //RuleFor(p => p.NationalityCountryID)
-        //    .MustAsync(async (countryId, cancellation) =>
-        //        await _context.Countries.AnyAsync(
-        //            c => c.CountryID == countryId,
-        //            cancellation))
-        //    .WithMessage(PeopleMessages.InvalidNationality);
     }
 }

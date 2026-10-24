@@ -1,5 +1,6 @@
 ﻿using DVLD_Enterprise_System.Domain.Constants.PropertiesMaxLength;
 using DVLD_Enterprise_System.Domain.Entities;
+using DVLD_Enterprise_System.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -40,7 +41,7 @@ namespace DVLD_Enterprise_System.Infrastructure.Persistence.Configurations
 
             builder.Property(p => p.Gender)
                    .HasConversion<byte>()
-                   .HasDefaultValue(0)
+                   .HasDefaultValue((GenderType)0)
                    .IsRequired();
 
             builder.Property(p => p.Address)

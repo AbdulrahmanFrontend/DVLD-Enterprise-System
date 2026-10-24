@@ -3,7 +3,7 @@ using DVLD_Enterprise_System.Application.Interfaces;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
-namespace DVLD_Enterprise_System.Application.Services.Countries;
+namespace DVLD_Enterprise_System.Application.Services;
 
 /// <summary>
 /// Contains application-level operations related to countries.

@@ -1,46 +1,18 @@
-﻿using DVLD_Enterprise_System.Application.DTOs.People;
+﻿using DVLD_Enterprise_System.Application.Common;
+using DVLD_Enterprise_System.Application.DTOs.People;
 using DVLD_Enterprise_System.Application.Interfaces;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DVLD_Enterprise_System.API.Controllers
 {
     /// <summary>
     /// Handles HTTP requests related to people.
-    ///
-    /// The controller belongs to the API/presentation layer.
-    /// Its responsibility is to:
-    ///
-    /// - Receive HTTP requests.
-    /// - Read route/body parameters.
-    /// - Call the appropriate application service.
-    /// - Convert application results into HTTP responses.
-    ///
-    /// The controller should NOT:
-    ///
-    /// - Access EF Core directly.
-    /// - Access DVLDDbContext directly.
-    /// - Execute SQL queries.
-    /// - Contain database logic.
-    /// - Contain business/application rules.
-    ///
-    /// The actual application logic is handled by IPersonService.
     /// </summary>
     [Route("api/People")]
     [ApiController]
     public class PeopleController : ControllerBase
     {
-        // The controller depends on the application abstraction
-        // IPersonService instead of depending on the concrete
-        // PersonService implementation.
-        //
-        // This is Dependency Injection.
-        //
-        // Program.cs registers:
-        //
-        // IPersonService → PersonService
-        //
-        // Therefore, ASP.NET Core's DI container automatically
-        // creates PersonService and injects it here.
         private readonly IPersonService _personService;
 
         public PeopleController(IPersonService personService)
@@ -49,211 +21,157 @@ namespace DVLD_Enterprise_System.API.Controllers
         }
 
         /// <summary>
-        /// Returns all people.
-        ///
-        /// HTTP:
-        /// GET /api/People
-        ///
-        /// Request flow:
-        ///
-        /// Client
-        ///   ↓
-        /// PeopleController.GetAll()
-        ///   ↓
-        /// IPersonService
-        ///   ↓
-        /// PersonService
-        ///   ↓
-        /// IPersonRepository
-        ///   ↓
-        /// PersonRepository
-        ///   ↓
-        /// DbContext
-        ///   ↓
-        /// SQL Server
+        /// Returns filtered, paginated list of people.
+        /// HTTP: GET /api/People/filtered
         /// </summary>
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("filtered")]
+        public async Task<ActionResult<PagedResult<FilteredPeopleDto>>> GetFilteredPeople(
+            [FromQuery] GetPeopleQueryDto queryDto,
+            CancellationToken cancellation = default)
         {
-            // The controller delegates the operation to the
-            // application/service layer.
-            //
-            // It does not know how people are stored or retrieved.
-            var people = await _personService.GetAllAsync();
-
-            // 200 OK + people serialized as JSON.
-            return Ok(people);
+            var result = await _personService.GetFilteredPeopleAsync(queryDto, cancellation);
+            return Ok(result);
         }
 
         /// <summary>
         /// Returns a specific person by ID.
-        ///
-        /// HTTP:
-        /// GET /api/People/{id}
-        ///
-        /// Example:
-        /// GET /api/People/10
+        /// HTTP: GET /api/People/{id}
         /// </summary>
         [HttpGet("{id:int}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(
+            int id, 
+            CancellationToken cancellation = default)
         {
-            // The {id:int} route constraint ensures that this
-            // action is selected when the route value is an integer.
-            //
-            // Example:
-            // /api/People/10 → matches
-            // /api/People/abc → does not match this action.
-            var person = await _personService.GetByIdAsync(id);
+            var person = await _personService.GetByIdAsync(id, cancellation);
 
-            // The service returns null when the person does not exist.
-            //
-            // The controller translates that application result
-            // into the appropriate HTTP response.
             if (person == null)
                 return NotFound();
 
-            // 200 OK + person JSON.
             return Ok(person);
         }
 
         /// <summary>
         /// Returns a specific person by National Number.
-        ///
-        /// HTTP:
-        /// GET /api/People/national-no/{nationalNo}
-        ///
-        /// Example:
-        /// GET /api/People/national-no/N10
-        ///
-        /// A dedicated route segment is used instead of relying on a
-        /// string route constraint. This avoids ambiguity with the
-        /// GET /api/People/{id:int} endpoint.
+        /// HTTP: GET /api/People/national-no/{nationalNo}
         /// </summary>
         [HttpGet("national-no/{nationalNo}")]
-        public async Task<IActionResult> GetByNationalNo(string nationalNo)
+        public async Task<IActionResult> GetByNationalNo(
+            string nationalNo, 
+            CancellationToken cancellation = default)
         {
-            // Delegate the lookup operation to the application service.
-            var person = await _personService.GetByNationalNoAsync(nationalNo);
+            var person = await _personService.GetByNationalNoAsync(nationalNo, cancellation);
 
-            // Return 404 when no person matches the supplied National Number.
             if (person == null)
                 return NotFound();
 
-            // Return 200 OK with the requested person.
+            return Ok(person);
+        }
+
+        /// <summary>
+        /// Returns a specific person by Email.
+        /// HTTP: GET /api/People/email/{email}
+        /// </summary>
+        [HttpGet("email/{email}")]
+        public async Task<IActionResult> GetByEmail(
+            string email,
+            CancellationToken cancellation = default)
+        {
+            var person = await _personService.GetByEmailAsync(email, cancellation);
+
+            if (person == null)
+                return NotFound();
+
             return Ok(person);
         }
 
         /// <summary>
         /// Creates a new person.
-        ///
-        /// HTTP:
-        /// POST /api/People
-        ///
-        /// The request body contains CreatePersonDto as JSON.
-        ///
-        /// Example:
-        ///
-        /// {
-        ///     "nationalNo": "N10",
-        ///     "firstName": "Abdulrahman",
-        ///     ...
-        /// }
+        /// HTTP: POST /api/People
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Create(CreatePersonDto dto)
+        public async Task<IActionResult> Create(
+            CreatePersonDto dto,
+            CancellationToken cancellation = default)
         {
-            // ASP.NET Core automatically binds the JSON request body
-            // to CreatePersonDto because this is an API Controller.
-            //
-            // The controller then passes the DTO to the application layer.
-            //
-            // Validation/business rules and persistence are NOT
-            // implemented here.
-            var person = await _personService.CreateAsync(dto);
+            var result = await _personService.CreateAsync(dto, cancellation);
 
-            // CreatedAtAction returns:
-            //
-            // HTTP 201 Created
-            //
-            // and provides the location of the newly created resource.
-            //
-            // nameof(GetById)
-            //     → identifies the action that can retrieve the resource.
-            //
-            // new { id = person.PersonID }
-            //     → generates the route values.
-            //
-            // person
-            //     → returned as the response body.
+            if (!result.IsSuccess)
+                return BadRequest(result.Message);
+
+            // جلب الشخص المضاف حديثاً لإرجاعه في الـ CreatedAtAction
+            var createdPerson = await _personService
+                .GetByNationalNoAsync(dto.NationalNo, cancellation);
+
             return CreatedAtAction(
                 nameof(GetById),
-                new { id = person.PersonID },
-                person);
+                new { id = createdPerson?.PersonID },
+                createdPerson);
         }
 
         /// <summary>
         /// Updates an existing person.
-        ///
-        /// HTTP:
-        /// PUT /api/People/{id}
-        ///
-        /// Example:
-        /// PUT /api/People/10
+        /// HTTP: PUT /api/People/{id}
         /// </summary>
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(
             int id,
-            UpdatePersonDto dto)
+            UpdatePersonDto dto,
+            CancellationToken cancellation = default)
         {
-            // The ID comes from the route.
-            //
-            // The updated values come from the request body.
-            //
-            // Example:
-            //
-            // PUT /api/People/10
-            //
-            // id = 10
-            // dto = updated person data
-            var person = await _personService.UpdateAsync(id, dto);
+            bool exists = await _personService.ExistsAsync(id, cancellation);
 
-            // If the service could not find the requested person,
-            // return HTTP 404 Not Found.
-            if (person == null)
+            if (!exists)
                 return NotFound();
 
-            // 200 OK + updated person JSON.
-            return Ok(person);
+            var result = await _personService.UpdateAsync(id, dto, cancellation);
+
+            if (!result.IsSuccess)
+                return BadRequest(result.Message);
+
+            var updatedPerson = await _personService.GetByIdAsync(id, cancellation);
+            return Ok(updatedPerson);
+        }
+
+        /// <summary>
+        /// Check exists by id
+        /// HTTP: GET /api/People/exists/id/{id:int}
+        /// </summary>
+        [HttpGet("exists/id/{id:int}")]
+        public async Task<IActionResult> CheckExistsByIdAsync(
+            int id,
+            CancellationToken cancellation = default)
+        {
+            bool exists = await _personService.ExistsAsync(id, cancellation);
+            return Ok(exists);
+        }
+
+        /// <summary>
+        /// Check exists by national no
+        /// HTTP: GET /api/People/exists/national-no/{nationalNo}
+        /// </summary>
+        [HttpGet("exists/national-no/{nationalNo}")]
+        public async Task<IActionResult> CheckExistsByNationalNoAsync(
+            string nationalNo,
+            CancellationToken cancellation = default)
+        {
+            bool exists = await _personService.ExistsAsync(nationalNo, cancellation);
+            return Ok(exists);
         }
 
         /// <summary>
         /// Deletes a person by ID.
-        ///
-        /// HTTP:
-        /// DELETE /api/People/{id}
-        ///
-        /// Example:
-        /// DELETE /api/People/10
+        /// HTTP: DELETE /api/People/{id}
         /// </summary>
         [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(
+            int id, 
+            CancellationToken cancellation = default)
         {
-            // The controller delegates the deletion operation
-            // to the application layer.
-            //
-            // It does not execute _context.People.Remove(...)
-            // because database access belongs to Infrastructure.
-            var deleted = await _personService.DeleteAsync(id);
+            var result = await _personService.DeleteAsync(id, cancellation);
 
-            // The service returns false when the requested
-            // person does not exist.
-            if (!deleted)
-                return NotFound();
+            if (!result.IsSuccess)
+                return NotFound(result.Message);
 
-            // HTTP 204 No Content means:
-            //
-            // The operation succeeded,
-            // but there is no response body to return.
             return NoContent();
         }
     }
