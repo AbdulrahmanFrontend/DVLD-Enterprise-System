@@ -47,6 +47,9 @@ namespace DVLD_Enterprise_System.Application.Services
             GetPeopleQueryDto queryDto,
             CancellationToken cancellation = default)
         {
+            if (queryDto is null)
+                throw new ArgumentNullException(nameof(queryDto));
+
             // 1. اجعل الـ Query يبدأ كـ IQueryable (لا يتم التنفيذ على الداتابيز الآن)
             var query = _context.People
                 .Include(p => p.NationalityCountry)
@@ -82,11 +85,14 @@ namespace DVLD_Enterprise_System.Application.Services
             // 3. حساب العدد الكلي للنتائج المطابقة للفلترة (قبل تطبيق الـ Skip و Take)
             var totalCount = await query.CountAsync();
 
+            int pageNumber = Math.Max(1, queryDto.pageNumber);
+            int pageSize = Math.Max(1, queryDto.pageSize);
+
             // 4. تطبيق الـ Pagination وترتيب النتائج
             var items = await query
                 .OrderByDescending(p => p.PersonID) // ترتيب تنازلي للأحدث أوالأبجدي بحسب الحاجة
-                .Skip((queryDto.pageNumber - 1) * queryDto.pageSize)
-                .Take(queryDto.pageSize)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
                 .Select(p => new FilteredPeopleDto
                 {
                     PersonID = p.PersonID,
@@ -146,7 +152,7 @@ namespace DVLD_Enterprise_System.Application.Services
             if (dto is null)
             {
                 _logger.LogWarning("Failed to Add New Person, Person Data Not Found!");
-                return Result.Failure("Failed to Add New Person, Person Data Not Found!");
+                throw new ArgumentNullException(nameof(dto));
             }
 
             var validationResult = await _createValidator.ValidateAsync(dto, cancellation);
@@ -179,8 +185,7 @@ namespace DVLD_Enterprise_System.Application.Services
             {
                 _logger.LogWarning($"Failed to Update Person {id}," +
                     $" Person {id} Data for updating Not Found!");
-                return Result.Failure("Failed to Update Person, " +
-                    "Person Data for updating Not Found!");
+                throw new ArgumentNullException(nameof(dto));
             }
 
             var validationResult = await _updateValidator.ValidateAsync(dto, cancellation);

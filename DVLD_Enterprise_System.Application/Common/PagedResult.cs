@@ -23,8 +23,8 @@ public sealed class PagedResult<T>
         int pageSize)
     {
         Items = items;
-        TotalCount = totalCount;
-        PageNumber = pageNumber;
-        PageSize = pageSize;
+        TotalCount = Math.Max(0, totalCount);
+        PageNumber = Math.Max(1, pageNumber);
+        PageSize = Math.Max(1, pageSize);
     }
 }
