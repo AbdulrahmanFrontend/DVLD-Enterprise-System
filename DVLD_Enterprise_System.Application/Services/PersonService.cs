@@ -93,20 +93,7 @@ namespace DVLD_Enterprise_System.Application.Services
                 .OrderByDescending(p => p.PersonID) // ترتيب تنازلي للأحدث أوالأبجدي بحسب الحاجة
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
-                .Select(p => new FilteredPeopleDto
-                {
-                    PersonID = p.PersonID,
-                    NationalNo = p.NationalNo,
-                    FirstName = p.FirstName,
-                    SecondName = p.SecondName,
-                    ThirdName = p.ThirdName,
-                    LastName = p.LastName,
-                    Gender = p.Gender,
-                    Phone = p.Phone,
-                    Email = p.Email,
-                    NationalityCountryID = p.NationalityCountryID,
-                    NationalityCountryName = p.NationalityCountry.CountryName,
-                })
+                .ProjectToType<FilteredPeopleDto>()
                 .ToListAsync();
 
             // 5. إرجاع النتيجة مغلفة مع تفاصيل الصفحات

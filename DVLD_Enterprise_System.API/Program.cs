@@ -1,9 +1,11 @@
 using DVLD_Enterprise_System.API.Middleware;
 using DVLD_Enterprise_System.Application.Interfaces;
-using DVLD_Enterprise_System.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using FluentValidation;
+using DVLD_Enterprise_System.Application.Mappings;
 using DVLD_Enterprise_System.Application.Services;
+using DVLD_Enterprise_System.Infrastructure.Persistence;
+using FluentValidation;
+using Mapster;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +61,11 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
 builder.Services.AddScoped<IAppDbContext, DVLDDbContext>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
+
+// تفعيل قراءة جميع ملفات التكوين (IRegister) الموجودة في الـ Assembly الحالي
+//TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
+// أو إذا كانت الـ Mappings في مشروع الـ Application، ضع Assembly الخاص بطبقة الـ Application:
+ TypeAdapterConfig.GlobalSettings.Scan(typeof(PersonMappingConfig).Assembly);
 
 // تسجيل كل الـ Validators الموجودة في الـ Application Assembly بأسطر بسيطة
 builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
