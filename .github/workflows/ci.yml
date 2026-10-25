@@ -1,0 +1,34 @@
+name: .NET Backend CI & Tests
+
+on:
+  push:
+    branches: [ "main", "master", "feature/aspnet-core-efcore" ]
+  pull_request:
+    branches: [ "main", "master", "feature/aspnet-core-efcore" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. سحب أحدث نسخة من الكود
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 2. إعداد بيئة .NET (نستخدم 9.0 لضمان دعم ملفات الـ .slnx الحديثة وبناء .NET 8/9 بكفاءة)
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '10.0.x'
+
+    # 3. استعادة الحزم (NuGet Packages)
+    - name: Restore dependencies
+      run: dotnet restore DVLD_Enterprise_System.Backend.slnx
+
+    # 4. بناء الـ Solution للتأكد من خلوه من أخطاء الـ Compilation
+    - name: Build solution
+      run: dotnet build DVLD_Enterprise_System.Backend.slnx --no-restore --configuration Release
+
+    # 5. تشغيل جميع اختبارات الوحدة والتكامل تلقائياً
+    - name: Run all tests
+      run: dotnet test DVLD_Enterprise_System.Backend.slnx --no-build --configuration Release --verbosity normal
