@@ -3,10 +3,4 @@
   <Project Path="DVLD-Enterprise-System.Core/DVLD-Enterprise-System.Core.csproj" Id="b4d54053-203f-4863-b9a9-abc59b067658" />
   <Project Path="DVLD-Enterprise-System.DAL/DVLD-Enterprise-System.DAL.csproj" Id="0468332d-f982-4fa2-8c59-6a70de4fddd8" />
   <Project Path="DVLD-Enterprise-System.UI/DVLD-Enterprise-System.UI.csproj" Id="0e493f5b-69a9-4fcc-825c-94a006d51b24" />
-  <Project Path="DVLD_Enterprise_System.API/DVLD_Enterprise_System.API.csproj" Id="e86ca30b-d596-4ecc-ac85-98a92077d237" />
-  <Project Path="DVLD_Enterprise_System.Application/DVLD_Enterprise_System.Application.csproj" Id="8fc6ffdf-3a68-4b18-8137-6a4108e16982" />
-  <Project Path="DVLD_Enterprise_System.Domain/DVLD_Enterprise_System.Domain.csproj" Id="c52fe704-0fa0-413d-84a5-4e32b71ae00c" />
-  <Project Path="DVLD_Enterprise_System.Infrastructure/DVLD_Enterprise_System.Infrastructure.csproj" Id="c1dd4952-8d35-418d-a3d3-756ce174a6c7" />
-  <Project Path="DVLD_Enterprise_System.IntegrationTests/DVLD_Enterprise_System.IntegrationTests.csproj" Id="b1a29541-b0d7-4f28-b1ee-7f56b8531a38" />
-  <Project Path="DVLD_Enterprise_System.UnitTests/DVLD_Enterprise_System.UnitTests.csproj" Id="be61be7f-5172-4c30-8461-bbb60cb30eec" />
 </Solution>

@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DVLD_Enterprise_System.Application\DVLD_Enterprise_System.Application.csproj" />
+    <ProjectReference Include="..\DVLD_Enterprise_System.Domain\DVLD_Enterprise_System.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="DVLD_Enterprise_System.Application">
       <HintPath>..\DVLD_Enterprise_System.Application\bin\Debug\net10.0\DVLD_Enterprise_System.Application.dll</HintPath>
     </Reference>
