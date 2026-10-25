@@ -15,7 +15,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    # 2. إعداد بيئة .NET (نستخدم 9.0 لضمان دعم ملفات الـ .slnx الحديثة وبناء .NET 8/9 بكفاءة)
+    # 2. إعداد بيئة .NET 10
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
@@ -23,12 +23,12 @@ jobs:
 
     # 3. استعادة الحزم (NuGet Packages)
     - name: Restore dependencies
-      run: dotnet restore DVLD_Enterprise_System.Backend.slnx
+      run: dotnet restore DVLD_Enterprise_System.Backend.sln
 
     # 4. بناء الـ Solution للتأكد من خلوه من أخطاء الـ Compilation
     - name: Build solution
-      run: dotnet build DVLD_Enterprise_System.Backend.slnx --no-restore --configuration Release
+      run: dotnet build DVLD_Enterprise_System.Backend.sln --no-restore --configuration Release
 
     # 5. تشغيل جميع اختبارات الوحدة والتكامل تلقائياً
     - name: Run all tests
-      run: dotnet test DVLD_Enterprise_System.Backend.slnx --no-build --configuration Release --verbosity normal
+      run: dotnet test DVLD_Enterprise_System.Backend.sln --no-build --configuration Release --verbosity normal
