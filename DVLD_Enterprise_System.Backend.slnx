@@ -1,0 +1,8 @@
+<Solution>
+  <Project Path="DVLD_Enterprise_System.API/DVLD_Enterprise_System.API.csproj" />
+  <Project Path="DVLD_Enterprise_System.Application/DVLD_Enterprise_System.Application.csproj" />
+  <Project Path="DVLD_Enterprise_System.Domain/DVLD_Enterprise_System.Domain.csproj" />
+  <Project Path="DVLD_Enterprise_System.Infrastructure/DVLD_Enterprise_System.Infrastructure.csproj" />
+  <Project Path="DVLD_Enterprise_System.IntegrationTests/DVLD_Enterprise_System.IntegrationTests.csproj" />
+  <Project Path="DVLD_Enterprise_System.UnitTests/DVLD_Enterprise_System.UnitTests.csproj" />
+</Solution>
