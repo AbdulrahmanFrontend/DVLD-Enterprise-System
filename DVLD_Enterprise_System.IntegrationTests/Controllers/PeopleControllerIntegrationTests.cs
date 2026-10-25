@@ -27,7 +27,13 @@ namespace DVLD_Enterprise_System.IntegrationTests.Controllers
         {
             using var scope = _factory.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<DVLDDbContext>();
-            db.Database.EnsureCreated();
+            
+            // تفريغ البيانات القديمة لضمان عدم التداخل بين الاختبارات
+            db.People.RemoveRange(db.People);
+            db.Countries.RemoveRange(db.Countries);
+            db.SaveChanges();
+        
+            // إعادة حقن البيانات الخاصة بهذا الاختبار فقط
             seedAction(db);
             db.SaveChanges();
         }
