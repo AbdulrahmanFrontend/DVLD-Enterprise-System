@@ -7,4 +7,5 @@
   <Project Path="DVLD_Enterprise_System.Application/DVLD_Enterprise_System.Application.csproj" Id="8fc6ffdf-3a68-4b18-8137-6a4108e16982" />
   <Project Path="DVLD_Enterprise_System.Domain/DVLD_Enterprise_System.Domain.csproj" Id="c52fe704-0fa0-413d-84a5-4e32b71ae00c" />
   <Project Path="DVLD_Enterprise_System.Infrastructure/DVLD_Enterprise_System.Infrastructure.csproj" Id="c1dd4952-8d35-418d-a3d3-756ce174a6c7" />
+  <Project Path="DVLD_Enterprise_System.UnitTests/DVLD_Enterprise_System.UnitTests.csproj" Id="be61be7f-5172-4c30-8461-bbb60cb30eec" />
 </Solution>
