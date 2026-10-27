@@ -95,6 +95,7 @@ public static class PeopleMessages
         GeneralMessages.Invalid(PeopleFieldsNames.ImagePathName);
     public static string ExistsImagePath =>
         GeneralMessages.AlreadyExists(PeopleFieldsNames.ImagePathName);
+    public static string ImageSize => "Image Size must be less than or equal to 3 MB!";
 
     public static string RequiredAddress =>
         GeneralMessages.Required(PeopleFieldsNames.AddressName);

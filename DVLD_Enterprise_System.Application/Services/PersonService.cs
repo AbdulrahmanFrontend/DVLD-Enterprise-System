@@ -30,17 +30,20 @@ namespace DVLD_Enterprise_System.Application.Services
         private readonly IValidator<CreatePersonDto> _createValidator;
         private readonly IValidator<UpdatePersonDto> _updateValidator;
         private readonly ILogger<PersonService> _logger;
+        private readonly IFileStorageService _fileStorageService;
 
         public PersonService(
             IAppDbContext context,
             IValidator<CreatePersonDto> createValidator,
             IValidator<UpdatePersonDto> updateValidator,
-            ILogger<PersonService> logger)
+            ILogger<PersonService> logger,
+            IFileStorageService fileStorageService)
         {
             _context = context;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
             _logger = logger;
+            _fileStorageService = fileStorageService;
         }
 
         public async Task<PagedResult<FilteredPeopleDto>> GetFilteredPeopleAsync(
@@ -152,7 +155,16 @@ namespace DVLD_Enterprise_System.Application.Services
                 return Result.Failure(errorMessage);
             }
 
+            string imagePath = string.Empty;
+
+            if (dto.ImageStream != null && !string.IsNullOrEmpty(dto.ImageFileName))
+                imagePath = await _fileStorageService.SaveFileAsync(
+                    dto.ImageStream,
+                    dto.ImageFileName,
+                    "uploads/people");
+
             var person = dto.Adapt<Person>();
+            person.ImagePath = imagePath;
 
             await _context.People.AddAsync(person, cancellation);
 
@@ -230,6 +242,18 @@ namespace DVLD_Enterprise_System.Application.Services
                 return Result.Failure($"Failed to Update Person, Nationality not exists!");
             }
 
+            exists = await _context.People.AnyAsync(
+                p => p.ImagePath!.EndsWith(dto.ImageFileName!) && p.PersonID != id,
+                cancellation);
+
+            if (exists)
+            {
+                _logger.LogWarning($"Failed to Update Person {id}, " +
+                    $"ImageFileName {dto.ImageFileName} already exists!");
+                return Result.Failure(
+                    $"Failed to Update Person, ImageFileName already exists!");
+            }
+
             return Result.Success();
         }
 
@@ -251,7 +275,23 @@ namespace DVLD_Enterprise_System.Application.Services
             if (!result.IsSuccess)
                 return result;
 
+            string? imagePath = person.ImagePath; // الاحتفاظ بالمسار القديم افتراضياً
+
+            // إذا أرسل المستخدم صورة جديدة
+            if (dto.ImageStream != null && !string.IsNullOrEmpty(dto.ImageFileName))
+            {
+                // 1. حفظ الصورة الجديدة والحصول على مسارها
+                imagePath = await _fileStorageService.SaveFileAsync(dto.ImageStream, dto.ImageFileName, "uploads/people");
+
+                // 2. إذا كانت هناك صورة قديمة مخزنة مسبقاً، قم بحذفها من السيرفر نظافةً للمساحة
+                if (!string.IsNullOrEmpty(person.ImagePath))
+                {
+                    _fileStorageService.DeleteFile(person.ImagePath);
+                }
+            }
+
             dto.Adapt(person);
+            person.ImagePath = imagePath;
 
             await _context.SaveChangesAsync(cancellation);
 
@@ -271,6 +311,10 @@ namespace DVLD_Enterprise_System.Application.Services
                 _logger.LogWarning($"Failed to delete person {id} because it not found!");
                 return Result.Failure("Failed to delete person because it not found!");
             }
+
+            // 2. 📌 إذا كان الشخص يمتلك صورة مخزنة على السيرفر، قم بحذفها أولاً
+            if (!string.IsNullOrEmpty(person.ImagePath) && File.Exists(person.ImagePath))
+                _fileStorageService.DeleteFile(person.ImagePath);
 
             _context.People.Remove(person);
 

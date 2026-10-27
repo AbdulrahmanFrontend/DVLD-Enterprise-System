@@ -2,6 +2,7 @@
 using DVLD_Enterprise_System.Domain.Constants.PropertiesMaxLength;
 using DVLD_Enterprise_System.Domain.Messages;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 
 namespace DVLD_Enterprise_System.Application.Validators.People;
 
@@ -61,11 +62,15 @@ public class UpdatePersonDtoValidator : AbstractValidator<UpdatePersonDto>
             .Must(gender => (int)gender == 1 || (int)gender == 2 || gender == 0)
             .WithMessage(PeopleMessages.InvalidGender);
 
-        RuleFor(x => x.ImagePath)
-            .Must(path => string.IsNullOrEmpty(path)
-            || path.EndsWith(".jpg")
-            || path.EndsWith(".png")
-            || path.EndsWith(".jpeg"))
+        RuleFor(x => x.ImageFileName)
+            .Must(imageFileName => string.IsNullOrEmpty(imageFileName)
+            || imageFileName.EndsWith(".jpg")
+            || imageFileName.EndsWith(".png")
+            || imageFileName.EndsWith(".jpeg"))
             .WithMessage(PeopleMessages.InvalidImagePath);
+
+        RuleFor(p => p.ImageStream)
+            .Must(imageStream => imageStream == null || imageStream.Length <= 3 * 1024 * 1024)
+            .WithMessage(PeopleMessages.ImageSize);
     }
 }

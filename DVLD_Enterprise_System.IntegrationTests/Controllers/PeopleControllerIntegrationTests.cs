@@ -128,31 +128,33 @@ namespace DVLD_Enterprise_System.IntegrationTests.Controllers
         [Fact]
         public async Task CreatePerson_ReturnsCreated_WhenDataIsValid()
         {
-            // Arrange
             EnsureDatabaseSeeded(db =>
             {
                 if (!db.Countries.Any(c => c.CountryID == 1))
                     db.Countries.Add(new Country { CountryID = 1, CountryName = "Jordan" });
             });
 
-            var newDto = new CreatePersonDto
+            var formContent = new MultipartFormDataContent
             {
-                NationalNo = "INT-300",
-                FirstName = "Layla",
-                SecondName = "Mohammad",
-                LastName = "Salem",
-                DateOfBirth = new DateTime(2000, 1, 1),
-                Gender = GenderType.Female,
-                Address = "Zarqa",
-                Phone = "0777777777",
-                Email = "layla@test.com",
-                NationalityCountryID = 1
+                { new StringContent("INT-300"), "NationalNo" },
+                { new StringContent("Layla"), "FirstName" },
+                { new StringContent("Mohammad"), "SecondName" },
+                { new StringContent("Salem"), "LastName" },
+                { new StringContent("2000-01-01"), "DateOfBirth" },
+                { new StringContent(((int)GenderType.Female).ToString()), "Gender" },
+                { new StringContent("Zarqa"), "Address" },
+                { new StringContent("0777777777"), "Phone" },
+                { new StringContent("layla@test.com"), "Email" },
+                { new StringContent("1"), "NationalityCountryID" }
             };
 
-            // Act
-            var response = await _client.PostAsJsonAsync("/api/People", newDto);
+            // إضافة ملف صورة وهمي للاختبار
+            var fileBytes = new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 };
+            var fileContent = new ByteArrayContent(fileBytes);
+            formContent.Add(fileContent, "ImageFile", "test.jpg");
 
-            // Assert
+            var response = await _client.PostAsync("/api/People", formContent);
+
             response.IsSuccessStatusCode.Should().BeTrue();
             var createdPerson = await response.Content.ReadFromJsonAsync<PersonDto>();
             createdPerson.Should().NotBeNull();
@@ -162,7 +164,6 @@ namespace DVLD_Enterprise_System.IntegrationTests.Controllers
         [Fact]
         public async Task UpdatePerson_ReturnsOk_WhenDataIsValid()
         {
-            // Arrange
             EnsureDatabaseSeeded(db =>
             {
                 if (!db.Countries.Any(c => c.CountryID == 1))
@@ -187,24 +188,27 @@ namespace DVLD_Enterprise_System.IntegrationTests.Controllers
                 }
             });
 
-            var updateDto = new UpdatePersonDto
+            var formContent = new MultipartFormDataContent
             {
-                NationalNo = "INT-500",
-                FirstName = "Hassan-Updated",
-                SecondName = "Ali",
-                LastName = "Omar",
-                DateOfBirth = new DateTime(1990, 1, 1),
-                Gender = GenderType.Male,
-                Address = "Amman-Updated",
-                Phone = "0795555555",
-                Email = "hassan.updated@test.com",
-                NationalityCountryID = 1
+                { new StringContent("INT-500"), "NationalNo" },
+                { new StringContent("Hassan-Updated"), "FirstName" },
+                { new StringContent("Ali"), "SecondName" },
+                { new StringContent("Omar"), "LastName" },
+                { new StringContent("1990-01-01"), "DateOfBirth" },
+                { new StringContent(((int)GenderType.Male).ToString()), "Gender" },
+                { new StringContent("Amman-Updated"), "Address" },
+                { new StringContent("0795555555"), "Phone" },
+                { new StringContent("hassan.updated@test.com"), "Email" },
+                { new StringContent("1"), "NationalityCountryID" }
             };
 
-            // Act
-            var response = await _client.PutAsJsonAsync("/api/People/5", updateDto);
+            // إضافة ملف صورة وهمي للاختبار
+            var fileBytes = new byte[] { 0xFF, 0xD8, 0xFF, 0xE0 };
+            var fileContent = new ByteArrayContent(fileBytes);
+            formContent.Add(fileContent, "ImageFile", "test.jpg");
 
-            // Assert
+            var response = await _client.PutAsync("/api/People/5", formContent);
+
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             var updatedPerson = await response.Content.ReadFromJsonAsync<PersonDto>();
             updatedPerson.Should().NotBeNull();
@@ -214,7 +218,6 @@ namespace DVLD_Enterprise_System.IntegrationTests.Controllers
         [Fact]
         public async Task DeletePerson_ReturnsNoContent_WhenPersonExists()
         {
-            // Arrange
             EnsureDatabaseSeeded(db =>
             {
                 if (!db.Countries.Any(c => c.CountryID == 1))
@@ -239,10 +242,8 @@ namespace DVLD_Enterprise_System.IntegrationTests.Controllers
                 }
             });
 
-            // Act 
             var response = await _client.DeleteAsync("/api/People/8");
 
-            // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
 
             var getResponse = await _client.GetAsync("/api/People/8");

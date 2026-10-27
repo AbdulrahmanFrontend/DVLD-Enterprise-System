@@ -15,5 +15,8 @@ public class CreatePersonDto
     public string Phone { get; set; } = null!;
     public string? Email { get; set; }
     public int NationalityCountryID { get; set; }
-    public string? ImagePath { get; set; }
+
+    // 📌 إضافة خصائص نقية لاستقبال الملف المعالج
+    public Stream? ImageStream { get; set; }
+    public string? ImageFileName { get; set; }
 }

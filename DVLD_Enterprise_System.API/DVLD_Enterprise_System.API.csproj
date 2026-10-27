@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DVLD_Enterprise_System.Application\DVLD_Enterprise_System.Application.csproj" />
+    <ProjectReference Include="..\DVLD_Enterprise_System.Domain\DVLD_Enterprise_System.Domain.csproj" />
     <ProjectReference Include="..\DVLD_Enterprise_System.Infrastructure\DVLD_Enterprise_System.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,15 +1,18 @@
 ﻿using DVLD_Enterprise_System.Application.DTOs.People;
+using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Application.Mappings;
 using DVLD_Enterprise_System.Application.Services;
 using DVLD_Enterprise_System.Domain.Entities;
 using DVLD_Enterprise_System.Domain.Enums;
 using DVLD_Enterprise_System.Domain.Messages;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
+using DVLD_Enterprise_System.Infrastructure.Services;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -21,6 +24,7 @@ public class PersonServiceTests : IDisposable
     private readonly Mock<IValidator<CreatePersonDto>> _createValidatorMock;
     private readonly Mock<IValidator<UpdatePersonDto>> _updateValidatorMock;
     private readonly Mock<ILogger<PersonService>> _loggerMock;
+    private readonly Mock<IFileStorageService> _fileStorageService;
     private readonly PersonService _personService;
 
     public PersonServiceTests()
@@ -35,12 +39,14 @@ public class PersonServiceTests : IDisposable
         _createValidatorMock = new Mock<IValidator<CreatePersonDto>>();
         _updateValidatorMock = new Mock<IValidator<UpdatePersonDto>>();
         _loggerMock = new Mock<ILogger<PersonService>>();
+        _fileStorageService = new Mock<IFileStorageService>();
 
         _personService = new PersonService(
             _context,
             _createValidatorMock.Object,
             _updateValidatorMock.Object,
-            _loggerMock.Object
+            _loggerMock.Object,
+            _fileStorageService.Object
         );
 
         SeedDatabase();
@@ -136,6 +142,7 @@ public class PersonServiceTests : IDisposable
     public async Task CreateAsync_ShouldSucceed_WhenDataIsValid()
     {
         // Arrange
+        var stream = new MemoryStream(new byte[] { 1, 2, 3 });
         var dto = new CreatePersonDto
         {
             NationalNo = "NAT-300",
@@ -147,8 +154,14 @@ public class PersonServiceTests : IDisposable
             Address = "Zarqa",
             Phone = "0773333333",
             Email = "omar@test.com",
-            NationalityCountryID = 1
-        };
+            NationalityCountryID = 1,
+            ImageStream = stream,
+            ImageFileName = "test.jpg"
+        }; 
+        
+        _fileStorageService
+            .Setup(x => x.SaveFileAsync(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<string>()))
+            .ReturnsAsync("uploads/people/test.jpg");
 
         _createValidatorMock
             .Setup(v => v.ValidateAsync(dto, It.IsAny<CancellationToken>()))

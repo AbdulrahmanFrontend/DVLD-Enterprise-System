@@ -1,7 +1,7 @@
-﻿using DVLD_Enterprise_System.Application.Common;
+﻿using DVLD_Enterprise_System.API.Models;
+using DVLD_Enterprise_System.Application.Common;
 using DVLD_Enterprise_System.Application.DTOs.People;
 using DVLD_Enterprise_System.Application.Interfaces;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DVLD_Enterprise_System.API.Controllers
@@ -90,9 +90,26 @@ namespace DVLD_Enterprise_System.API.Controllers
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> Create(
-            CreatePersonDto dto,
+            [FromForm] CreatePersonApiRequestModel model,
             CancellationToken cancellation = default)
         {
+            var dto = new CreatePersonDto
+            {
+                NationalNo = model.NationalNo,
+                FirstName = model.FirstName,
+                SecondName = model.SecondName,
+                ThirdName = model.ThirdName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                NationalityCountryID = model.NationalityCountryID,
+                Gender = model.Gender,
+                Address = model.Address,
+                Phone = model.Phone,
+                Email = model.Email,
+                ImageStream = model.ImageFile?.OpenReadStream(),
+                ImageFileName = model.ImageFile?.FileName,
+            };
+
             var result = await _personService.CreateAsync(dto, cancellation);
 
             if (!result.IsSuccess)
@@ -115,13 +132,30 @@ namespace DVLD_Enterprise_System.API.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Update(
             int id,
-            UpdatePersonDto dto,
+            [FromForm] UpdatePersonApiRequestModel model,
             CancellationToken cancellation = default)
         {
             bool exists = await _personService.ExistsAsync(id, cancellation);
 
             if (!exists)
                 return NotFound();
+
+            var dto = new UpdatePersonDto
+            {
+                NationalNo = model.NationalNo,
+                FirstName = model.FirstName,
+                SecondName = model.SecondName,
+                ThirdName = model.ThirdName,
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
+                NationalityCountryID = model.NationalityCountryID,
+                Gender = model.Gender,
+                Address = model.Address,
+                Phone = model.Phone,
+                Email = model.Email,
+                ImageStream = model.ImageFile?.OpenReadStream(),
+                ImageFileName = model.ImageFile?.FileName,
+            };
 
             var result = await _personService.UpdateAsync(id, dto, cancellation);
 

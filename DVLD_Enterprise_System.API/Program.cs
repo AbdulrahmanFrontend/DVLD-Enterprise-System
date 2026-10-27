@@ -3,6 +3,7 @@ using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Application.Mappings;
 using DVLD_Enterprise_System.Application.Services;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
+using DVLD_Enterprise_System.Infrastructure.Services;
 using FluentValidation;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -58,6 +59,7 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
 // The service contains application-level orchestration and rules.
 // ============================================================
 
+builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
 builder.Services.AddScoped<IAppDbContext, DVLDDbContext>();
 builder.Services.AddScoped<ICountryService, CountryService>();
 builder.Services.AddScoped<IPersonService, PersonService>();
@@ -113,6 +115,9 @@ builder.Services.AddSwaggerGen();
 // ============================================================
 
 var app = builder.Build();
+
+// 📌 تفعيل قراءة الملفات الثابتة من مجلد wwwroot
+app.UseStaticFiles();
 
 
 // ============================================================
