@@ -11,24 +11,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # 1. سحب أحدث نسخة من الكود
-    - name: Checkout code
-      uses: actions/checkout@v4
+      # 1. سحب أحدث نسخة من الكود
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    # 2. إعداد بيئة .NET 10
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '10.0.x'
+      # 2. إعداد بيئة .NET 10
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
 
-    # 3. استعادة الحزم (NuGet Packages)
-    - name: Restore dependencies
-      run: dotnet restore DVLD_Enterprise_System.Backend.sln
+      # 3. [إضافة احترافية] التخزين المؤقت لحزم NuGet لتسريع البناء
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
-    # 4. بناء الـ Solution للتأكد من خلوه من أخطاء الـ Compilation
-    - name: Build solution
-      run: dotnet build DVLD_Enterprise_System.Backend.sln --no-restore --configuration Release
+      # 4. استعادة الحزم (NuGet Packages)
+      - name: Restore dependencies
+        run: dotnet restore DVLD_Enterprise_System.Backend.sln
 
-    # 5. تشغيل جميع اختبارات الوحدة والتكامل تلقائياً
-    - name: Run all tests
-      run: dotnet test DVLD_Enterprise_System.Backend.sln --no-build --configuration Release --verbosity normal
+      # 5. بناء الـ Solution للتأكد من خلوه من أخطاء الـ Compilation
+      - name: Build solution
+        run: dotnet build DVLD_Enterprise_System.Backend.sln --no-restore --configuration Release
+
+      # 6. تشغيل جميع اختبارات الوحدة والتكامل تلقائياً
+      - name: Run all tests
+        run: dotnet test DVLD_Enterprise_System.Backend.sln --no-build --configuration Release --verbosity normal
