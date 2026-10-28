@@ -1,4 +1,4 @@
-using DVLD_Enterprise_System.API.Middleware;
+using DVLD_Enterprise_System.API.ExceptionHandler;
 using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Application.Mappings;
 using DVLD_Enterprise_System.Application.Services;
@@ -9,6 +9,10 @@ using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// تسجيل معالج الأخطاء المركزي الحديث
+builder.Services.AddExceptionHandler<AdvancedGlobalExceptionHandler>();
+builder.Services.AddProblemDetails(); // تفعيل معيار الـ Problem Details القياسي
 
 // ============================================================
 // 1. إنشاء WebApplicationBuilder
@@ -110,6 +114,9 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+// 🟢 تفعيل معالج الأخطاء العالمي (هذا هو السطر الصحيح بدلاً من UseMiddleware)
+app.UseExceptionHandler();
+
 // ============================================================
 // تطبيق الـ Migrations وزرع البيانات الثابتة تلقائياً عند الإقلاع
 // ============================================================
@@ -137,40 +144,6 @@ using (var scope = app.Services.CreateScope())
 
 // 📌 تفعيل قراءة الملفات الثابتة من مجلد wwwroot
 app.UseStaticFiles();
-
-
-// ============================================================
-// 4. Middleware Pipeline
-// ============================================================
-//
-// كل HTTP Request يمر عبر Middleware Pipeline.
-//
-// ExceptionHandlingMiddleware موجود في بداية الـ pipeline
-// حتى يستطيع التقاط Exceptions التي تحدث في الطبقات التي بعده.
-//
-// مثال:
-//
-// Client
-//   ↓
-// ExceptionHandlingMiddleware
-//   ↓
-// HTTPS
-//   ↓
-// Authorization
-//   ↓
-// Controller
-//   ↓
-// Service
-//   ↓
-// EF Core
-//   ↓
-// SQL Server
-//
-// إذا حدث Exception في Controller أو Service أو EF Core:
-// يرجع إلى Middleware ويقوم Middleware بمعالجته.
-// ============================================================
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 
 // ============================================================

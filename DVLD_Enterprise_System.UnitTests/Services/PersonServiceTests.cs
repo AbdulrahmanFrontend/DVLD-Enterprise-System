@@ -1,4 +1,5 @@
 ﻿using DVLD_Enterprise_System.Application.DTOs.People;
+using DVLD_Enterprise_System.Application.Exceptions;
 using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Application.Mappings;
 using DVLD_Enterprise_System.Application.Services;
@@ -6,13 +7,11 @@ using DVLD_Enterprise_System.Domain.Entities;
 using DVLD_Enterprise_System.Domain.Enums;
 using DVLD_Enterprise_System.Domain.Messages;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
-using DVLD_Enterprise_System.Infrastructure.Services;
 using FluentAssertions;
 using FluentValidation;
 using FluentValidation.Results;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -160,7 +159,10 @@ public class PersonServiceTests : IDisposable
         }; 
         
         _fileStorageService
-            .Setup(x => x.SaveFileAsync(It.IsAny<Stream>(), It.IsAny<string>(), It.IsAny<string>()))
+            .Setup(
+                x => x.SaveFileAsync(It.IsAny<Stream>(),
+                It.IsAny<string>(),
+                It.IsAny<string>()))
             .ReturnsAsync("uploads/people/test.jpg");
 
         _createValidatorMock
@@ -171,7 +173,7 @@ public class PersonServiceTests : IDisposable
         var result = await _personService.CreateAsync(dto);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
+        result.Should().Be(3);
         _context.People.Count().Should().Be(3);
     }
 
@@ -190,11 +192,11 @@ public class PersonServiceTests : IDisposable
             .ReturnsAsync(validationResult);
 
         // Act
-        var result = await _personService.CreateAsync(dto);
+        var action = async () => await _personService.CreateAsync(dto);
 
         // Assert
-        result.IsSuccess.Should().BeFalse();
-        result.Message.Should().Be(PeopleMessages.RequiredNationalNo);
+        await action.Should().ThrowAsync<ValidationException>();
+        _context.People.Count().Should().Be(2);
     }
 
     [Fact]
@@ -213,10 +215,8 @@ public class PersonServiceTests : IDisposable
         };
 
         // Act
-        var result = await _personService.UpdateAsync(999, updateDto);
-
-        // Assert
-        result.IsSuccess.Should().BeFalse();
+        var action = async () => await _personService.UpdateAsync(999, updateDto);
+        await action.Should().ThrowAsync<NotFoundException>();
     }
 
     [Fact]
@@ -242,10 +242,10 @@ public class PersonServiceTests : IDisposable
             .ReturnsAsync(new ValidationResult());
 
         // Act
-        var result = await _personService.UpdateAsync(1, updateDto);
+        var action = async () => await _personService.UpdateAsync(1, updateDto);
 
         // Assert
-        result.IsSuccess.Should().BeFalse();
+        await action.Should().ThrowAsync<ConflictException>();
 
         var person = await _context.People.FindAsync(1);
         person?.NationalNo.Should().Be("NAT-100");
@@ -255,11 +255,11 @@ public class PersonServiceTests : IDisposable
     public async Task DeleteAsync_ShouldSucceed_WhenPersonExists()
     {
         // Act
-        var result = await _personService.DeleteAsync(1);
+        var action = async () => await _personService.DeleteAsync(3);
 
         // Assert
-        result.IsSuccess.Should().BeTrue();
-        _context.People.Find(1).Should().BeNull();
+        await action.Should().ThrowAsync<NotFoundException>();
+        _context.People.Find(3).Should().BeNull();
     }
 
     public void Dispose()

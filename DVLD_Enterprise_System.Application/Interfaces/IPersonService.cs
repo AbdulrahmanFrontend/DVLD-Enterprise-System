@@ -27,15 +27,15 @@ namespace DVLD_Enterprise_System.Application.Interfaces
 
         Task<bool> ExistsAsync(string nationalNo, CancellationToken cancellation = default);
 
-        Task<Result> CreateAsync(
+        Task<int> CreateAsync(
             CreatePersonDto dto, 
             CancellationToken cancellation = default);
 
-        Task<Result> UpdateAsync(
+        Task UpdateAsync(
             int id,
             UpdatePersonDto dto,
             CancellationToken cancellation = default);
 
-        Task<Result> DeleteAsync(int id, CancellationToken cancellation = default);
+        Task DeleteAsync(int id, CancellationToken cancellation = default);
     }
 }
