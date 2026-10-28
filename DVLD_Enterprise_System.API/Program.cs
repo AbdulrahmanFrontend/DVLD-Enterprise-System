@@ -37,10 +37,21 @@ builder.Services.AddControllers();
 // عمر DbContext هنا Scoped:
 // يتم إنشاء instance لكل HTTP Request تقريباً
 // ثم يتم التخلص منه بعد انتهاء الطلب.
+// ============================================================
+// 1. تسجيل EF Core DbContext مع مرونة الاتصال (Resiliency)
+// ============================================================
 builder.Services.AddDbContext<DVLDDbContext>(options =>
 {
     options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DVLDDatabase"));
+        builder.Configuration.GetConnectionString("DVLDDatabase"),
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            // 📌 إعادة محاولة الاتصال تلقائياً حتى 5 مرات في حال حدوث انقطاع شبكي مؤقت
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5,
+                maxRetryDelay: TimeSpan.FromSeconds(30),
+                errorNumbersToAdd: null);
+        });
 });
 
 
@@ -59,39 +70,20 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
 // The service contains application-level orchestration and rules.
 // ============================================================
 
-builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
 builder.Services.AddScoped<IAppDbContext, DVLDDbContext>();
-builder.Services.AddScoped<ICountryService, CountryService>();
-builder.Services.AddScoped<IPersonService, PersonService>();
 
-// تفعيل قراءة جميع ملفات التكوين (IRegister) الموجودة في الـ Assembly الحالي
-//TypeAdapterConfig.GlobalSettings.Scan(Assembly.GetExecutingAssembly());
-// أو إذا كانت الـ Mappings في مشروع الـ Application، ضع Assembly الخاص بطبقة الـ Application:
- TypeAdapterConfig.GlobalSettings.Scan(typeof(PersonMappingConfig).Assembly);
+builder.Services.AddScoped<ICountryService, CountryService>();
 
 // تسجيل كل الـ Validators الموجودة في الـ Application Assembly بأسطر بسيطة
 builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
 
+builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
 
-// ============================================================
-// Infrastructure Implementations
-// ============================================================
-//
-// Application depends only on repository abstractions:
-//
-// IPersonRepository
-// ICountryRepository
-// IUnitOfWork
-//
-// Infrastructure provides their concrete implementations:
-//
-// IPersonRepository → PersonRepository
-// ICountryRepository → CountryRepository
-// IUnitOfWork → UnitOfWork
-//
-// This allows Application to remain independent from EF Core
-// and SQL Server implementation details.
-// ============================================================
+// تفعيل قراءة جميع ملفات التكوين (IRegister) الموجودة في الـ Assembly الحالي
+// أو إذا كانت الـ Mappings في مشروع الـ Application، ضع Assembly الخاص بطبقة الـ Application:
+TypeAdapterConfig.GlobalSettings.Scan(typeof(PersonMappingConfig).Assembly);
+
+builder.Services.AddScoped<IPersonService, PersonService>();
 
 
 // ============================================================
@@ -115,6 +107,31 @@ builder.Services.AddSwaggerGen();
 // ============================================================
 
 var app = builder.Build();
+
+// ============================================================
+// تطبيق الـ Migrations وزرع البيانات الثابتة تلقائياً عند الإقلاع
+// ============================================================
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<DVLDDbContext>();
+
+        // 1. تطبيق الجداول تلقائياً
+        context.Database.Migrate();
+
+        // 2. حقن وزرع البيانات الثابتة (Lookup Tables)
+        await DVLD_Enterprise_System.Infrastructure.Persistence.Seeding.DbSeeder.SeedAsync(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+    }
+}
+
+// ... باقي الـ Middleware والـ Controllers
 
 // 📌 تفعيل قراءة الملفات الثابتة من مجلد wwwroot
 app.UseStaticFiles();
