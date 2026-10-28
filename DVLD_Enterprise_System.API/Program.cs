@@ -72,6 +72,8 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
 
 builder.Services.AddScoped<IAppDbContext, DVLDDbContext>();
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddScoped<ICountryService, CountryService>();
 
 // تسجيل كل الـ Validators الموجودة في الـ Application Assembly بأسطر بسيطة
