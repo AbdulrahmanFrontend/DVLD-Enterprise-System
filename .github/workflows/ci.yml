@@ -50,5 +50,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./DVLD_Enterprise_System.API/Dockerfile
+          file: ./Dockerfile   # 📌 تم تعديل المسار ليطابق المجلد الرئيسي
           push: false # مجرد اختبار بناء محلي داخل سيرفر GitHub لضمان خلوه من الأخطاء
