@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # نسخ ملف المشروع واستعادة الحزم
-توافقية الملفات الأساسية
+# توافقية الملفات الأساسية
 COPY ["DVLD_Enterprise_System.API.csproj", "./"]
 RUN dotnet restore "DVLD_Enterprise_System.API.csproj"
 
