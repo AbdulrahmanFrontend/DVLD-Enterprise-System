@@ -7,45 +7,58 @@ using DVLD_Enterprise_System.Infrastructure.Services;
 using FluentValidation;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
-var builder = WebApplication.CreateBuilder(args);
+// 📌 2. تهيئة Serilog في السطر الأول تماماً لالتقاط أخطاء الإقلاع
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .CreateLogger();
 
-// تسجيل معالج الأخطاء المركزي الحديث
-builder.Services.AddExceptionHandler<AdvancedGlobalExceptionHandler>();
-builder.Services.AddProblemDetails(); // تفعيل معيار الـ Problem Details القياسي
-
-// ============================================================
-// 1. إنشاء WebApplicationBuilder
-// ============================================================
-// builder مسؤول عن تجهيز التطبيق قبل تشغيله.
-// من خلاله نقوم بتسجيل:
-// - Services
-// - Database
-// - Configuration
-// - Logging
-// - وغيرها من dependencies.
-//
-// builder.Services هو IServiceCollection
-// ============================================================
-
-builder.Services.AddControllers();
-
-// تسجيل EF Core DbContext داخل Dependency Injection.
-//
-// AddDbContext تجعل DVLDDbContext متاحاً تلقائياً
-// لأي Service أو Controller يطلبه في constructor.
-//
-// كما تحدد أن EF Core سيستخدم SQL Server
-// وأن Connection String موجود في Configuration.
-//
-// عمر DbContext هنا Scoped:
-// يتم إنشاء instance لكل HTTP Request تقريباً
-// ثم يتم التخلص منه بعد انتهاء الطلب.
-// ============================================================
-// 1. تسجيل EF Core DbContext مع مرونة الاتصال (Resiliency)
-// ============================================================
-builder.Services.AddDbContext<DVLDDbContext>(options =>
+try
 {
+    Log.Logger.Information("Starting DVLD Web API application...");
+
+    var builder = WebApplication.CreateBuilder(args);
+
+    // 📌 3. (اختياري وموصى به) ربط Serilog مع نظام الـ Logging الداخلي في ASP.NET Core
+    builder.Host.UseSerilog();
+
+    // تسجيل معالج الأخطاء المركزي الحديث
+    builder.Services.AddExceptionHandler<AdvancedGlobalExceptionHandler>();
+    builder.Services.AddProblemDetails(); // تفعيل معيار الـ Problem Details القياسي
+
+    // ============================================================
+    // 1. إنشاء WebApplicationBuilder
+    // ============================================================
+    // builder مسؤول عن تجهيز التطبيق قبل تشغيله.
+    // من خلاله نقوم بتسجيل:
+    // - Services
+    // - Database
+    // - Configuration
+    // - Logging
+    // - وغيرها من dependencies.
+    //
+    // builder.Services هو IServiceCollection
+    // ============================================================
+
+    builder.Services.AddControllers();
+
+    // تسجيل EF Core DbContext داخل Dependency Injection.
+    //
+    // AddDbContext تجعل DVLDDbContext متاحاً تلقائياً
+    // لأي Service أو Controller يطلبه في constructor.
+    //
+    // كما تحدد أن EF Core سيستخدم SQL Server
+    // وأن Connection String موجود في Configuration.
+    //
+    // عمر DbContext هنا Scoped:
+    // يتم إنشاء instance لكل HTTP Request تقريباً
+    // ثم يتم التخلص منه بعد انتهاء الطلب.
+    // ============================================================
+    // 1. تسجيل EF Core DbContext مع مرونة الاتصال (Resiliency)
+    // ============================================================
+    builder.Services.AddDbContext<DVLDDbContext>(options =>
+    {
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DVLDDatabase"),
         sqlServerOptionsAction: sqlOptions =>
@@ -56,72 +69,72 @@ builder.Services.AddDbContext<DVLDDbContext>(options =>
                 maxRetryDelay: TimeSpan.FromSeconds(30),
                 errorNumbersToAdd: null);
         });
-});
+    });
 
 
-// ============================================================
-// Application Services
-// ============================================================
-//
-// Controllers depend on application-service abstractions.
-//
-// Example:
-//
-// IPersonService
-//      ↓
-// PersonService
-//
-// The service contains application-level orchestration and rules.
-// ============================================================
+    // ============================================================
+    // Application Services
+    // ============================================================
+    //
+    // Controllers depend on application-service abstractions.
+    //
+    // Example:
+    //
+    // IPersonService
+    //      ↓
+    // PersonService
+    //
+    // The service contains application-level orchestration and rules.
+    // ============================================================
 
-builder.Services.AddScoped<IAppDbContext, DVLDDbContext>();
+    builder.Services.AddScoped<IAppDbContext, DVLDDbContext>();
 
-builder.Services.AddMemoryCache();
+    builder.Services.AddMemoryCache();
 
-builder.Services.AddScoped<ICountryService, CountryService>();
+    builder.Services.AddScoped<ICountryService, CountryService>();
 
-// تسجيل كل الـ Validators الموجودة في الـ Application Assembly بأسطر بسيطة
-builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
+    // تسجيل كل الـ Validators الموجودة في الـ Application Assembly بأسطر بسيطة
+    builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
 
-builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
+    builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
 
-// تفعيل قراءة جميع ملفات التكوين (IRegister) الموجودة في الـ Assembly الحالي
-// أو إذا كانت الـ Mappings في مشروع الـ Application، ضع Assembly الخاص بطبقة الـ Application:
-TypeAdapterConfig.GlobalSettings.Scan(typeof(PersonMappingConfig).Assembly);
+    // تفعيل قراءة جميع ملفات التكوين (IRegister) الموجودة في الـ Assembly الحالي
+    // أو إذا كانت الـ Mappings في مشروع الـ Application، ضع Assembly الخاص بطبقة الـ Application:
+    TypeAdapterConfig.GlobalSettings.Scan(typeof(PersonMappingConfig).Assembly);
 
-builder.Services.AddScoped<IPersonService, PersonService>();
-
-
-// ============================================================
-// Swagger
-// ============================================================
-//
-// يسمح لنا باختبار واستكشاف REST API من المتصفح.
-//
-// ============================================================
-
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+    builder.Services.AddScoped<IPersonService, PersonService>();
 
 
-// ============================================================
-// 3. بناء التطبيق
-// ============================================================
-//
-// هنا يتم تحويل الـ configuration التي قمنا بتجهيزها
-// إلى WebApplication فعلي.
-// ============================================================
+    // ============================================================
+    // Swagger
+    // ============================================================
+    //
+    // يسمح لنا باختبار واستكشاف REST API من المتصفح.
+    //
+    // ============================================================
 
-var app = builder.Build();
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
 
-// 🟢 تفعيل معالج الأخطاء العالمي (هذا هو السطر الصحيح بدلاً من UseMiddleware)
-app.UseExceptionHandler();
 
-// ============================================================
-// تطبيق الـ Migrations وزرع البيانات الثابتة تلقائياً عند الإقلاع
-// ============================================================
-using (var scope = app.Services.CreateScope())
-{
+    // ============================================================
+    // 3. بناء التطبيق
+    // ============================================================
+    //
+    // هنا يتم تحويل الـ configuration التي قمنا بتجهيزها
+    // إلى WebApplication فعلي.
+    // ============================================================
+
+    var app = builder.Build();
+
+    // 🟢 تفعيل معالج الأخطاء العالمي (هذا هو السطر الصحيح بدلاً من UseMiddleware)
+    app.UseExceptionHandler();
+
+    // ============================================================
+    // تطبيق الـ Migrations وزرع البيانات الثابتة تلقائياً عند الإقلاع
+    // ============================================================
+    using (var scope = app.Services.CreateScope())
+    {
     var services = scope.ServiceProvider;
     try
     {
@@ -138,60 +151,69 @@ using (var scope = app.Services.CreateScope())
         var logger = services.GetRequiredService<ILogger<Program>>();
         logger.LogError(ex, "An error occurred while migrating or seeding the database.");
     }
-}
+    }
 
-// ... باقي الـ Middleware والـ Controllers
+    // ... باقي الـ Middleware والـ Controllers
 
-// 📌 تفعيل قراءة الملفات الثابتة من مجلد wwwroot
-app.UseStaticFiles();
+    // 📌 تفعيل قراءة الملفات الثابتة من مجلد wwwroot
+    app.UseStaticFiles();
 
 
-// ============================================================
-// 5. Swagger فقط في Development
-// ============================================================
+    // ============================================================
+    // 5. Swagger فقط في Development
+    // ============================================================
 
-if (app.Environment.IsDevelopment())
-{
+    if (app.Environment.IsDevelopment())
+    {
     app.UseSwagger();
     app.UseSwaggerUI();
+    }
+
+
+    // إجبار HTTP على التحويل إلى HTTPS.
+    app.UseHttpsRedirection();
+
+
+    // Middleware الخاص بالـ Authorization.
+    // لاحقاً عندما نضيف Authentication + JWT
+    // سيصبح هذا مهماً جداً.
+    //app.UseAuthorization();
+
+
+    // ============================================================
+    // 6. ربط Controllers بالـ Routing System
+    // ============================================================
+    //
+    // يجعل ASP.NET Core يبحث عن Controllers
+    // ويطابق HTTP Requests مع Actions.
+    //
+    // مثال:
+    //
+    // GET /api/People
+    //
+    // ↓
+    //
+    // PeopleController.GetAll()
+    //
+    // ============================================================
+
+    app.MapControllers();
+
+
+    // ============================================================
+    // 7. تشغيل Web Server
+    // ============================================================
+    //
+    // هنا يبدأ التطبيق فعلياً في استقبال HTTP Requests.
+    // ============================================================
+
+    app.Run();
 }
-
-
-// إجبار HTTP على التحويل إلى HTTPS.
-app.UseHttpsRedirection();
-
-
-// Middleware الخاص بالـ Authorization.
-// لاحقاً عندما نضيف Authentication + JWT
-// سيصبح هذا مهماً جداً.
-//app.UseAuthorization();
-
-
-// ============================================================
-// 6. ربط Controllers بالـ Routing System
-// ============================================================
-//
-// يجعل ASP.NET Core يبحث عن Controllers
-// ويطابق HTTP Requests مع Actions.
-//
-// مثال:
-//
-// GET /api/People
-//
-// ↓
-//
-// PeopleController.GetAll()
-//
-// ============================================================
-
-app.MapControllers();
-
-
-// ============================================================
-// 7. تشغيل Web Server
-// ============================================================
-//
-// هنا يبدأ التطبيق فعلياً في استقبال HTTP Requests.
-// ============================================================
-
-app.Run();
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly!");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
