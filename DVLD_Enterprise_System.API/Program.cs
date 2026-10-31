@@ -3,11 +3,16 @@ using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Application.Mappings;
 using DVLD_Enterprise_System.Application.Services;
 using DVLD_Enterprise_System.Infrastructure.Persistence;
+using DVLD_Enterprise_System.Infrastructure.Persistence.Seeding;
 using DVLD_Enterprise_System.Infrastructure.Services;
 using FluentValidation;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using Serilog;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 // 📌 2. تهيئة Serilog في السطر الأول تماماً لالتقاط أخطاء الإقلاع
 Log.Logger = new LoggerConfiguration()
@@ -59,16 +64,16 @@ try
     // ============================================================
     builder.Services.AddDbContext<DVLDDbContext>(options =>
     {
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString("DVLDDatabase"),
-        sqlServerOptionsAction: sqlOptions =>
-        {
-            // 📌 إعادة محاولة الاتصال تلقائياً حتى 5 مرات في حال حدوث انقطاع شبكي مؤقت
-            sqlOptions.EnableRetryOnFailure(
-                maxRetryCount: 5,
-                maxRetryDelay: TimeSpan.FromSeconds(30),
-                errorNumbersToAdd: null);
-        });
+        options.UseSqlServer(
+            builder.Configuration.GetConnectionString("DVLDDatabase"),
+            sqlServerOptionsAction: sqlOptions =>
+            {
+                // 📌 إعادة محاولة الاتصال تلقائياً حتى 5 مرات في حال حدوث انقطاع شبكي مؤقت
+                sqlOptions.EnableRetryOnFailure(
+                    maxRetryCount: 5,
+                    maxRetryDelay: TimeSpan.FromSeconds(30),
+                    errorNumbersToAdd: null);
+            });
     });
 
 
@@ -95,14 +100,15 @@ try
 
     // تسجيل كل الـ Validators الموجودة في الـ Application Assembly بأسطر بسيطة
     builder.Services.AddValidatorsFromAssembly(typeof(IAppDbContext).Assembly);
-
     builder.Services.AddScoped<IFileStorageService, LocalFileStorageService>();
-
     // تفعيل قراءة جميع ملفات التكوين (IRegister) الموجودة في الـ Assembly الحالي
     // أو إذا كانت الـ Mappings في مشروع الـ Application، ضع Assembly الخاص بطبقة الـ Application:
     TypeAdapterConfig.GlobalSettings.Scan(typeof(PersonMappingConfig).Assembly);
-
     builder.Services.AddScoped<IPersonService, PersonService>();
+
+    builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
+    builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
+    builder.Services.AddScoped<IUserService, UserService>();
 
 
     // ============================================================
@@ -114,7 +120,59 @@ try
     // ============================================================
 
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    // ============================================================
+    // 1. إعداد وتفعيل الـ JWT Authentication
+    // ============================================================
+    var jwtSettings = builder.Configuration.GetSection("Jwt");
+    var secretKey = jwtSettings["Key"] ?? throw new InvalidOperationException("JWT Key is missing.");
+    var key = Encoding.UTF8.GetBytes(secretKey);
+
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });
+
+    builder.Services.AddAuthorization();
+
+
+    // ============================================================
+    // 2. تحديث Swagger ليدعم إدخال الـ Bearer Token (متوافق مع .NET 10 و Swashbuckle 10)
+    // ============================================================
+    builder.Services.AddSwaggerGen(c =>
+    {
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "DVLD Enterprise API", Version = "v1" });
+
+        // 1. تعريف وسيلة الحماية (Bearer Token)
+        c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+        {
+            Description = "أدخل الـ Token بهذه الصيغة: Bearer {مسافة ثم الـ Token هنا}",
+            Name = "Authorization",
+            In = ParameterLocation.Header,
+            Type = SecuritySchemeType.Http,
+            Scheme = "Bearer",
+            BearerFormat = "JWT"
+        });
+
+        // 2. ربط الشروط بالطريقة الحديثة لـ Swashbuckle 10 (بدون الحاجة لـ OpenApiReference القديم)
+        c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+        {
+            [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
+        });
+    });
 
 
     // ============================================================
@@ -135,22 +193,36 @@ try
     // ============================================================
     using (var scope = app.Services.CreateScope())
     {
-    var services = scope.ServiceProvider;
-    try
-    {
-        var context = services.GetRequiredService<DVLDDbContext>();
+        var services = scope.ServiceProvider;
+        try
+        {
+            var context = services.GetRequiredService<DVLDDbContext>();
+            
+            // 1. جلب خدمة تشفير كلمات المرور المسجلة في الـ DI
+            var passwordHasher = services.GetRequiredService<IPasswordHasher>();
 
-        // 1. تطبيق الجداول تلقائياً
-        context.Database.Migrate();
+            // 1. تطبيق الجداول تلقائياً
+            context.Database.Migrate();
 
-        // 2. حقن وزرع البيانات الثابتة (Lookup Tables)
-        await DVLD_Enterprise_System.Infrastructure.Persistence.Seeding.DbSeeder.SeedAsync(context);
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-    }
+            // 2. حقن وزرع البيانات الثابتة (Lookup Tables)
+            await DbSeeder.SeedAsync(context);
+            var adminUser = await DbSeeder.SeedPersonalDataForAdminUserAsync(context);
+
+            if (adminUser != null)
+            {
+                adminUser.PasswordHash = passwordHasher.HashPassword(
+                    adminUser,
+                    "Admin@12345");
+
+                await context.AddAsync(adminUser);
+                await context.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            var logger = services.GetRequiredService<ILogger<Program>>();
+            logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+        }
     }
 
     // ... باقي الـ Middleware والـ Controllers
@@ -165,8 +237,8 @@ try
 
     if (app.Environment.IsDevelopment())
     {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+        app.UseSwagger();
+        app.UseSwaggerUI();
     }
 
 
@@ -174,10 +246,9 @@ try
     app.UseHttpsRedirection();
 
 
-    // Middleware الخاص بالـ Authorization.
-    // لاحقاً عندما نضيف Authentication + JWT
-    // سيصبح هذا مهماً جداً.
-    //app.UseAuthorization();
+    // 🛑 الترتيب مهم جداً هنا:
+    app.UseAuthentication(); // 1. التحقق من هوية المستخدم (فك الـ Token)
+    app.UseAuthorization();  // 2. التحقق من صلاحياته (Roles / Policies)
 
 
     // ============================================================

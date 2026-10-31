@@ -7,6 +7,7 @@ public interface IAppDbContext
 {
     DbSet<Country> Countries { get; }
     DbSet<Person> People { get; }
+    DbSet<User> Users { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     int SaveChanges();

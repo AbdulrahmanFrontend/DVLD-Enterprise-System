@@ -58,6 +58,13 @@ public class AdvancedGlobalExceptionHandler : IExceptionHandler
                 _logger.LogWarning(businessRule, "Business Rule Exception [TraceId: {TraceId}]", traceId);
                 break;
 
+            case UnauthorizedAccessException unauthorizedAccess:
+                statusCode = StatusCodes.Status401Unauthorized;
+                title = "Unauthorized Access";
+                message = unauthorizedAccess.Message;
+                _logger.LogWarning(unauthorizedAccess, "Unauthorized Access Exception [TraceId: {TraceId}]", traceId);
+                break;
+
             case ValidationException validationEx:
                 statusCode = StatusCodes.Status400BadRequest;
                 title = "Validation Failed";

@@ -1,4 +1,5 @@
 ﻿using DVLD_Enterprise_System.Domain.Entities;
+using DVLD_Enterprise_System.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace DVLD_Enterprise_System.Infrastructure.Persistence.Seeding;
@@ -332,5 +333,52 @@ public static class DbSeeder
 
         }
             */
+    }
+
+    public static async Task<User?> SeedPersonalDataForAdminUserAsync(DVLDDbContext context)
+    {
+        // 1. التأكد هل يوجد مستخدمون أم النظام فارغ تماماً؟
+        if (!await context.Users.AnyAsync())
+        {
+            // 2. هل الشخص الأساسي للـ Admin موجود في جدول People أم لا؟
+            // نبحث مثلاً برقم قومي خاص بالـ System Admin
+            var adminPerson = await context.People
+                .FirstOrDefaultAsync(p => p.NationalNo == "SYS-ADMIN-01");
+
+            if (adminPerson == null)
+            {
+                // إنشاء سجل الشخص الحقيقي الأساسي للـ Admin مع مراعاة كافة القيود الإجبارية
+                adminPerson = new Person
+                {
+                    NationalNo = "SYS-ADMIN-01",
+                    FirstName = "System",
+                    SecondName = "Root",
+                    ThirdName = "Admin",
+                    LastName = "User",
+                    DateOfBirth = new DateTime(1990, 1, 1),
+                    Gender = GenderType.Male, // 1 = Male
+                    Address = "System Headquarters",
+                    Phone = "01000000000",
+                    Email = "admin@dvld.system",
+                    NationalityCountryID = 1 // أول دولة متوفرة في جدول Countries
+                };
+
+                context.People.Add(adminPerson);
+                await context.SaveChangesAsync(); // للحصول على PersonID الحقيقي المولّد تلقائياً
+            }
+
+            // 3. إنشاء حساب الـ User وربطه حصرياً بهذا الـ PersonID
+            var adminUser = new User
+            {
+                PersonID = adminPerson.PersonID, // الربط السليم 100% بدون قيم وهمية تكسر القاعدة
+                UserName = "admin",
+                IsActive = true,
+                Permissions = Permissions.All // -1 (كل الصلاحيات)
+            };
+
+            return adminUser;
+        }
+
+        return null;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DVLD_Enterprise_System.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace DVLD_Enterprise_System.Domain.Entities;
 
@@ -14,6 +15,8 @@ public class User
     [Required(ErrorMessage = "Password hash is required!")]
     [MaxLength(255, ErrorMessage = "Password hash cannot exceed 255 characters!")]
     public string PasswordHash { get; set; } = null!;
+
+    public Permissions Permissions { get; set; } = Permissions.None;
 
     public bool IsActive { get; set; } = true;
     public Person Person { get; set; } = null!;
