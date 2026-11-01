@@ -1,4 +1,5 @@
 ﻿using DVLD_Enterprise_System.Application.DTOs.People;
+using DVLD_Enterprise_System.Application.DTOs.Users;
 using DVLD_Enterprise_System.Domain.Entities;
 using Mapster;
 
@@ -24,5 +25,15 @@ public class PersonMappingConfig : IRegister
         // 3. ربط UpdatePersonDto مع الكيان Person
         config.NewConfig<UpdatePersonDto, Person>()
             .Ignore(dest => dest.ImagePath); // يتم تحديثه يدوياً في الـ Service مع مراعاة الحفاظ على القديم أو الجديد
+
+        config.NewConfig<Person, FilteredUsersDto>()
+            .Map(
+            dest => dest.FullName, 
+            src =>
+            $"{src.FirstName} {src.SecondName} {
+                (string.IsNullOrEmpty(src.ThirdName) ? 
+                "" :
+                src.ThirdName + " ")
+                }{src.LastName}");
     }
 }

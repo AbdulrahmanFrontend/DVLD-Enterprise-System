@@ -1,4 +1,4 @@
-﻿namespace DVLD_Enterprise_System.Application.DTOs.Users;
+﻿namespace DVLD_Enterprise_System.Application.DTOs.Auth;
 
 public class AuthResponseDto
 {

@@ -65,6 +65,13 @@ public class AdvancedGlobalExceptionHandler : IExceptionHandler
                 _logger.LogWarning(unauthorizedAccess, "Unauthorized Access Exception [TraceId: {TraceId}]", traceId);
                 break;
 
+            case ForbiddenAccessException forbiddenAccess:
+                statusCode = StatusCodes.Status403Forbidden;
+                title = "Forbidden";
+                message = forbiddenAccess.Message;
+                _logger.LogWarning(forbiddenAccess, "Forbidden Exception [TraceId: {TraceId}]", traceId);
+                break;
+
             case ValidationException validationEx:
                 statusCode = StatusCodes.Status400BadRequest;
                 title = "Validation Failed";

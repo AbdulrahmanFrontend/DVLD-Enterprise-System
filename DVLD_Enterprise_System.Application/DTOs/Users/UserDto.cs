@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using DVLD_Enterprise_System.Application.DTOs.People;
+using DVLD_Enterprise_System.Domain.Enums;
 
-namespace DVLD_Enterprise_System.Application.DTOs.Users
+namespace DVLD_Enterprise_System.Application.DTOs.Users;
+
+public class UserDto
 {
-    public class UserDto
-    {
-        public int UserID { get; set; }
-
-        public string UserName { get; set; } = string.Empty;
-
-        public bool IsActive { get; set; } = true;
-
-        public int PersonID { get; set; }
-    }
+    public int UserID { get; set; }
+    public string UserName { get; set; } = null!;
+    public string FullName { get; set; } = null!;
+    public bool IsActive { get; set; }
+    public Permissions Permissions { get; set; }
+    public int PersonID { get; set; }
+    public PersonDto Person { get; set; } = null!;
 }

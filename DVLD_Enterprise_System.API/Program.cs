@@ -1,4 +1,5 @@
 using DVLD_Enterprise_System.API.ExceptionHandler;
+using DVLD_Enterprise_System.API.Services;
 using DVLD_Enterprise_System.Application.Interfaces;
 using DVLD_Enterprise_System.Application.Mappings;
 using DVLD_Enterprise_System.Application.Services;
@@ -7,12 +8,12 @@ using DVLD_Enterprise_System.Infrastructure.Persistence.Seeding;
 using DVLD_Enterprise_System.Infrastructure.Services;
 using FluentValidation;
 using Mapster;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using Serilog;
 using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 // 📌 2. تهيئة Serilog في السطر الأول تماماً لالتقاط أخطاء الإقلاع
 Log.Logger = new LoggerConfiguration()
@@ -108,7 +109,11 @@ try
 
     builder.Services.AddScoped<IPasswordHasher, PasswordHasher>();
     builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
-    builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IUserAuthService, UserAuthService>();
+
+    TypeAdapterConfig.GlobalSettings.Scan(typeof(UserMappingConfig).Assembly);
+    builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+    builder.Services.AddScoped<IUserManagementService, UserManagementService>();
 
 
     // ============================================================

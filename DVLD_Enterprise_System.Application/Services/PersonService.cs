@@ -291,8 +291,15 @@ public class PersonService : IPersonService
         CancellationToken cancellation = default)
     {
         var person = await _context.People.FindAsync(id, cancellation);
+
         if (person == null)
             throw new NotFoundException(nameof(Person), id);
+
+        var isUser = await _context.Users.AnyAsync(u => u.PersonID == id, cancellation);
+
+        if (isUser)
+            throw new ConflictException(
+                "Cannot delete a person who is associated with a user account!");
 
         if (!string.IsNullOrEmpty(person.ImagePath) && File.Exists(person.ImagePath))
             _fileStorageService.DeleteFile(person.ImagePath);
