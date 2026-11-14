@@ -1,0 +1,54 @@
+name: .NET Backend CI & Docker Build
+
+on:
+  push:
+    branches: [ "main", "master", "feature/aspnet-core-efcore" ]
+  pull_request:
+    branches: [ "main", "master", "feature/aspnet-core-efcore" ]
+
+jobs:
+  build-test-and-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. سحب أحدث نسخة من الكود
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. إعداد بيئة .NET 10
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      # 3. التخزين المؤقت لحزم NuGet لتسريع البناء
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      # 4. استعادة الحزم للـ Solution بالكامل
+      - name: Restore dependencies
+        run: dotnet restore DVLD_Enterprise_System.Backend.sln
+
+      # 5. بناء الـ Solution للتأكد من خلوه من الأخطاء
+      - name: Build solution
+        run: dotnet build DVLD_Enterprise_System.Backend.sln --no-restore --configuration Release
+
+      # 6. تشغيل الاختبارات تلقائياً
+      - name: Run all tests
+        run: dotnet test DVLD_Enterprise_System.Backend.sln --no-build --configuration Release --verbosity normal
+
+      # 7. [إضافة دوكر المتقدمة] اختبار بناء الـ Dockerfile للتأكد من أنه سليم 100% ولا يحتوي على أخطاء مسارات
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Test Docker Image Build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile   # 📌 تم تعديل المسار ليطابق المجلد الرئيسي
+          push: false # مجرد اختبار بناء محلي داخل سيرفر GitHub لضمان خلوه من الأخطاء

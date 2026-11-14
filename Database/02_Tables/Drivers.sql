@@ -1,7 +1,7 @@
 USE [DVLDSystemDb]
 GO
 
-/****** Object:  Table [dbo].[Drivers]    Script Date: 6/3/2026 3:53:30 PM ******/
+/****** Object:  Table [dbo].[Drivers]    Script Date: 9/11/2026 3:35:11 AM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -16,6 +16,10 @@ CREATE TABLE [dbo].[Drivers](
  CONSTRAINT [PK_Drivers_1] PRIMARY KEY CLUSTERED 
 (
 	[DriverID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+ CONSTRAINT [UQ_Drivers] UNIQUE NONCLUSTERED 
+(
+	[PersonID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
@@ -28,13 +32,6 @@ REFERENCES [dbo].[People] ([PersonID])
 GO
 
 ALTER TABLE [dbo].[Drivers] CHECK CONSTRAINT [FK_Drivers_People]
-GO
-
-ALTER TABLE [dbo].[Drivers]  WITH CHECK ADD  CONSTRAINT [FK_Drivers_Users] FOREIGN KEY([CreatedByUserID])
-REFERENCES [dbo].[Users] ([UserID])
-GO
-
-ALTER TABLE [dbo].[Drivers] CHECK CONSTRAINT [FK_Drivers_Users]
 GO
 
 
