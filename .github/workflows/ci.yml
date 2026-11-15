@@ -2,9 +2,9 @@ name: .NET Backend CI & Docker Build
 
 on:
   push:
-    branches: [ "main", "master", "feature/aspnet-core-efcore" ]
+    branches: [ "main", "master" ]
   pull_request:
-    branches: [ "main", "master", "feature/aspnet-core-efcore" ]
+    branches: [ "main", "master" ]
 
 jobs:
   build-test-and-docker:
@@ -32,15 +32,15 @@ jobs:
 
       # 4. استعادة الحزم للـ Solution بالكامل
       - name: Restore dependencies
-        run: dotnet restore DVLD_Enterprise_System.Backend.sln
+        run: dotnet restore DVLD_Enterprise_System.slnx
 
       # 5. بناء الـ Solution للتأكد من خلوه من الأخطاء
       - name: Build solution
-        run: dotnet build DVLD_Enterprise_System.Backend.sln --no-restore --configuration Release
+        run: dotnet build DVLD_Enterprise_System.slnx --no-restore --configuration Release
 
       # 6. تشغيل الاختبارات تلقائياً
       - name: Run all tests
-        run: dotnet test DVLD_Enterprise_System.Backend.sln --no-build --configuration Release --verbosity normal
+        run: dotnet test DVLD_Enterprise_System.slnx --no-build --configuration Release --verbosity normal
 
       # 7. [إضافة دوكر المتقدمة] اختبار بناء الـ Dockerfile للتأكد من أنه سليم 100% ولا يحتوي على أخطاء مسارات
       - name: Set up Docker Buildx

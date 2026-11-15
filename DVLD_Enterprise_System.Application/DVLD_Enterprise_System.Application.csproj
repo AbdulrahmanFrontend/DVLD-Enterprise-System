@@ -8,22 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="12.2.0" />
-    <PackageReference Include="Mapster" Version="10.0.13" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.3.13" />
+    <PackageReference Include="Mapster" Version="10.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.14" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="10.0.14" />
-    <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.14" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="10.0.14" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DVLD_Enterprise_System.Domain\DVLD_Enterprise_System.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="DVLD_Enterprise_System.Domain">
-      <HintPath>..\DVLD_Enterprise_System.Domain\bin\Debug\net10.0\DVLD_Enterprise_System.Domain.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>
