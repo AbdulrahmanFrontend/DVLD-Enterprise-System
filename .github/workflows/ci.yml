@@ -32,15 +32,15 @@ jobs:
 
       # 4. استعادة الحزم للـ Solution بالكامل
       - name: Restore dependencies
-        run: dotnet restore DVLD_Enterprise_System.slnx
+        run: dotnet restore DVLD-Enterprise-System.slnx
 
       # 5. بناء الـ Solution للتأكد من خلوه من الأخطاء
       - name: Build solution
-        run: dotnet build DVLD_Enterprise_System.slnx --no-restore --configuration Release
+        run: dotnet build DVLD-Enterprise-System.slnx --no-restore --configuration Release
 
       # 6. تشغيل الاختبارات تلقائياً
       - name: Run all tests
-        run: dotnet test DVLD_Enterprise_System.slnx --no-build --configuration Release --verbosity normal
+        run: dotnet test DVLD-Enterprise-System.slnx --no-build --configuration Release --verbosity normal
 
       # 7. [إضافة دوكر المتقدمة] اختبار بناء الـ Dockerfile للتأكد من أنه سليم 100% ولا يحتوي على أخطاء مسارات
       - name: Set up Docker Buildx

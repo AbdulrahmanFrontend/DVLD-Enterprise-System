@@ -188,6 +188,8 @@ try
     // إلى WebApplication فعلي.
     // ============================================================
 
+    builder.Services.AddHttpContextAccessor();
+
     var app = builder.Build();
 
     // 🟢 تفعيل معالج الأخطاء العالمي (هذا هو السطر الصحيح بدلاً من UseMiddleware)
@@ -227,6 +229,7 @@ try
         {
             var logger = services.GetRequiredService<ILogger<Program>>();
             logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+            throw; // إعادة رمي الاستثناء لإيقاف تشغيل التطبيق إذا فشل التهيئة
         }
     }
 
@@ -288,6 +291,7 @@ try
 catch (Exception ex)
 {
     Log.Fatal(ex, "Application terminated unexpectedly!");
+    throw; // إعادة رمي الاستثناء لإيقاف تشغيل التطبيق إذا فشل الإقلاع
 }
 finally
 {
