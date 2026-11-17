@@ -65,8 +65,13 @@ try
     // ============================================================
     builder.Services.AddDbContext<DVLDDbContext>(options =>
     {
+        var connectionString =
+            builder.Configuration.GetConnectionString("DVLDDatabase")
+            ?? throw new InvalidOperationException(
+                "Database connection string is missing.");
+
         options.UseSqlServer(
-            builder.Configuration.GetConnectionString("DVLDDatabase"),
+            connectionString,
             sqlServerOptionsAction: sqlOptions =>
             {
                 // 📌 إعادة محاولة الاتصال تلقائياً حتى 5 مرات في حال حدوث انقطاع شبكي مؤقت
@@ -217,9 +222,14 @@ try
 
             if (adminUser != null)
             {
+                var initialAdminPassword =
+                    builder.Configuration["InitialAdmin:Password"]
+                    ?? throw new InvalidOperationException(
+                        "Initial admin password is missing.");
+
                 adminUser.PasswordHash = passwordHasher.HashPassword(
                     adminUser,
-                    "Admin@12345");
+                    initialAdminPassword);
 
                 await context.AddAsync(adminUser);
                 await context.SaveChangesAsync();
