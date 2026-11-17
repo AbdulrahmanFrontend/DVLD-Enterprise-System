@@ -2,6 +2,7 @@
 using DVLD_Enterprise_System.Application.Common;
 using DVLD_Enterprise_System.Application.DTOs.People;
 using DVLD_Enterprise_System.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DVLD_Enterprise_System.API.Controllers;
@@ -9,6 +10,7 @@ namespace DVLD_Enterprise_System.API.Controllers;
 /// <summary>
 /// Handles HTTP requests related to people.
 /// </summary>
+[Authorize]
 [Route("api/People")]
 [ApiController]
 public class PeopleController : ControllerBase

@@ -1,5 +1,6 @@
 ﻿using DVLD_Enterprise_System.Application.DTOs.Auth;
 using DVLD_Enterprise_System.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DVLD_Enterprise_System.API.Controllers;
@@ -15,6 +16,7 @@ public class UsersAuthController : ControllerBase
         _authService = authService;
     }
 
+    [Authorize]
     [HttpPost("change-password")]
     public async Task<IActionResult> ChangePassword(
         [FromBody] ChangePasswordDto dto, 
@@ -34,16 +36,16 @@ public class UsersAuthController : ControllerBase
         return Ok(new { message = "Password changed successfully." });
     }
 
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login(
         [FromBody] LoginRequestDto dto,
         CancellationToken cancellationToken)
     {
-        var token = await _authService.LoginAsync(dto, cancellationToken);
+        var authResponse = await _authService.LoginAsync(
+            dto,
+            cancellationToken);
 
-        if (token == null)
-            return Unauthorized(new { message = "Invalid username or password!" });
-
-        return Ok(new { token });
+        return Ok(authResponse);
     }
 }
